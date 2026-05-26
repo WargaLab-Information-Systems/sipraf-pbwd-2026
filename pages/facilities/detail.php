@@ -1,110 +1,399 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Detail Peminjaman</title>
+  <title>Detail Fasilitas Kampus</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 font-sans">
 
-<div class="max-w-5xl mx-auto mt-10">
+<div class="max-w-7xl mx-auto py-10">
 
-  <div class="bg-white p-8 rounded-2xl shadow">
+  <div class="mb-10">
 
-    <div class="flex justify-between items-center mb-8">
+    <h1 class="text-4xl font-bold text-gray-800">
+      Detail Fasilitas Kampus
+    </h1>
 
-      <h1 class="text-3xl font-bold">
-        Detail Peminjaman
-      </h1>
+    <p class="text-gray-500 mt-2">
+      Sistem Informasi Peminjaman Ruang dan Fasilitas Kampus
+    </p>
 
-      <a href="index.php"
-      class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg">
-        Kembali
-      </a>
+  </div>
 
-    </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-    <!-- DETAIL -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-      <div class="bg-gray-50 p-6 rounded-2xl">
-        <p class="text-gray-500 mb-2">
-          Nama Mahasiswa
-        </p>
-
-        <h2 class="text-2xl font-bold">
-          Andi Saputra
-        </h2>
-      </div>
-
-      <div class="bg-gray-50 p-6 rounded-2xl">
-        <p class="text-gray-500 mb-2">
-          NIM
-        </p>
-
-        <h2 class="text-2xl font-bold">
-          231011401
-        </h2>
-      </div>
-
-      <div class="bg-gray-50 p-6 rounded-2xl">
-        <p class="text-gray-500 mb-2">
-          Ruangan
-        </p>
-
-        <h2 class="text-2xl font-bold">
-          Lab Komputer 1
-        </h2>
-      </div>
-
-      <div class="bg-gray-50 p-6 rounded-2xl">
-        <p class="text-gray-500 mb-2">
-          Status
-        </p>
-
-        <span class="bg-green-100 text-green-700 px-4 py-2 rounded-full">
-          Disetujui
-        </span>
-      </div>
-
-      <div class="bg-gray-50 p-6 rounded-2xl">
-        <p class="text-gray-500 mb-2">
-          Tanggal Peminjaman
-        </p>
-
-        <h2 class="text-2xl font-bold">
-          12 Mei 2026
-        </h2>
-      </div>
-
-      <div class="bg-gray-50 p-6 rounded-2xl">
-        <p class="text-gray-500 mb-2">
-          Fasilitas
-        </p>
-
-        <h2 class="text-xl font-semibold">
-          Proyektor, AC, WiFi
-        </h2>
-      </div>
-
-    </div>
-
-    <!-- KEPERLUAN -->
-    <div class="mt-8 bg-gray-50 p-6 rounded-2xl">
-
-      <h2 class="text-2xl font-bold mb-4">
-        Keperluan
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-2xl transition">
+      <h2 class="text-3xl font-bold text-green-700 mb-2">
+        Lab TI
       </h2>
 
-      <p class="text-gray-600 leading-relaxed">
-        Digunakan untuk kegiatan presentasi seminar proposal
-        dan diskusi kelompok mahasiswa teknik informatika.
+      <p class="text-gray-500 mb-6">
+        Laboratorium Teknologi Informasi
       </p>
 
+      <div class="space-y-4">
+
+        <div>
+          <h3 class="font-bold">Kapasitas</h3>
+          <p class="text-gray-600">40 Orang</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold">Status</h3>
+          <p class="text-green-600 font-semibold">Tersedia</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold">Jam Operasional</h3>
+          <p class="text-gray-600">06:00 - 22:00</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold">Fasilitas</h3>
+
+          <div class="flex flex-wrap gap-2 mt-2">
+
+            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+              40 PC
+            </span>
+
+            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
+              Proyektor
+            </span>
+
+            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">
+              WiFi
+            </span>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-2xl transition">
+      <h2 class="text-3xl font-bold text-blue-700 mb-2">
+        Lab BIS
+      </h2>
+
+      <p class="text-gray-500 mb-6">
+        Laboratorium Bisnis dan Sistem Informasi
+      </p>
+
+      <div class="space-y-4">
+
+        <div>
+          <h3 class="font-bold">Kapasitas</h3>
+          <p class="text-gray-600">40 Orang</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold">Status</h3>
+          <p class="text-green-600 font-semibold">Tersedia</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold">Jam Operasional</h3>
+          <p class="text-gray-600">06:00 - 22:00</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold">Fasilitas</h3>
+
+          <div class="flex flex-wrap gap-2 mt-2">
+
+            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
+              40 PC
+            </span>
+
+            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+              Proyektor
+            </span>
+
+            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">
+              WiFi
+            </span>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-2xl transition">
+      <h2 class="text-3xl font-bold text-purple-700 mb-2">
+        RKBF 204
+      </h2>
+
+      <p class="text-gray-500 mb-6">
+        Ruang Kelas Lantai 2 Gedung B Fakultas
+      </p>
+
+      <div class="space-y-4">
+
+        <div>
+          <h3 class="font-bold">Kapasitas</h3>
+          <p class="text-gray-600">40 Orang</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold">Status</h3>
+          <p class="text-green-600 font-semibold">Tersedia</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold">Jam Operasional</h3>
+          <p class="text-gray-600">06:00 - 17:00</p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-2xl transition">
+      <h2 class="text-3xl font-bold text-red-700 mb-2">
+        RKBF 307
+      </h2>
+
+      <p class="text-gray-500 mb-6">
+        Ruang Kelas Lantai 3 Gedung B Fakultas
+      </p>
+
+      <div class="space-y-4">
+
+        <div>
+          <h3 class="font-bold">Kapasitas</h3>
+          <p class="text-gray-600">40 Orang</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold">Status</h3>
+          <p class="text-green-600 font-semibold">Tersedia</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold">Jam Operasional</h3>
+          <p class="text-gray-600">06:00 - 17:00</p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-2xl transition">
+      <h2 class="text-3xl font-bold text-yellow-700 mb-2">
+        RKBF 308
+      </h2>
+      <p class="text-gray-500 mb-6">
+        Ruang Kelas Lantai 3 Gedung B Fakultas
+      </p>
+      <div class="space-y-4">
+        <div>
+          <h3 class="font-bold">Kapasitas</h3>
+          <p class="text-gray-600">40 Orang</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Status</h3>
+          <p class="text-green-600 font-semibold">Tersedia</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Jam Operasional</h3>
+          <p class="text-gray-600">06:00 - 17:00</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-2xl transition">
+      <h2 class="text-3xl font-bold text-green-700 mb-2">
+        RKBF 407
+      </h2>
+      <p class="text-gray-500 mb-6">
+        Ruang Kelas Lantai 4 Gedung B Fakultas
+      </p>
+      <div class="space-y-4">
+        <div>
+          <h3 class="font-bold">Kapasitas</h3>
+          <p class="text-gray-600">40 Orang</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Status</h3>
+          <p class="text-green-600 font-semibold">Tersedia</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Jam Operasional</h3>
+          <p class="text-gray-600">06:00 - 17:00</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-2xl transition">
+      <h2 class="text-3xl font-bold text-pink-700 mb-2">
+        RKBF 408
+      </h2>
+      <p class="text-gray-500 mb-6">
+        Ruang Kelas Lantai 4 Gedung B Fakultas
+      </p>
+      <div class="space-y-4">
+        <div>
+          <h3 class="font-bold">Kapasitas</h3>
+          <p class="text-gray-600">40 Orang</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Status</h3>
+          <p class="text-green-600 font-semibold">Tersedia</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Jam Operasional</h3>
+          <p class="text-gray-600">06:00 - 17:00</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-2xl transition">
+      <h2 class="text-3xl font-bold text-blue-700 mb-2">
+        Proyektor 01
+      </h2>
+      <p class="text-gray-500 mb-6">
+        Proyektor Portable Unit 01
+      </p>
+      <div class="space-y-4">
+        <div>
+          <h3 class="font-bold">Kapasitas</h3>
+          <p class="text-gray-600">1</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Status</h3>
+          <p class="text-green-600 font-semibold">Tersedia</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Jam Operasional</h3>
+          <p class="text-gray-600">06:00 - 17:00</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-2xl transition">
+      <h2 class="text-3xl font-bold text-purple-700 mb-2">
+        Proyektor 02
+      </h2>
+      <p class="text-gray-500 mb-6">
+        Proyektor Portable Unit 02
+      </p>
+      <div class="space-y-4">
+        <div>
+          <h3 class="font-bold">Kapasitas</h3>
+          <p class="text-gray-600">1</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Status</h3>
+          <p class="text-green-600 font-semibold">Tersedia</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Jam Operasional</h3>
+          <p class="text-gray-600">06:00 - 17:00</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-2xl transition">
+      <h2 class="text-3xl font-bold text-yellow-700 mb-2">
+        Switch 01
+      </h2>
+      <p class="text-gray-500 mb-6">
+        Network Switch Manageable Unit 01
+      </p>
+      <div class="space-y-4">
+        <div>
+          <h3 class="font-bold">Kapasitas</h3>
+          <p class="text-gray-600">1</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Status</h3>
+          <p class="text-green-600 font-semibold">Tersedia</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Jam Operasional</h3>
+          <p class="text-gray-600">06:00 - 17:00</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-2xl transition">
+      <h2 class="text-3xl font-bold text-blue-700 mb-2">
+        Switch 02
+      </h2>
+      <p class="text-gray-500 mb-6">
+        Network Switch Manageable Unit 02
+      </p>
+      <div class="space-y-4">
+        <div>
+          <h3 class="font-bold">Kapasitas</h3>
+          <p class="text-gray-600">1</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Status</h3>
+          <p class="text-green-600 font-semibold">Tersedia</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Jam Operasional</h3>
+          <p class="text-gray-600">06:00 - 17:00</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-2xl transition">
+      <h2 class="text-3xl font-bold text-orange-700 mb-2">
+        Router 01
+      </h2>
+      <p class="text-gray-500 mb-6">
+        Router Jaringan Unit 01
+      </p>
+      <div class="space-y-4">
+        <div>
+          <h3 class="font-bold">Kapasitas</h3>
+          <p class="text-gray-600">1</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Status</h3>
+          <p class="text-green-600 font-semibold">Tersedia</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Jam Operasional</h3>
+          <p class="text-gray-600">06:00 - 17:00</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-2xl transition">
+      <h2 class="text-3xl font-bold text-green-700 mb-2">
+        Router 02
+      </h2>
+      <p class="text-gray-500 mb-6">
+        Router Jaringan Unit 02
+      </p>
+      <div class="space-y-4">
+        <div>
+          <h3 class="font-bold">Kapasitas</h3>
+          <p class="text-gray-600">1</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Status</h3>
+          <p class="text-green-600 font-semibold">Tersedia</p>
+        </div>
+        <div>
+          <h3 class="font-bold">Jam Operasional</h3>
+          <p class="text-gray-600">06:00 - 17:00</p>
+        </div>
+      </div>
     </div>
 
   </div>
