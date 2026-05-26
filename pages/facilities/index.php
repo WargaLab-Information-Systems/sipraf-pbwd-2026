@@ -61,6 +61,34 @@
           Sistem Informasi Peminjaman Ruang dan Fasilitas Kampus
         </p>
 
+      <a href="form.php"
+      class="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-xl">
+        + Add
+      </a>
+    </div>
+
+    <!-- CARDS -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <div class="bg-white p-6 rounded-2xl shadow">
+        <p class="text-gray-500">Total Rooms</p>
+        <h2 class="text-3xl font-bold mt-2">120</h2>
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl shadow">
+        <p class="text-gray-500">Visitors</p>
+        <h2 class="text-3xl font-bold mt-2">542</h2>
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl shadow">
+        <p class="text-gray-500">Bookings</p>
+        <h2 class="text-3xl font-bold mt-2">85</h2>
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl shadow">
+        <p class="text-gray-500">Revenue</p>
+        <h2 class="text-3xl font-bold mt-2">$12K</h2>
+>>>>>>> 8fb0e57 (modified)
       </div>
 
     </div>
