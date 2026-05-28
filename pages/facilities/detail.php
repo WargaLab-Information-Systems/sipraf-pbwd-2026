@@ -8,21 +8,39 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body class="bg-gray-100 font-sans">
 
 <div class="max-w-7xl mx-auto py-10">
 
-  <div class="mb-10">
+  <!-- HEADER -->
+  <div class="flex justify-between items-start mb-10">
 
-    <h1 class="text-4xl font-bold text-gray-800">
-      Detail Fasilitas Kampus
-    </h1>
+    <!-- JUDUL -->
+    <div>
 
-    <p class="text-gray-500 mt-2">
-      Sistem Informasi Peminjaman Ruang dan Fasilitas Kampus
-    </p>
+      <h1 class="text-4xl font-bold text-gray-800">
+        Detail Fasilitas Kampus
+      </h1>
+
+      <p class="text-gray-500 mt-2">
+        Sistem Informasi Peminjaman Ruang dan Fasilitas Kampus
+      </p>
+
+    </div>
+
+    <!-- BUTTON CETAK -->
+    <button
+    onclick="window.print()"
+    class="mr-4 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl shadow-lg print:hidden">
+
+        <i class="fa-solid fa-print"></i>
+        Cetak PDF
+
+    </button>
 
   </div>
 
