@@ -21,4 +21,3 @@ if ($action_type === 'cancel') {
     header("Location: ../pages/reservation/index.php");
     exit();
 }
-

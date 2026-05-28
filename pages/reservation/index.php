@@ -1,8 +1,4 @@
 <?php
-/**
- * File: pages/reservation/index.php
- * Deskripsi: Halaman utama daftar pengajuan sekaligus cetak laporan (Hanya HTML + TailwindCSS).
- */
 
 // Memanggil file helper data
 require_once __DIR__ . '/../../helper/data/reservation.php';

@@ -14,7 +14,6 @@ if (!$detail_pengajuan) {
     header("Location: index.php");
     exit();
 }
-
 // Cek apakah user sedang menekan tombol "Edit" (Mengaktifkan Mode Edit)
 $mode_edit = isset($_GET['mode']) && $_GET['mode'] === 'edit';
 ?>

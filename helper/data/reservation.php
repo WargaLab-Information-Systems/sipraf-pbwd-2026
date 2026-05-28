@@ -1,6 +1,5 @@
 <?php
 
-
 // Memanggil koneksi database
 require_once __DIR__ . '/../db_conn.php';
 
