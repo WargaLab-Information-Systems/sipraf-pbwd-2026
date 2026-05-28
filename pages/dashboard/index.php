@@ -39,7 +39,7 @@ include '../../logic/dashboard_process.php';
     <div class="flex">
 
         <!-- Sidebar -->
-        <?php include __DIR__ . '/../includes/sidebar.php'; ?>
+        <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
 
         <!-- Main Content -->
         <div class="flex-1 p-8">

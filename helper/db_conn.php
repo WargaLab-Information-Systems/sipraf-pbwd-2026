@@ -1,12 +1,10 @@
 <?php
 
-$conn = mysqli_connect(
-    "localhost",
-    "root",
-    "",
-    "db_sipraf"
-);
+include 'db_const.php';
 
-if (!$conn) {
-    die("Koneksi gagal: " . mysqli_connect_error());
-}
+$conn = new mysqli(
+    DB_HOST,
+    DB_USER,
+    DB_PASS,
+    DB_NAME
+);
