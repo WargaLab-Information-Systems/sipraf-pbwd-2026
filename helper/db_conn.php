@@ -1,6 +1,10 @@
 <?php
 
-$host = 'localhost';
-$username = 'root';
-$pw= '';
-$db = 'db_sipraf';
+<?php
+
+$conn = mysqli_connect(
+    'localhost',
+    'root',
+    '',
+    'db_sipraf'
+);
