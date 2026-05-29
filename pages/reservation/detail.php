@@ -1,102 +1,181 @@
 <?php
-/**
- * File: pages/reservation/detail.php
- * Deskripsi: Modul All-in-One (Detail, Batal, Hapus, dan EDIT data dalam satu file!)
- */
 
-session_start();
-require_once __DIR__ . '/../../helper/data/reservation.php';
+$conn = mysqli_connect("localhost", "root", "", "db_sipraf");
 
-$id_detail = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-$detail_pengajuan = getReservationById($conn, $id_detail);
+$query = mysqli_query($conn, "
 
-if (!$detail_pengajuan) {
-    header("Location: index.php");
-    exit();
-}
-// Cek apakah user sedang menekan tombol "Edit" (Mengaktifkan Mode Edit)
-$mode_edit = isset($_GET['mode']) && $_GET['mode'] === 'edit';
+SELECT
+    reservations.*,
+    users.name AS user_name,
+    facilities.name AS facility_name
+
+FROM reservations
+
+JOIN users
+ON reservations.user_id = users.id
+
+JOIN facilities
+ON reservations.facility_id = facilities.id
+
+ORDER BY reservations.id DESC
+
+");
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Pengajuan #<?php echo $id_detail; ?></title>
+    <title>Data Reservation</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-900 text-gray-100 p-6">
-    <div class="max-w-3xl mx-auto bg-gray-800 rounded-lg shadow-xl overflow-hidden border border-gray-700">
-        
-        <div class="p-6 bg-gray-700 border-b border-gray-600 flex justify-between items-center">
-            <div>
-                <h2 class="text-xl font-bold"><?php echo $mode_edit ? 'Form Edit Pengajuan' : 'Detail Pengajuan Reservasi'; ?></h2>
-                <p class="text-xs text-gray-400 mt-1">ID Pengajuan: #<?php echo $id_detail; ?></p>
-            </div>
-            <span class="px-3 py-1 rounded-full text-xs font-bold uppercase <?php
-                if ($detail_pengajuan['status'] == 'disetujui') echo 'bg-green-900 text-green-300';
-                elseif ($detail_pengajuan['status'] == 'dibatalkan') echo 'bg-gray-600 text-gray-300';
-                else echo 'bg-yellow-950 text-yellow-300';
-            ?>"><?php echo htmlspecialchars($detail_pengajuan['status']); ?></span>
-        </div>
 
-        <?php if ($mode_edit): ?>
-            <form action="../../logic/reservation_process.php?action=update&id=<?php echo $id_detail; ?>" method="POST" class="p-6 space-y-4">
-                <div>
-                    <label class="block text-sm font-semibold text-blue-400 mb-1">NAMA PEMINJAM</label>
-                    <input type="text" name="borrower_name" value="<?php echo htmlspecialchars($detail_pengajuan['borrower_name']); ?>" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white text-sm focus:outline-none focus:border-blue-500">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-blue-400 mb-1">EMAIL</label>
-                    <input type="email" name="borrower_email" value="<?php echo htmlspecialchars($detail_pengajuan['borrower_email']); ?>" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white text-sm focus:outline-none focus:border-blue-500">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-blue-400 mb-1">CATATAN KEPERLUAN</label>
-                    <textarea name="notes" rows="3" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white text-sm focus:outline-none focus:border-blue-500"><?php echo htmlspecialchars($detail_pengajuan['notes']); ?></textarea>
-                </div>
-                
-                <div class="flex gap-3 justify-end pt-4 border-t border-gray-700">
-                    <a href="detail.php?id=<?php echo $id_detail; ?>" class="bg-gray-600 hover:bg-gray-500 px-4 py-2 rounded text-sm font-medium">Batal Edit</a>
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-medium text-white">Simpan Perubahan</button>
-                </div>
-            </form>
+<body class="bg-[#f4f7fb]">
 
-        <?php else: ?>
-            <div class="p-6 space-y-6">
-                <div>
-                    <h3 class="text-sm font-semibold text-blue-400 uppercase tracking-wider mb-2">Informasi Peminjam</h3>
-                    <p class="text-base font-medium text-white"><?php echo htmlspecialchars($detail_pengajuan['borrower_name']); ?></p>
-                    <p class="text-sm text-gray-400"><?php echo htmlspecialchars($detail_pengajuan['borrower_email']); ?></p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-b border-gray-700 py-4">
-                    <div>
-                        <h4 class="text-xs text-gray-400 uppercase">Fasilitas / Ruangan</h4>
-                        <p class="text-sm font-semibold text-white"><?php echo htmlspecialchars($detail_pengajuan['facility_name']); ?> (<?php echo htmlspecialchars($detail_pengajuan['kategori']); ?>)</p>
-                    </div>
-                    <div>
-                        <h4 class="text-xs text-gray-400 uppercase">Tanggal & Waktu</h4>
-                        <p class="text-sm font-semibold text-white"><?php echo htmlspecialchars($detail_pengajuan['tanggal'] . ' / ' . $detail_pengajuan['jam_mulai'] . ' - ' . $detail_pengajuan['jam_selesai']); ?></p>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-sm font-semibold text-blue-400 uppercase tracking-wider mb-1">Catatan Keperluan</h3>
-                    <p class="text-sm text-gray-300 bg-gray-850 p-3 rounded border border-gray-700"><?php echo htmlspecialchars($detail_pengajuan['notes'] ?: '-'); ?></p>
-                </div>
-            </div>
+<div class="flex min-h-screen">
 
-            <div class="p-6 bg-gray-900 border-t border-gray-700 flex flex-wrap gap-3 justify-end">
-                <a href="index.php" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded text-sm font-medium">Kembali</a>
-                
-                <?php if ($detail_pengajuan['status'] == 'diajukan'): ?>
-                    <a href="../../logic/reservation_process.php?action=cancel&id=<?php echo $id_detail; ?>" onclick="return confirm('Batalkan pengajuan ini?')" class="bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded text-sm font-medium">Batalkan Pengajuan</a>
-                <?php endif; ?>
+    <!-- sidebr -->
 
-                <a href="detail.php?id=<?php echo $id_detail; ?>&mode=edit" class="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded text-sm font-medium">Edit Data</a>
+    <div class="w-64 bg-white shadow-md p-6">
 
-                <a href="../../logic/reservation_process.php?action=delete&id=<?php echo $id_detail; ?>" onclick="return confirm('Hapus permanen data ini?')" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-sm font-medium">Hapus Data</a>
-            </div>
-        <?php endif; ?>
+        <h1 class="text-3xl font-bold text-green-600 mb-10">
+            SIPRAF
+        </h1>
+
+        <ul class="space-y-3">
+
+            <li>
+                <a href="index.php"
+                class="block hover:bg-gray-100 px-4 py-3 rounded-xl text-gray-600">
+
+                    Reservation
+
+                </a>
+            </li>
+
+            <li>
+                <a href="detail.php"
+                class="block bg-green-100 text-green-700 px-4 py-3 rounded-xl font-semibold">
+
+                    Data Pengajuan
+
+                </a>
+            </li>
+
+        </ul>
 
     </div>
+
+    <!-- konten -->
+
+    <div class="flex-1 p-10">
+
+        <div class="flex justify-between items-center mb-8">
+
+            <div>
+
+                <h1 class="text-4xl font-bold text-gray-700 mb-2">
+                    Data Pengajuan
+                </h1>
+
+                <p class="text-gray-500">
+                    Daftar data reservation fasilitas
+                </p>
+
+            </div>
+
+            <a href="index.php"
+            class="bg-green-500 hover:bg-green-600 text-white px-6 py-4 rounded-xl font-semibold">
+
+                + Tambahkan Pengajuan
+
+            </a>
+
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+
+            <table class="w-full">
+
+                <thead class="bg-gray-50">
+
+                    <tr class="text-gray-700">
+
+                        <th class="p-5">No</th>
+                        <th class="p-5">User</th>
+                        <th class="p-5">Fasilitas</th>
+                        <th class="p-5">Tanggal</th>
+                        <th class="p-5">Jam</th>
+                        <th class="p-5">Keperluan</th>
+                        <th class="p-5">Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <?php
+                    $no = 1;
+
+                    while($row = mysqli_fetch_assoc($query)) {
+                    ?>
+
+                    <tr class="border-b text-center hover:bg-gray-50">
+
+                        <td class="p-5">
+                            <?= $no++; ?>
+                        </td>
+
+                        <td class="p-5">
+                            <?= $row['user_name']; ?>
+                        </td>
+
+                        <td class="p-5">
+                            <?= $row['facility_name']; ?>
+                        </td>
+
+                        <td class="p-5">
+                            <?= $row['tanggal']; ?>
+                        </td>
+
+                        <td class="p-5">
+                            <?= $row['jam_mulai']; ?>
+                            -
+                            <?= $row['jam_selesai']; ?>
+                        </td>
+
+                        <td class="p-5">
+                            <?= $row['notes']; ?>
+                        </td>
+
+                        <td class="p-5">
+
+                            <span class="bg-yellow-100 text-yellow-700 px-4 py-2 rounded-full text-sm">
+
+                                <?= $row['status']; ?>
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    <?php } ?>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
 </body>
 </html>
+```
