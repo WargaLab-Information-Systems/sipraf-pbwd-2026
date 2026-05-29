@@ -1,8 +1,6 @@
 <?php
 
-<?php
-
-$conn = mysqli_connect(
+$conn = new mysqli(
     'localhost',
     'root',
     '',
