@@ -1,5 +1,6 @@
 <?php
 
+
 // Memanggil koneksi database
 require_once __DIR__ . '/../db_conn.php';
 
@@ -106,4 +107,11 @@ function updateReservation($conn, $id_reservation, $tanggal_baru, $jam_mulai_bar
                   WHERE id = $id_reservation";
                   
     return mysqli_query($conn, $sql_query);
+
+// mengubah status reservasi setelah keputusan approval dibuat
+function updateStatusReservasi($conn, $id, $status) {
+    $query = "UPDATE reservations SET status = ? WHERE id = ?";
+    $stmt  = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, 'si', $status, $id);
+    return mysqli_stmt_execute($stmt);
 }

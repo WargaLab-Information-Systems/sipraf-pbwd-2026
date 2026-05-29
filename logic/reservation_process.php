@@ -1,6 +1,5 @@
 <?php
 
-
 // 1. Panggil file helper data agar fungsi 'cancelReservation' dan koneksi '$conn' bisa dibaca
 require_once __DIR__ . '/../helper/data/reservation.php';
 
@@ -20,4 +19,18 @@ if ($action_type === 'cancel') {
     // Setelah selesai membatalkan, langsung usir user kembali ke halaman utama
     header("Location: ../pages/reservation/index.php");
     exit();
+
+// proses perubahan status reservasi berdasar keputusan approval
+function prosesStatusReservasi($conn, $id, $status) {
+    // daftar status yang valid 
+    $status_valid = ['diajukan', 'disetujui', 'ditolak', 'dibatalkan'];
+
+    // validasi status yang dikirim harus sesuai 
+    if (!in_array($status, $status_valid)) {
+        return false;
+    }
+
+    // memanggil helper untuk update status di  reservations
+    $hasil = updateStatusReservasi($conn, $id, $status);
+    return $hasil;
 }
