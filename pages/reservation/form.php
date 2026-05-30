@@ -6,7 +6,7 @@ require_once '../../helper/data/user.php';
 require_once '../../helper/data/facility.php';
 
 $users = getUsers($conn);
-$facilities = getAllFacilities($conn);
+$facilities = getFacilities($conn);
 
 ?>
 
