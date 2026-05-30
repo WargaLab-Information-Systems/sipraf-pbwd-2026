@@ -1,17 +1,27 @@
+<?php
+require_once __DIR__ . '/../../helper/db_conn.php';
+require_once __DIR__ . '/../../helper/data/facility.php';
+
+$facilities = getAllFacilities($conn);
+
+$totalRuangan = 0;
+
+// Cek satu-satu isi datanya
+foreach ($facilities as $row) {
+    // Kalau kategorinya 'ruang' atau 'lab', tambahkan 1 ke hitungan
+    if (strtolower($row['kategori']) == 'ruang' || strtolower($row['kategori']) == 'lab') {
+        $totalRuangan++;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Pages Facilities Index</title>
-
+    <title>SIPRAF - Fasilitas</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body class="bg-gray-100 font-sans">
@@ -137,6 +147,7 @@
                 <i class="fa-solid fa-right-from-bracket"></i>
 
             </button>
+        </div>
 
         </div>
 
@@ -191,42 +202,47 @@
         <!-- CARD -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
 
+        <?php if (isset($_GET['status'])): ?>
+            <?php if ($_GET['status'] == 'success'): ?>
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl relative mb-6 shadow-sm print:hidden" role="alert">
+                    <strong class="font-bold"><i class="fa-solid fa-check-circle mr-1"></i> Berhasil!</strong>
+                    <span class="block sm:inline">Data fasilitas telah berhasil disimpan.</span>
+                </div>
+            <?php elseif ($_GET['status'] == 'deleted'): ?>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl relative mb-6 shadow-sm print:hidden" role="alert">
+                    <strong class="font-bold"><i class="fa-solid fa-trash-can mr-1"></i> Dihapus!</strong>
+                    <span class="block sm:inline">Data fasilitas telah berhasil dihapus.</span>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 print:hidden">
             <div class="bg-white p-6 rounded-2xl shadow">
                 <p class="text-gray-500">Total Ruangan</p>
-                <h2 class="text-4xl font-bold mt-2">7</h2>
+                <h2 class="text-4xl font-bold mt-2"><?= $totalRuangan ?></h2>
             </div>
-
             <div class="bg-white p-6 rounded-2xl shadow">
                 <p class="text-gray-500">Reservasi</p>
                 <h2 class="text-4xl font-bold mt-2">30</h2>
             </div>
-
             <div class="bg-white p-6 rounded-2xl shadow">
                 <p class="text-gray-500">User</p>
                 <h2 class="text-4xl font-bold mt-2">11</h2>
             </div>
-
             <div class="bg-white p-6 rounded-2xl shadow">
                 <p class="text-gray-500">Fasilitas</p>
-                <h2 class="text-4xl font-bold mt-2">13</h2>
+                <h2 class="text-4xl font-bold mt-2"><?= count($facilities) ?></h2>
             </div>
-
         </div>
 
-        <!-- TABLE -->
-        <div class="bg-white rounded-2xl shadow-lg p-8">
-
-            <div class="flex justify-between items-center mb-6 print:hidden">
-
-                <h2 class="text-2xl font-bold">
-                    Data Fasilitas Kampus
-                </h2>
-
-                <input type="text"
-                placeholder="Cari data..."
-                class="border px-4 py-2 rounded-xl">
-
+        <div class="flex justify-between items-center mb-6 print:hidden">
+            <h2 class="text-2xl font-bold text-gray-800">Daftar Fasilitas</h2>
+    
+            <div class="flex">
+                <input type="text" id="searchInput" placeholder="Cari fasilitas, kategori, kapasitas, atau status..." 
+                        class="border border-gray-300 px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 w-96">
             </div>
+        </div>
 
             <table class="w-full text-left border-collapse">
 
@@ -595,6 +611,47 @@
     </main>
 
 </div>
+<script>
+    // --- FITUR LIVE SEARCH ---
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        let keyword = this.value.toLowerCase();
+        let rows = document.querySelectorAll('tbody tr');
 
+        rows.forEach(row => {
+            if (row.classList.contains('border-b')) {
+                let rowText = row.textContent.toLowerCase();
+                if (rowText.includes(keyword)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+    });
+
+    // --- FITUR BERSIHKAN URL & AUTO HIDE NOTIFIKASI ---
+    
+    // 1. Bersihkan ?status=success dari URL tanpa refresh
+    if (window.history.replaceState) {
+        const url = new URL(window.location.href);
+        if (url.searchParams.has('status')) {
+            url.searchParams.delete('status');
+            window.history.replaceState({ path: url.href }, '', url.href);
+        }
+    }
+
+    // 2. Hilangkan kotak notifikasi otomatis setelah 3 detik (opsional tapi keren)
+    const alerts = document.querySelectorAll('[role="alert"]');
+    alerts.forEach(alert => {
+        setTimeout(() => {
+            // Animasi memudar
+            alert.style.transition = 'opacity 0.5s ease';
+            alert.style.opacity = '0';
+            
+            // Hapus elemen setelah animasi selesai
+            setTimeout(() => alert.remove(), 500); 
+        }, 3000); // 3000 ms = 3 detik
+    });
+</script>
 </body>
 </html>
