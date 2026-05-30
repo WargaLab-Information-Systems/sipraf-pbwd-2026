@@ -1,53 +1,125 @@
-<div class="w-72 bg-white h-screen shadow-xl p-6 sticky top-0">
+<!-- SIDEBAR -->
+<aside class="w-72 bg-white border-r shadow-sm flex flex-col justify-between print:hidden">
 
-    <!-- Logo -->
-    <h1 class="text-3xl font-bold text-green-600 mb-12">
-        SIPRAF
-    </h1>
+    <!-- TOP -->
+    <div>
 
-    <!-- Menu -->
-    <ul class="space-y-3">
+        <!-- LOGO -->
+        <div class="p-8 border-b">
 
-        <!-- Dashboard -->
-        <li>
-            <a
-                href="../dashboard/index.php"
-                class="flex items-center gap-3 bg-green-100 text-green-700 px-4 py-3 rounded-xl font-semibold transition hover:bg-green-200"
-            >
-                📊 Dashboard
+            <h1 class="text-4xl font-bold text-center text-black">
+                SIPRAF
+            </h1>
+
+        </div>
+
+        <!-- MENU -->
+        <div class="p-6">
+
+            <!-- DASHBOARD -->
+            <div class="mb-10">
+
+                <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">
+                    Dashboard
+                </p>
+
+                <a href="../dashboard/index.php"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
+
+                    <i class="fa-solid fa-chart-line text-gray-600"></i>
+                    
+                    <span class="font-medium text-gray-700">
+                        Dashboard
+                    </span>
+
+                </a>
+
+            </div>
+
+            <!-- MASTER DATA -->
+            <div class="mb-10">
+
+                <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">
+                    Master Data
+                </p>
+
+                <div class="space-y-2">
+
+                    <a href="index.php"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl bg-green-100 text-green-700 font-semibold">
+
+                        <i class="fa-solid fa-building"></i>Facilities
+                    </a>
+
+                    <a href="../users/index.php"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
+
+                        <i class="fa-solid fa-users"></i>Users
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- FEATURE -->
+            <div>
+
+                <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">
+                    Feature
+                </p>
+
+                <div class="space-y-2">
+
+                    <a href="../reservation/index.php"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
+
+                        <i class="fa-solid fa-calendar-check"></i>Peminjaman
+                    </a>
+
+                    <a href="../approval/index.php"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
+
+                        <i class="fa-solid fa-circle-check"></i>Persetujuan
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="p-6 border-t">
+
+        <div class="flex items-center justify-between">
+
+            <!-- PROFILE -->
+            <a href="profile/index.php"
+            class="flex items-center gap-3">
+
+                <div class="w-12 h-12 rounded-full bg-gray-300"></div>
+
+                <div>
+
+                    <h2 class="font-semibold text-gray-700">
+                        Profile_name
+                    </h2>
+                </div>
+
             </a>
-        </li>
 
-        <!-- Reservation -->
-        <li>
-            <a
-                href="../reservation/index.php"
-                class="flex items-center gap-3 text-gray-600 px-4 py-3 rounded-xl transition hover:bg-gray-100"
-            >
-                📅 Reservation
-            </a>
-        </li>
+            <!-- LOGOUT -->
+            <button
+            class="w-10 h-10 rounded-full bg-gray-200 hover:bg-red-500 hover:text-white transition">
 
-        <!-- Facility -->
-        <li>
-            <a
-                href="../facilities/index.php"
-                class="flex items-center gap-3 text-gray-600 px-4 py-3 rounded-xl transition hover:bg-gray-100"
-            >
-                🏢 Facility
-            </a>
-        </li>
+                <i class="fa-solid fa-right-from-bracket"></i>
 
-        <!-- Approval -->
-        <li>
-            <a
-                href="../approval/index.php"
-                class="flex items-center gap-3 text-gray-600 px-4 py-3 rounded-xl transition hover:bg-gray-100"
-            >
-                ✅ Approval
-            </a>
-        </li>
+            </button>
 
-    </ul>
+        </div>
 
-</div>
+    </div>
+
+</aside>
