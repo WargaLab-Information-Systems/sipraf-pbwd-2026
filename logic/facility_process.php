@@ -5,7 +5,7 @@ require_once __DIR__ . '/../helper/data/facility.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
-    
+
     $data = [
         'name' => $_POST['name'],
         'kategori' => $_POST['kategori'],
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'status' => $_POST['status']
     ];
 
-    $redirect_url = '/sipraf-pbwd-2026/pages/facilities/index.php';
+    $redirect_url = '../pages/facilities/index.php';
 
     if ($action === 'insert') {
         insertFacility($conn, $data);
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: $redirect_url?status=success");
         exit;
     }
-    
+
     header("Location: $redirect_url");
     exit;
 }
@@ -37,4 +37,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
     header("Location: $redirect_url?status=deleted");
     exit;
 }
-?>
