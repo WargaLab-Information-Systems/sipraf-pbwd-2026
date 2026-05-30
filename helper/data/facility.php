@@ -1,4 +1,12 @@
 <?php
+function getFacilities($conn) {
+
+    $query = mysqli_query($conn, "SELECT * FROM facilities");
+
+    return $query;
+
+}
+
 function getAllFacilities($conn) {
     $query = 'SELECT * FROM facilities ORDER BY id DESC';
     $result = mysqli_query($conn, $query);
