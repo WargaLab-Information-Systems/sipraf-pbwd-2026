@@ -129,8 +129,11 @@ foreach ($facilities as $row) {
                 class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl shadow-lg">
                 <i class="fa-solid fa-plus"></i>
                 Tambah Data
+
             </a>
+
         </div>
+
     </div>
 
         <?php if (isset($_GET['status'])): ?>
