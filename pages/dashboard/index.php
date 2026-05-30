@@ -36,13 +36,13 @@ include '../../logic/dashboard_process.php';
 
 <body class="bg-gray-100">
 
-    <div class="flex">
+    <!-- Sidebar -->
+    <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
 
-        <!-- Sidebar -->
-        <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
+    <!-- Main Content -->
+    <div class="pl-80 p-8">
 
-        <!-- Main Content -->
-        <div class="flex-1 p-8">
+        <!-- isi dashboard kamu -->
 
             <!-- Header -->
             <div class="mb-8">
@@ -78,7 +78,7 @@ include '../../logic/dashboard_process.php';
                         </div>
 
                         <div class="text-5xl">
-                            👤
+                            
                         </div>
 
                     </div>
@@ -103,7 +103,7 @@ include '../../logic/dashboard_process.php';
                         </div>
 
                         <div class="text-5xl">
-                            🏢
+                            
                         </div>
 
                     </div>
@@ -128,7 +128,7 @@ include '../../logic/dashboard_process.php';
                         </div>
 
                         <div class="text-5xl">
-                            📅
+                            
                         </div>
 
                     </div>
@@ -153,7 +153,7 @@ include '../../logic/dashboard_process.php';
                         </div>
 
                         <div class="text-5xl">
-                            ✅
+                            
                         </div>
 
                     </div>
@@ -172,7 +172,7 @@ include '../../logic/dashboard_process.php';
                     </h2>
 
                     <div class="text-gray-400">
-                        📆
+                        
                     </div>
 
                 </div>
@@ -190,7 +190,7 @@ include '../../logic/dashboard_process.php';
         </h2>
 
         <div class="text-gray-400">
-            📋
+            
         </div>
 
     </div>
