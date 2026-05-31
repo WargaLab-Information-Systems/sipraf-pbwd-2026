@@ -1,11 +1,10 @@
 <?php
-// index.php (Dashboard Utama di Root)
+
 session_start();
 
-// Proteksi Halaman: Jika tidak ada session user_id, tendang ke login.php
 if (!isset($_SESSION['user_id'])) {
     header("Location: pages/auth/login.php");
-    exit;
+    exit; 
 }
 ?>
 

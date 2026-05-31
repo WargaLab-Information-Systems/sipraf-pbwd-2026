@@ -2,13 +2,13 @@
 // pages/auth/login.php
 session_start();
 
-// Jika user sudah login, langsung lempar ke index.php luar
+
 if (isset($_SESSION['user_id'])) {
     header("Location: ../../index.php");
     exit;
 }
 
-// Mengambil koneksi dari helper/db_conn.php (Naik 2 tingkat dari pages/auth/)
+
 require_once dirname(__DIR__, 2) . '/helper/db_conn.php';
 
 $error_message = "";
@@ -19,10 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!empty($email) && !empty($password)) {
         
-        // Menggunakan MD5 sesuai dengan kode awalmu
+        
         $hashed_password = md5($password);
 
-        // Ambil data user
+        
         $stmt = $pdo->prepare("SELECT id, name, email, role FROM users WHERE email = ? AND password = ?");
         $stmt->execute([$email, $hashed_password]);
         $user = $stmt->fetch();

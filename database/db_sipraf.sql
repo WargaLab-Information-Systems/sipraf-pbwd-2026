@@ -1,3 +1,62 @@
+<<<<<<< HEAD
+CREATE TABLE users_table (
+
+    id INT PRIMARY KEY AUTO_INCREMENT,
+
+    username VARCHAR(100),
+
+    email VARCHAR(100)
+
+);
+
+CREATE TABLE facility (
+
+    id INT PRIMARY KEY AUTO_INCREMENT,
+
+    facility_name VARCHAR(100)
+
+);
+
+CREATE TABLE reservation (
+
+    id INT PRIMARY KEY AUTO_INCREMENT,
+
+    reservation_date DATE,
+
+    facility_name VARCHAR(100)
+
+);
+
+CREATE TABLE approval (
+
+    id INT PRIMARY KEY AUTO_INCREMENT,
+
+    status VARCHAR(50)
+
+);
+
+INSERT INTO users_table(username, email)
+VALUES
+('sultan', 'sultan@gmail.com'),
+('admin', 'admin@gmail.com');
+
+INSERT INTO facility(facility_name)
+VALUES
+('Aula'),
+('Ruang Meeting'),
+('Lab Komputer');
+
+INSERT INTO reservation(reservation_date, facility_name)
+VALUES
+('2026-05-20', 'Aula'),
+('2026-05-21', 'Ruang Meeting'),
+('2026-05-22', 'Lab Komputer');
+
+INSERT INTO approval(status)
+VALUES
+('Approved'),
+('Pending');
+=======
 -- phpMyAdmin SQL Dump
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
@@ -19,8 +78,8 @@ SET time_zone = "+00:00";
 
 --
 -- Database: `db_sipraf`
---
-
+CREATE DATABASE IF NOT EXISTS db_sipraf;
+USE db_sipraf;
 -- --------------------------------------------------------
 
 --
@@ -34,7 +93,7 @@ CREATE TABLE `approvals` (
   `status` enum('disetujui','ditolak') NOT NULL,
   `notes` text,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `approvals`
@@ -76,7 +135,7 @@ CREATE TABLE `facilities` (
   `deskripsi` text,
   `status` enum('tersedia','dipinjam') DEFAULT 'tersedia',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `facilities`
@@ -113,7 +172,7 @@ CREATE TABLE `reservations` (
   `jam_selesai` time NOT NULL,
   `status` enum('diajukan','disetujui','ditolak','dibatalkan') DEFAULT 'diajukan',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `reservations`
@@ -165,7 +224,7 @@ CREATE TABLE `users` (
   `role` enum('admin','supervisor','borrower') NOT NULL,
   `foto` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `users`
@@ -267,3 +326,4 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+>>>>>>> origin/main
