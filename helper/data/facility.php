@@ -29,7 +29,6 @@ function getFacilityById($conn, $id) {
 }
 
 function insertFacility($conn, $data) {
-    // created_at biasanya otomatis diisi oleh database (current_timestamp)
     $query = 'INSERT INTO facilities (name, kategori, kapasitas, deskripsi, status) VALUES (?, ?, ?, ?, ?)';
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "ssiss", $data['name'], $data['kategori'], $data['kapasitas'], $data['deskripsi'], $data['status']);

@@ -179,6 +179,9 @@ foreach ($facilities as $row) {
         </div>
 
             <div class="overflow-x-auto">
+            <div class="bg-white border border-gray-200 rounded-2xl shadow-lg p-6">
+                <div class="flex justify-between items-center mb-6 print:hidden">
+
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="border-b text-gray-600">
