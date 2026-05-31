@@ -25,37 +25,78 @@ $facilities = getFacilities($conn);
 
 <div class="flex min-h-screen">
 
-    <!-- sidebr -->
+    <!-- Sidebar -->
 
-    <div class="w-64 bg-white shadow-md p-6">
+<div class="w-64 bg-white shadow-md flex flex-col justify-between">
 
-        <h1 class="text-3xl font-bold text-green-600 mb-10">
-            SIPRAF
-        </h1>
+    <div>
 
-        <ul class="space-y-3">
+        <div class="p-6 border-b">
 
-            <li>
-                <a href="index.php"
-                class="block bg-green-100 text-green-700 px-4 py-3 rounded-xl font-semibold">
+            <h1 class="text-3xl font-bold text-center">
+                SIPRAF
+            </h1>
 
-                    Reservation
+        </div>
 
-                </a>
-            </li>
+        <div class="p-6">
 
-            <li>
-                <a href="detail.php"
-                class="block hover:bg-gray-100 px-4 py-3 rounded-xl text-gray-600">
+            <p class="text-xs text-gray-400 uppercase mb-3">
+                Dashboard
+            </p>
 
-                    Data Pengajuan
+            <a href="../dashboard/index.php"
+            class="block px-4 py-3 rounded-lg hover:bg-gray-100 mb-2">
+                Dashboard
+            </a>
 
-                </a>
-            </li>
+            <p class="text-xs text-gray-400 uppercase mt-6 mb-3">
+                Master Data
+            </p>
 
-        </ul>
+            <a href="../facilities/index.php"
+            class="block px-4 py-3 rounded-lg hover:bg-gray-100 mb-2">
+                Facilities
+            </a>
+
+            <a href="../users/index.php"
+            class="block px-4 py-3 rounded-lg hover:bg-gray-100 mb-2">
+                Users
+            </a>
+
+            <p class="text-xs text-gray-400 uppercase mt-6 mb-3">
+                Feature
+            </p>
+
+            <a href="form.php"
+            class="block bg-green-100 text-green-700 font-semibold px-4 py-3 rounded-lg mb-2">
+                Peminjaman
+            </a>
+
+            <a href="../approval/index.php"
+            class="block px-4 py-3 rounded-lg hover:bg-gray-100">
+                Persetujuan
+            </a>
+
+        </div>
 
     </div>
+
+    <div class="p-6 border-t">
+
+        <a href="../profile/index.php"
+        class="block mb-4 px-4 py-3 rounded-lg hover:bg-gray-100">
+            Profile
+        </a>
+
+        <a href="../../logout.php"
+        class="block text-center bg-red-500 text-white py-3 rounded-lg hover:bg-red-600">
+            Logout
+        </a>
+
+    </div>
+
+</div>
 
     <!-- kontem -->
 
@@ -105,7 +146,7 @@ $facilities = getFacilities($conn);
 
         <!-- form -->
 
-        <div class="bg-white p-8 rounded-2xl shadow-sm max-w-5xl">
+        <div class="bg-white p-8 rounded-2xl shadow-sm w-full">
 
             <div class="mb-8">
 
@@ -183,10 +224,17 @@ $facilities = getFacilities($conn);
                         Tanggal
                     </label>
 
+                    <!-- <input
+                    type="date"
+                    name="tanggal"
+                    id="tanggal"
+                    class="w-full border border-gray-200 rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-green-400"> -->
+
                     <input
                     type="date"
                     name="tanggal"
                     id="tanggal"
+                    min="<?= date('Y-m-d'); ?>"
                     class="w-full border border-gray-200 rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-green-400">
 
                 </div>
@@ -201,10 +249,18 @@ $facilities = getFacilities($conn);
                             Jam Mulai
                         </label>
 
+                        <!-- <input
+                        type="time"
+                        name="jam_mulai"
+                        id="jam_mulai"
+                        class="w-full border border-gray-200 rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-green-400"> -->
+
                         <input
                         type="time"
                         name="jam_mulai"
                         id="jam_mulai"
+                        min="07:00"
+                        max="21:00"
                         class="w-full border border-gray-200 rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-green-400">
 
                     </div>
@@ -215,12 +271,19 @@ $facilities = getFacilities($conn);
                             Jam Selesai
                         </label>
 
+                        <!-- <input
+                        type="time"
+                        name="jam_selesai"
+                        id="jam_selesai"
+                        class="w-full border border-gray-200 rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-green-400"> -->
+                        
                         <input
                         type="time"
                         name="jam_selesai"
                         id="jam_selesai"
+                        min="07:00"
+                        max="21:00"
                         class="w-full border border-gray-200 rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-green-400">
-
                     </div>
 
                 </div>
@@ -269,6 +332,25 @@ $facilities = getFacilities($conn);
     </div>
 
 </div>
+
+<script>
+
+document.querySelector("form").addEventListener("submit", function(e){
+
+    let mulai = document.getElementById("jam_mulai").value;
+    let selesai = document.getElementById("jam_selesai").value;
+
+    if(mulai >= selesai){
+
+        alert("Jam selesai harus lebih besar dari jam mulai");
+        e.preventDefault();
+
+    }
+
+});
+
+</script>
+
 
 </body>
 </html>
