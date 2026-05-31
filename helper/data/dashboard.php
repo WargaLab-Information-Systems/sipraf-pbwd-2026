@@ -7,7 +7,7 @@ function get_dashboard_stats($conn)
     // Total users
     $query_user = mysqli_query(
         $conn,
-        "SELECT COUNT(*) AS total_user FROM users_table"
+        "SELECT COUNT(*) AS total_user FROM users"
     );
 
     $data['total_user'] = mysqli_fetch_assoc(

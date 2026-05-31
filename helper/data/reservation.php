@@ -81,6 +81,15 @@ function getAllReservations($conn) {
     ORDER BY r.created_at DESC
 
     ";
+require_once __DIR__ . '/../db_conn.php';
+
+function getAllReservations($conn)
+{
+    $sql_query = "SELECT r.*, u.name AS borrower_name, f.name AS facility_name, f.kategori 
+                  FROM reservations r
+                  JOIN users u ON r.user_id = u.id
+                  JOIN facilities f ON r.facility_id = f.id
+                  ORDER BY r.created_at DESC";
 
     $result_data = mysqli_query($conn, $sql_query);
 

@@ -1,155 +1,234 @@
+<?php
+require_once __DIR__ . '/../../helper/db_conn.php';
+require_once __DIR__ . '/../../helper/data/facility.php';
+
+// Siapkan variabel bawaan (kosong) untuk mode Tambah Data
+$isEdit = false;
+$facilityData = [
+    'id' => '',
+    'name' => '',
+    'kategori' => '',
+    'kapasitas' => '',
+    'status' => 'tersedia',
+    'deskripsi' => ''
+];
+
+if (isset($_GET['id'])) {
+    $isEdit = true;
+    $id = $_GET['id'];
+    // Tarik data lama dari database berdasarkan ID
+    $fetchedData = getFacilityById($conn, $id);
+
+    if ($fetchedData) {
+        $facilityData = $fetchedData;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Formulir Fasilitas</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= $isEdit ? 'Edit' : 'Tambah' ?> Fasilitas - SIPRAF</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
 
-<div class="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-2xl shadow-lg">
+    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden w-full max-w-xl">
 
-  <div class="flex justify-between items-center mb-8">
+        <div class="flex items-center gap-3 px-6 py-5 border-b border-gray-100">
+            <div class="w-9 h-9 rounded-lg <?= $isEdit ? 'bg-green-50 text-green-700' : 'bg-emerald-50 text-emerald-700' ?> flex items-center justify-center text-xl flex-shrink-0">
+                <i class="<?= $isEdit ? 'fa-solid fa-pen-to-square' : 'fa-solid fa-plus' ?>"></i>
+            </div>
+            <div>
+                <p class="text-sm font-medium text-gray-800"><?= $isEdit ? 'Edit data fasilitas' : 'Tambah data fasilitas' ?></p>
+                <p class="text-xs text-gray-400 mt-0.5">Isi semua field yang wajib diisi</p>
+            </div>
+        </div>
 
-    <h1 class="text-3xl font-bold">
-      Form Peminjaman Ruangan
-    </h1>
+        <form id="facilityForm" action="../../logic/facility_process.php" method="POST" novalidate>
 
-    <a href="index.php"
-    class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg">
+            <input type="hidden" name="action" value="<?= $isEdit ? 'update' : 'insert' ?>">
 
-      Kembali
+            <?php if ($isEdit): ?>
+                <input type="hidden" name="id" value="<?= htmlspecialchars($facilityData['id']) ?>">
+            <?php endif; ?>
 
-    </a>
+            <div class="px-6 py-6 space-y-5">
 
-  </div>
+                <div>
+                    <label for="name" class="block text-xs font-medium text-gray-500 mb-1.5">
+                        Nama fasilitas <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="name" name="name"
+                        value="<?= htmlspecialchars($facilityData['name']) ?>"
+                        placeholder="Contoh: RKBF 204 atau Lab BIS"
+                        class="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-lg outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100">
+                    <p id="error-name" class="hidden text-xs text-red-700 mt-1.5 flex items-center gap-1">
+                        <i class="ti ti-alert-circle text-sm"></i> Nama fasilitas tidak boleh kosong.
+                    </p>
+                </div>
 
-  <form class="space-y-6">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="kategori" class="block text-xs font-medium text-gray-500 mb-1.5">
+                            Kategori <span class="text-red-500">*</span>
+                        </label>
+                        <select id="kategori" name="kategori"
+                            class="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-lg outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 appearance-none">
+                            <option value="">Pilih kategori</option>
+                            <option value="lab" <?= $facilityData['kategori'] == 'lab' ? 'selected' : '' ?>>Laboratorium</option>
+                            <option value="ruang" <?= $facilityData['kategori'] == 'ruang' ? 'selected' : '' ?>>Ruang kelas</option>
+                            <option value="barang" <?= $facilityData['kategori'] == 'barang' ? 'selected' : '' ?>>Barang / peralatan</option>
+                        </select>
+                        <p id="error-kategori" class="hidden text-xs text-red-700 mt-1.5 flex items-center gap-1">
+                            <i class="ti ti-alert-circle text-sm"></i> Pilih kategori terlebih dahulu.
+                        </p>
+                    </div>
+                    <div>
+                        <label for="kapasitas" class="block text-xs font-medium text-gray-500 mb-1.5">
+                            Kapasitas <span class="text-red-500">*</span>
+                        </label>
+                        <input type="number" id="kapasitas" name="kapasitas" min="1"
+                            value="<?= htmlspecialchars($facilityData['kapasitas']) ?>"
+                            placeholder="Contoh: 40"
+                            class="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-lg outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100">
+                        <p id="error-kapasitas" class="hidden text-xs text-red-700 mt-1.5 flex items-center gap-1">
+                            <i class="ti ti-alert-circle text-sm"></i> Minimal kapasitas adalah 1.
+                        </p>
+                    </div>
+                </div>
 
-    <div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 mb-1.5">
+                        Status <span class="text-red-500">*</span>
+                    </label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <input type="radio" id="s-tersedia" name="status" value="tersedia" class="peer hidden"
+                                <?= (strtolower($facilityData['status']) == 'tersedia' || strtolower($facilityData['status']) == 'available') ? 'checked' : '' ?>>
+                            <label for="s-tersedia"
+                                class="flex items-center gap-2 px-3 py-2 text-sm border border-gray-200 rounded-lg cursor-pointer text-gray-500 transition
+                                       peer-checked:border-emerald-500 peer-checked:bg-emerald-50 peer-checked:text-emerald-800 peer-checked:font-medium">
+                                <span class="w-2 h-2 rounded-full bg-gray-300 peer-checked:bg-emerald-500 transition flex-shrink-0"></span>
+                                Tersedia
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" id="s-dipinjam" name="status" value="dipinjam" class="peer hidden"
+                                <?= strtolower($facilityData['status']) == 'dipinjam' ? 'checked' : '' ?>>
+                            <label for="s-dipinjam"
+                                class="flex items-center gap-2 px-3 py-2 text-sm border border-gray-200 rounded-lg cursor-pointer text-gray-500 transition
+                                       peer-checked:border-emerald-500 peer-checked:bg-emerald-50 peer-checked:text-emerald-800 peer-checked:font-medium">
+                                <span class="w-2 h-2 rounded-full bg-gray-300 transition flex-shrink-0"></span>
+                                Dipinjam
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
-      <label class="block mb-2 font-semibold">
-        Nama Peminjam
-      </label>
+                <div>
+                    <label for="deskripsi" class="block text-xs font-medium text-gray-500 mb-1.5">
+                        Deskripsi <span class="text-red-500">*</span>
+                    </label>
+                    <textarea id="deskripsi" name="deskripsi" rows="3"
+                        placeholder="Masukkan deskripsi detail fasilitas..."
+                        class="w-full px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-lg outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 resize-none"><?= htmlspecialchars($facilityData['deskripsi']) ?></textarea>
+                    <p id="error-deskripsi" class="hidden text-xs text-red-700 mt-1.5 flex items-center gap-1">
+                        <i class="ti ti-alert-circle text-sm"></i> Deskripsi tidak boleh kosong.
+                    </p>
+                </div>
 
-      <input type="text"
-      placeholder="Masukkan nama mahasiswa"
-      class="w-full border rounded-xl px-4 py-3">
+            </div>
 
+            <div id="loadingMessage" class="hidden px-6 pb-2">
+                <div class="flex items-center gap-2 text-xs text-emerald-600">
+                    <svg class="animate-spin w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                    </svg>
+                    Memproses data...
+                </div>
+            </div>
+
+            <div class="flex justify-end items-center gap-2 px-6 py-4 border-t border-gray-100">
+                <button type="button" id="btnCancel"
+                    class="px-4 py-2 text-sm border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-50 transition">
+                    Batal
+                </button>
+                <button type="submit" name="submit_facility"
+                    class="flex items-center gap-2 px-4 py-2 text-sm font-medium <?= $isEdit ? 'bg-green-600 hover:bg-green-700' : 'bg-emerald-600 hover:bg-emerald-700' ?> text-white rounded-lg transition">
+                    <i class="fa-solid fa-floppy-disk"></i> <?= $isEdit ? 'Update fasilitas' : 'Simpan fasilitas' ?>
+                </button>
+            </div>
+
+        </form>
     </div>
 
-    <div>
+    <script>
+        const form = document.getElementById('facilityForm');
 
-      <label class="block mb-2 font-semibold">
-        Email Peminjam
-      </label>
+        function setError(id, show) {
+            const input = document.getElementById(id);
+            const error = document.getElementById('error-' + id);
+            if (!input || !error) return;
+            if (show) {
+                input.classList.add('border-red-400', 'focus:ring-red-100', 'focus:border-red-400');
+                input.classList.remove('focus:border-emerald-500', 'focus:ring-emerald-100');
+                error.classList.remove('hidden');
+            } else {
+                input.classList.remove('border-red-400', 'focus:ring-red-100', 'focus:border-red-400');
+                input.classList.add('focus:border-emerald-500', 'focus:ring-emerald-100');
+                error.classList.add('hidden');
+            }
+        }
 
-      <input type="text"
-      placeholder="Masukkan Email"
-      class="w-full border rounded-xl px-4 py-3">
+        ['name', 'kategori', 'kapasitas', 'deskripsi'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', () => setError(id, false));
+        });
 
-    </div>
+        form.addEventListener('submit', function(e) {
+            const name = document.getElementById('name').value.trim();
+            const kategori = document.getElementById('kategori').value;
+            const kapasitas = document.getElementById('kapasitas').value;
+            const deskripsi = document.getElementById('deskripsi').value.trim();
+            let isValid = true;
 
-    <div>
+            setError('name', !name);
+            if (!name) isValid = false;
+            setError('kategori', !['lab', 'ruang', 'barang'].includes(kategori));
+            if (!['lab', 'ruang', 'barang'].includes(kategori)) isValid = false;
+            const kap = parseInt(kapasitas);
+            setError('kapasitas', !kapasitas || isNaN(kap) || kap < 1);
+            if (!kapasitas || isNaN(kap) || kap < 1) isValid = false;
+            setError('deskripsi', !deskripsi);
+            if (!deskripsi) isValid = false;
 
-      <label class="block mb-2 font-semibold">
-        Pilih Pinjaman
-      </label>
+            if (!isValid) {
+                e.preventDefault();
+            } else {
+                const actionText = "<?= $isEdit ? 'diupdate' : 'disimpan' ?>";
+                const konfirmasi = confirm(`Apakah data sudah benar dan ingin ${actionText}?`);
 
-      <select class="w-full border rounded-xl px-4 py-3">
+                if (!konfirmasi) {
+                    e.preventDefault();
+                } else {
+                    document.getElementById('loadingMessage').classList.remove('hidden');
+                }
+            }
+        });
 
-        <option>Lab TI</option>
-        <option>Lab BIS</option>
-        <option>RKBF 204</option>
-        <option>RKBF 307</option>
-        <option>RKBF 308</option>
-        <option>RKBF 407</option>
-        <option>RKBF 408</option>
-        <option>Proyektor 01</option>
-        <option>Proyektor 02</option>
-        <option>Switch 01</option>
-        <option>Switch 02</option>
-        <option>Router 01</option>
-        <option>Router 02</option>
-
-      </select>
-
-    </div>
-
-    <div>
-
-      <label class="block mb-2 font-semibold">
-        Tanggal Peminjaman
-      </label>
-
-      <input type="date"
-      class="w-full border rounded-xl px-4 py-3">
-
-    </div>
-
-    <div>
-
-      <label class="block mb-2 font-semibold">
-        Fasilitas Tambahan (Jika Memilih Ruangan)
-      </label>
-
-      <div class="grid grid-cols-2 gap-4">
-
-        <label class="flex items-center gap-2">
-          <input type="checkbox">
-          Proyektor
-        </label>
-
-        <label class="flex items-center gap-2">
-          <input type="checkbox">
-          WiFi
-        </label>
-
-        <label class="flex items-center gap-2">
-          <input type="checkbox">
-          Komputer
-        </label>
-
-        <label class="flex items-center gap-2">
-          <input type="checkbox">
-          Sound System
-        </label>
-
-        <label class="flex items-center gap-2">
-          <input type="checkbox">
-          Tidak Ada (Hanya Meminjam Fasilitas)
-        </label>
-      </div>
-
-    </div>
-
-    <div>
-
-      <label class="block mb-2 font-semibold">
-        Keperluan
-      </label>
-
-      <textarea rows="5"
-      placeholder="Masukkan keperluan"
-      class="w-full border rounded-xl px-4 py-3"></textarea>
-
-    </div>
-
-    <button
-    class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl">
-
-      Simpan Data
-
-    </button>
-
-  </form>
-
-</div>
-
+        document.getElementById('btnCancel').addEventListener('click', function() {
+            const konfirmasi = confirm("Apakah Anda yakin ingin membatalkan? Perubahan tidak akan disimpan.");
+            if (konfirmasi) {
+                window.location.href = 'index.php';
+            }
+        });
+    </script>
 </body>
+
 </html>

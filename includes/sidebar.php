@@ -1,72 +1,125 @@
-<div class="w-64 h-screen bg-white border-r fixed left-0 top-0 flex flex-col justify-between overflow-y-auto">
+<!-- SIDEBAR -->
+<aside class="w-72 bg-white border-r shadow-sm flex flex-col justify-between print:hidden">
 
-    <!-- Top -->
+    <!-- TOP -->
     <div>
 
-        <!-- Logo -->
-        <div class="p-6 border-b text-center text-2xl font-bold text-blue-600">
-            SIPRAF
+        <!-- LOGO -->
+        <div class="p-8 border-b">
+
+            <h1 class="text-4xl font-bold text-center text-black">
+                SIPRAF
+            </h1>
+
         </div>
 
-        <!-- Menu -->
-        <div class="p-4 space-y-4 text-gray-700">
+        <!-- MENU -->
+        <div class="p-6">
 
-            <!-- Dashboard -->
-            <a href="/project_akhir/pages/dashboard/index.php" 
-               class="block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">
-                Dashboard
+            <!-- DASHBOARD -->
+            <div class="mb-10">
+
+                <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">
+                    Dashboard
+                </p>
+
+                <a href="../dashboard/index.php"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
+
+                    <i class="fa-solid fa-chart-line text-gray-600"></i>
+                    
+                    <span class="font-medium text-gray-700">
+                        Dashboard
+                    </span>
+
+                </a>
+
+            </div>
+
+            <!-- MASTER DATA -->
+            <div class="mb-10">
+
+                <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">
+                    Master Data
+                </p>
+
+                <div class="space-y-2">
+
+                    <a href="index.php"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl bg-green-100 text-green-700 font-semibold">
+
+                        <i class="fa-solid fa-building"></i>Facilities
+                    </a>
+
+                    <a href="../users/index.php"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
+
+                        <i class="fa-solid fa-users"></i>Users
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- FEATURE -->
+            <div>
+
+                <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">
+                    Feature
+                </p>
+
+                <div class="space-y-2">
+
+                    <a href="../reservation/index.php"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
+
+                        <i class="fa-solid fa-calendar-check"></i>Peminjaman
+                    </a>
+
+                    <a href="../approval/index.php"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
+
+                        <i class="fa-solid fa-circle-check"></i>Persetujuan
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="p-6 border-t">
+
+        <div class="flex items-center justify-between">
+
+            <!-- PROFILE -->
+            <a href="profile/index.php"
+            class="flex items-center gap-3">
+
+                <div class="w-12 h-12 rounded-full bg-gray-300"></div>
+
+                <div>
+
+                    <h2 class="font-semibold text-gray-700">
+                        Profile_name
+                    </h2>
+                </div>
+
             </a>
 
-            <!-- Master Data -->
-            <div class="mt-6">
-                <p class="text-xs text-gray-400 mb-2 uppercase tracking-wider">Master Data</p>
+            <!-- LOGOUT -->
+            <button
+            class="w-10 h-10 rounded-full bg-gray-200 hover:bg-red-500 hover:text-white transition">
 
-                <a href="/project_akhir/pages/facilities/index.php" 
-                   class="block ml-2 px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">
-                    Facilities
-                </a>
+                <i class="fa-solid fa-right-from-bracket"></i>
 
-                <a href="/project_akhir/pages/users/index.php" 
-                   class="block ml-2 px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">
-                    Users
-                </a>
-            </div>
-
-            <!-- Feature -->
-            <div class="mt-6">
-                <p class="text-xs text-gray-400 mb-2 uppercase tracking-wider">Feature</p>
-
-                <a href="/project_akhir/pages/reservation/index.php" 
-                   class="block ml-2 px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">
-                    Peminjaman
-                </a>
-
-                <a href="/project_akhir/pages/approval/index.php" 
-                   class="block ml-2 px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">
-                    Persetujuan
-                </a>
-            </div>
+            </button>
 
         </div>
 
     </div>
 
-    <!-- Bottom -->
-    <div class="p-4 border-t">
-
-        <div class="flex items-center gap-3 mb-3">
-            <div class="w-8 h-8 bg-blue-500 rounded-full"></div>
-
-            <span class="font-semibold text-gray-700">
-                Profile_name
-            </span>
-        </div>
-
-        <a href="#" 
-           class="block text-center bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">
-            Logout
-        </a>
-
-    </div>
-
-</div>
+</aside>
