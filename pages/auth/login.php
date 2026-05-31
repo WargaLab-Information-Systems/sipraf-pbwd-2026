@@ -1,30 +1,17 @@
 <?php
-
+// pages/auth/login.php
 session_start();
 
-
-$host     = 'localhost';
-$db       = 'db_sipraf';
-$user     = 'root'; 
-$pass     = '';     
-$charset  = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
-
-try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (\PDOException $e) {
-    die("Koneksi database gagal: " . $e->getMessage());
+// Jika user sudah login, langsung lempar ke index.php luar
+if (isset($_SESSION['user_id'])) {
+    header("Location: ../../index.php");
+    exit;
 }
 
+// Mengambil koneksi dari helper/db_conn.php (Naik 2 tingkat dari pages/auth/)
+require_once dirname(__DIR__, 2) . '/helper/db_conn.php';
 
 $error_message = "";
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email    = trim($_POST['email']);
@@ -32,21 +19,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!empty($email) && !empty($password)) {
         
+        // Menggunakan MD5 sesuai dengan kode awalmu
         $hashed_password = md5($password);
 
-        
+        // Ambil data user
         $stmt = $pdo->prepare("SELECT id, name, email, role FROM users WHERE email = ? AND password = ?");
         $stmt->execute([$email, $hashed_password]);
         $user = $stmt->fetch();
 
         if ($user) {
-            
+            // Simpan data ke session
             $_SESSION['user_id']   = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['user_role'] = $user['role'];
 
-            
-            header("Location: dashboard.php");
+            // Mundur 2 tingkat untuk langsung menemui index.php yang paling luar
+            header("Location: ../../index.php");
             exit;
         } else {
             $error_message = "Email atau password salah!";
@@ -123,7 +111,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-align: center;
             border: 1px solid #f5c6cb;
         }
-        /* Style tambahan untuk error JavaScript agar dinamis */
         .js-alert {
             display: none;
         }
@@ -159,42 +146,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <script>
 document.getElementById('loginForm').addEventListener('submit', function(event) {
-    
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
     const errorBox = document.getElementById('js-error');
     
-    
     const emailValue = emailInput.value.trim();
     const passwordValue = passwordInput.value.trim();
-    
-    
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     
     let errorMessage = "";
 
-    
     if (emailValue === "" || passwordValue === "") {
         errorMessage = "Harap isi semua kolom!";
-    } 
-    
-    else if (!emailPattern.test(emailValue)) {
+    } else if (!emailPattern.test(emailValue)) {
         errorMessage = "Format email tidak valid! (Contoh: user@email.com)";
-    } 
-    
-    else if (passwordValue.length < 6) {
+    } else if (passwordValue.length < 6) {
         errorMessage = "Password minimal harus terdiri dari 6 karakter!";
     }
 
-    
     if (errorMessage !== "") {
-        
         event.preventDefault();
-        
-        
         errorBox.textContent = errorMessage;
         errorBox.style.display = 'block';
-        
         
         if (errorMessage.includes("email")) {
             emailInput.focus();
@@ -202,11 +175,9 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
             passwordInput.focus();
         }
     } else {
-        
         errorBox.style.display = 'none';
     }
 });
 </script>
-
 </body>
 </html>
