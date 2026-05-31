@@ -1,20 +1,19 @@
 <?php
-// Pastikan tidak ada spasi atau enter di atas tag <?php ini
 require_once __DIR__ . '/../helper/db_conn.php';
 require_once __DIR__ . '/../helper/data/facility.php';
+
+$redirect_url = '../pages/facilities/index.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
     $data = [
-        'name' => $_POST['name'],
-        'kategori' => $_POST['kategori'],
-        'kapasitas' => $_POST['kapasitas'],
-        'deskripsi' => $_POST['deskripsi'],
-        'status' => $_POST['status']
+        'name'      => $_POST['name'] ?? '',
+        'kategori'  => $_POST['kategori'] ?? '',
+        'kapasitas' => $_POST['kapasitas'] ?? '',
+        'deskripsi' => $_POST['deskripsi'] ?? '',
+        'status'    => $_POST['status'] ?? 'tersedia'
     ];
-
-    $redirect_url = '../pages/facilities/index.php';
 
     if ($action === 'insert') {
         insertFacility($conn, $data);
@@ -32,8 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'delete') {
-    $redirect_url = '/sipraf-pbwd-2026/pages/facilities/index.php';
-    deleteFacility($conn, $_GET['id']);
-    header("Location: $redirect_url?status=deleted");
+    if (isset($_GET['id'])) {
+        deleteFacility($conn, $_GET['id']);
+        header("Location: $redirect_url?status=deleted");
+        exit;
+    }
+    
+    header("Location: $redirect_url");
     exit;
 }
