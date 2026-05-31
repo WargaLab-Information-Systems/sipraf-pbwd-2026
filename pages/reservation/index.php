@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../../helper/data/reservation.php';
+require_once '../../helper/db_conn.php';
+require_once '../../helper/data/reservation.php';
 $data_pengajuan = getAllReservations($conn);
 ?>
 <!DOCTYPE html>

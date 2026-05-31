@@ -248,6 +248,7 @@ $facilities = getFacilities($conn);
 
                         <button
                             type="submit"
+                            name="submit"
                             class="bg-green-500 hover:bg-green-600 text-white px-6 py-4 rounded-xl font-semibold">
 
                             Ajukan Peminjaman
