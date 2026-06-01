@@ -27,6 +27,7 @@ if(!$data){
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,6 +38,7 @@ if(!$data){
 <body class="bg-gray-100">
 
 <div class="flex min-h-screen">
+
 
     <!-- SIDEBAR -->
     <div class="w-64 bg-white shadow-md flex flex-col justify-between">
@@ -258,4 +260,5 @@ if(!$data){
 </div>
 
 </body>
+
 </html>

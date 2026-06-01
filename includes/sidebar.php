@@ -24,10 +24,10 @@
                 </p>
 
                 <a href="../dashboard/index.php"
-                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
 
                     <i class="fa-solid fa-chart-line text-gray-600"></i>
-                    
+
                     <span class="font-medium text-gray-700">
                         Dashboard
                     </span>
@@ -46,13 +46,13 @@
                 <div class="space-y-2">
 
                     <a href="index.php"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl bg-green-100 text-green-700 font-semibold">
+                        class="flex items-center gap-3 px-4 py-3 rounded-xl bg-green-100 text-green-700 font-semibold">
 
                         <i class="fa-solid fa-building"></i>Facilities
                     </a>
 
                     <a href="../users/index.php"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
+                        class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
 
                         <i class="fa-solid fa-users"></i>Users
                     </a>
@@ -71,13 +71,13 @@
                 <div class="space-y-2">
 
                     <a href="../reservation/index.php"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
+                        class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
 
                         <i class="fa-solid fa-calendar-check"></i>Peminjaman
                     </a>
 
                     <a href="../approval/index.php"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
+                        class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
 
                         <i class="fa-solid fa-circle-check"></i>Persetujuan
                     </a>
@@ -97,7 +97,7 @@
 
             <!-- PROFILE -->
             <a href="profile/index.php"
-            class="flex items-center gap-3">
+                class="flex items-center gap-3">
 
                 <div class="w-12 h-12 rounded-full bg-gray-300"></div>
 
@@ -112,7 +112,7 @@
 
             <!-- LOGOUT -->
             <button
-            class="w-10 h-10 rounded-full bg-gray-200 hover:bg-red-500 hover:text-white transition">
+                class="w-10 h-10 rounded-full bg-gray-200 hover:bg-red-500 hover:text-white transition">
 
                 <i class="fa-solid fa-right-from-bracket"></i>
 
