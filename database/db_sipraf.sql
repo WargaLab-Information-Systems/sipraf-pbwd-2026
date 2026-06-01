@@ -19,8 +19,8 @@ SET time_zone = "+00:00";
 
 --
 -- Database: `db_sipraf`
---
-
+CREATE DATABASE IF NOT EXISTS db_sipraf;
+USE db_sipraf;
 -- --------------------------------------------------------
 
 --
@@ -34,7 +34,7 @@ CREATE TABLE `approvals` (
   `status` enum('disetujui','ditolak') NOT NULL,
   `notes` text,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `approvals`
@@ -76,7 +76,7 @@ CREATE TABLE `facilities` (
   `deskripsi` text,
   `status` enum('tersedia','dipinjam') DEFAULT 'tersedia',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `facilities`
@@ -113,7 +113,7 @@ CREATE TABLE `reservations` (
   `jam_selesai` time NOT NULL,
   `status` enum('diajukan','disetujui','ditolak','dibatalkan') DEFAULT 'diajukan',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `reservations`
@@ -165,7 +165,7 @@ CREATE TABLE `users` (
   `role` enum('admin','supervisor','borrower') NOT NULL,
   `foto` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Dumping data for table `users`

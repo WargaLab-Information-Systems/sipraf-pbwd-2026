@@ -40,13 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch();
 
         if ($user) {
-            
+
             $_SESSION['user_id']   = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['user_role'] = $user['role'];
 
-            
-            header("Location: dashboard.php");
+
+            header("Location: ../dashboard/index.php");
             exit;
         } else {
             $error_message = "Email atau password salah!";
@@ -59,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -73,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             height: 100vh;
             margin: 0;
         }
+
         .login-container {
             background-color: #ffffff;
             padding: 30px;
@@ -81,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             width: 100%;
             max-width: 400px;
         }
+
         .login-container h2 {
             margin-bottom: 20px;
             text-align: center;
@@ -94,6 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-bottom: 5px;
             color: #666;
         }
+
         .form-group input {
             width: 100%;
             padding: 10px;
@@ -101,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 4px;
             box-sizing: border-box;
         }
+
         .btn-login {
             width: 100%;
             padding: 10px;
@@ -123,90 +128,88 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-align: center;
             border: 1px solid #f5c6cb;
         }
+
         /* Style tambahan untuk error JavaScript agar dinamis */
         .js-alert {
             display: none;
         }
     </style>
 </head>
+
 <body>
 
-<div class="login-container">
-    <h2>Login SIPRAF</h2>
+    <div class="login-container">
+        <h2>Login SIPRAF</h2>
 
-    <?php if (!empty($error_message)): ?>
-        <div class="alert">
-            <?php echo htmlspecialchars($error_message); ?>
-        </div>
-    <?php endif; ?>
+        <?php if (!empty($error_message)): ?>
+            <div class="alert">
+                <?php echo htmlspecialchars($error_message); ?>
+            </div>
+        <?php endif; ?>
 
-    <div id="js-error" class="alert js-alert"></div>
+        <div id="js-error" class="alert js-alert"></div>
 
-    <form id="loginForm" action="" method="POST">
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required autocomplete="email" placeholder="masukan email anda">
-        </div>
-        
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required placeholder="masukan password anda">
-        </div>
+        <form id="loginForm" action="" method="POST">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required autocomplete="email" placeholder="masukan email anda">
+            </div>
 
-        <button type="submit" class="btn-login">Masuk</button>
-    </form>
-</div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="masukan password anda">
+            </div>
 
-<script>
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const errorBox = document.getElementById('js-error');
-    
-    
-    const emailValue = emailInput.value.trim();
-    const passwordValue = passwordInput.value.trim();
-    
-    
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
-    let errorMessage = "";
+            <button type="submit" class="btn-login">Masuk</button>
+        </form>
+    </div>
 
-    
-    if (emailValue === "" || passwordValue === "") {
-        errorMessage = "Harap isi semua kolom!";
-    } 
-    
-    else if (!emailPattern.test(emailValue)) {
-        errorMessage = "Format email tidak valid! (Contoh: user@email.com)";
-    } 
-    
-    else if (passwordValue.length < 6) {
-        errorMessage = "Password minimal harus terdiri dari 6 karakter!";
-    }
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
 
-    
-    if (errorMessage !== "") {
-        
-        event.preventDefault();
-        
-        
-        errorBox.textContent = errorMessage;
-        errorBox.style.display = 'block';
-        
-        
-        if (errorMessage.includes("email")) {
-            emailInput.focus();
-        } else {
-            passwordInput.focus();
-        }
-    } else {
-        
-        errorBox.style.display = 'none';
-    }
-});
-</script>
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const errorBox = document.getElementById('js-error');
+
+
+            const emailValue = emailInput.value.trim();
+            const passwordValue = passwordInput.value.trim();
+
+
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            let errorMessage = "";
+
+
+            if (emailValue === "" || passwordValue === "") {
+                errorMessage = "Harap isi semua kolom!";
+            } else if (!emailPattern.test(emailValue)) {
+                errorMessage = "Format email tidak valid! (Contoh: user@email.com)";
+            } else if (passwordValue.length < 6) {
+                errorMessage = "Password minimal harus terdiri dari 6 karakter!";
+            }
+
+
+            if (errorMessage !== "") {
+
+                event.preventDefault();
+
+
+                errorBox.textContent = errorMessage;
+                errorBox.style.display = 'block';
+
+
+                if (errorMessage.includes("email")) {
+                    emailInput.focus();
+                } else {
+                    passwordInput.focus();
+                }
+            } else {
+
+                errorBox.style.display = 'none';
+            }
+        });
+    </script>
 
 </body>
 </html>
