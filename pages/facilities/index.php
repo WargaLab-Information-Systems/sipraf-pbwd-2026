@@ -147,6 +147,11 @@ foreach ($facilities as $row) {
                     <strong class="font-bold"><i class="fa-solid fa-trash-can mr-1"></i> Dihapus!</strong>
                     <span class="block sm:inline">Data fasilitas telah berhasil dihapus.</span>
                 </div>
+            <?php elseif ($_GET['status'] == 'error_used'): ?>
+                <div class="bg-orange-100 border border-orange-400 text-orange-700 px-4 py-3 rounded-xl relative mb-6 shadow-sm print:hidden" role="alert">
+                    <strong class="font-bold"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Gagal Dihapus!</strong>
+                    <span class="block sm:inline">Fasilitas tidak dapat dihapus karena sedang digunakan dalam data peminjaman (reservasi).</span>
+                </div>
             <?php endif; ?>
         <?php endif; ?>
 
