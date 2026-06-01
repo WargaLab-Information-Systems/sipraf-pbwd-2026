@@ -2,8 +2,8 @@
 
 $conn = new mysqli(
     'localhost',
-    'demo',
-    'pw1234',
+    'root',
+    '',
     'db_sipraf'
 );
 
