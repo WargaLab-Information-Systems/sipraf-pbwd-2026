@@ -1,6 +1,7 @@
 <?php
 
-function insertReservation($conn, $data) {
+function insertReservation($conn, $data)
+{
 
     $user_id = $data['user_id'];
     $facility_id = $data['facility_id'];
@@ -32,10 +33,10 @@ function insertReservation($conn, $data) {
     )";
 
     return mysqli_query($conn, $query);
-
 }
 
-function getReservations($conn) {
+function getReservations($conn)
+{
 
     $query = mysqli_query($conn, "
 
@@ -57,10 +58,10 @@ function getReservations($conn) {
     ");
 
     return $query;
-
 }
 
-function getAllReservations($conn) {
+function getAllReservations($conn)
+{
 
     $sql_query = "
 
@@ -81,15 +82,6 @@ function getAllReservations($conn) {
     ORDER BY r.created_at DESC
 
     ";
-require_once __DIR__ . '/../db_conn.php';
-
-function getAllReservations($conn)
-{
-    $sql_query = "SELECT r.*, u.name AS borrower_name, f.name AS facility_name, f.kategori 
-                  FROM reservations r
-                  JOIN users u ON r.user_id = u.id
-                  JOIN facilities f ON r.facility_id = f.id
-                  ORDER BY r.created_at DESC";
 
     $result_data = mysqli_query($conn, $sql_query);
 
@@ -100,16 +92,14 @@ function getAllReservations($conn)
         while ($row_data = mysqli_fetch_assoc($result_data)) {
 
             $list_reservations[] = $row_data;
-
         }
-
     }
 
     return $list_reservations;
-
 }
 
-function getReservationById($conn, $id_reservation) {
+function getReservationById($conn, $id_reservation)
+{
 
     $id_reservation = (int)$id_reservation;
 
@@ -150,14 +140,13 @@ function getReservationById($conn, $id_reservation) {
     if ($result_data && mysqli_num_rows($result_data) > 0) {
 
         return mysqli_fetch_assoc($result_data);
-
     }
 
     return null;
-
 }
 
-function cancelReservation($conn, $id_reservation) {
+function cancelReservation($conn, $id_reservation)
+{
 
     $id_reservation = (int)$id_reservation;
 
@@ -170,10 +159,10 @@ function cancelReservation($conn, $id_reservation) {
     ";
 
     return mysqli_query($conn, $sql_query);
-
 }
 
-function deleteReservation($conn, $id_reservation) {
+function deleteReservation($conn, $id_reservation)
+{
 
     $id_reservation = (int)$id_reservation;
 
@@ -185,7 +174,6 @@ function deleteReservation($conn, $id_reservation) {
     ";
 
     return mysqli_query($conn, $sql_query);
-
 }
 
 function updateReservation(
@@ -226,10 +214,10 @@ function updateReservation(
     ";
 
     return mysqli_query($conn, $sql_query);
-
 }
 
-function updateStatusReservasi($conn, $id, $status) {
+function updateStatusReservasi($conn, $id, $status)
+{
 
     $query = "
     
@@ -249,7 +237,4 @@ function updateStatusReservasi($conn, $id, $status) {
     );
 
     return mysqli_stmt_execute($stmt);
-
 }
-
-?>

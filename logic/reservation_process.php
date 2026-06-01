@@ -1,9 +1,23 @@
 <?php
 session_start();
- require_once __DIR__ . '/../helper/data/db_conn.php';
+require_once '../helper/db_conn.php';
+require_once '../helper/data/reservation.php';
 
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $id     = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+// RIRIN
+if (isset($_POST['submit'])) {
+    $result = insertReservation($conn, $_POST);
+
+    if ($result) {
+
+        header("Location: ../pages/reservation/detail.php");
+    } else {
+        echo "Gagal menyimpan data";
+    }
+    exit();
+}
 
 if ($id > 0) {
 
@@ -17,7 +31,6 @@ if ($id > 0) {
         } else {
             die("Error: " . mysqli_error($conn));
         }
-
     } elseif ($action === 'delete') {
         $query_delete = "DELETE FROM reservations WHERE id = $id";
         $eksekusi_delete = mysqli_query($conn, $query_delete);
@@ -28,7 +41,6 @@ if ($id > 0) {
         } else {
             die("Error: " . mysqli_error($conn));
         }
-
     } elseif ($action === 'update') {
         $borrower_name  = isset($_POST['borrower_name']) ? mysqli_real_escape_string($conn, $_POST['borrower_name']) : '';
         $borrower_email = isset($_POST['borrower_email']) ? mysqli_real_escape_string($conn, $_POST['borrower_email']) : '';
@@ -40,7 +52,7 @@ if ($id > 0) {
                                 borrower_email = '$borrower_email', 
                                 notes = '$notes' 
                              WHERE id = $id";
-            
+
             $eksekusi_update = mysqli_query($conn, $query_update);
 
             if ($eksekusi_update) {
@@ -53,13 +65,23 @@ if ($id > 0) {
             header("Location: ../pages/reservation/detail.php?id=" . $id . "&status=failed");
             exit();
         }
-        
     } else {
         header("Location: ../pages/reservation/index.php");
         exit();
     }
-
 } else {
     header("Location: ../pages/reservation/index.php");
     exit();
+}
+
+function prosesStatusReservasi($conn, $id, $status)
+{
+    $status_valid = ['diajukan', 'disetujui', 'ditolak', 'dibatalkan'];
+
+    if (!in_array($status, $status_valid)) {
+        return false;
+    }
+
+    $hasil = updateStatusReservasi($conn, $id, $status);
+    return $hasil;
 }
