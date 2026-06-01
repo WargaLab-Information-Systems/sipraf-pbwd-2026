@@ -47,7 +47,7 @@ foreach ($facilities as $row) {
 
                 <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">Dashboard</p>
                 <a href="../dashboard/index.php"
-                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
+                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-100  transition">
                     <i class="fa-solid fa-chart-line text-gray-600"></i>
                     <span class="font-medium text-gray-700">Dashboard</span>
                 </a>
@@ -58,11 +58,11 @@ foreach ($facilities as $row) {
                 <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">Master Data</p>
                 <div class="space-y-2">
                     <a href="index.php"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 font-semibold">
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-100 text-green-700 font-semibold">
                         <i class="fa-solid fa-building"></i>Facilities
                     </a>
                     <a href="../users/index.php"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-100  transition">
                         <i class="fa-solid fa-users"></i>Users
                     </a>
                 </div>
@@ -73,11 +73,11 @@ foreach ($facilities as $row) {
                 <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">Feature</p>
                 <div class="space-y-2">
                     <a href="../reservation/index.php"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-100  transition">
                         <i class="fa-solid fa-calendar-check"></i>Peminjaman
                     </a>
                     <a href="../approval/index.php"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-100  transition">
                         <i class="fa-solid fa-circle-check"></i>Persetujuan
                     </a>
                 </div>
@@ -98,9 +98,10 @@ foreach ($facilities as $row) {
             </a>
 
             <!-- LOGOUT -->
-            <button
-            class="w-10 h-10 rounded-full bg-gray-200 hover:bg-red-500 hover:text-white transition">
+            <button class="w-10 h-10 rounded-full bg-gray-200 hover:bg-red-500 hover:text-white transition">
+                <a href="../pages/auth/logout.php">
                 <i class="fa-solid fa-right-from-bracket"></i>
+                </a>
             </button>
         </div>
     </div>
@@ -154,25 +155,6 @@ foreach ($facilities as $row) {
                 </div>
             <?php endif; ?>
         <?php endif; ?>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 print:hidden">
-            <div class="bg-white p-6 rounded-2xl shadow">
-                <p class="text-gray-500">Total Ruangan</p>
-                <h2 class="text-4xl font-bold mt-2"><?= $totalRuangan ?></h2>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow">
-                <p class="text-gray-500">Reservasi</p>
-                <h2 class="text-4xl font-bold mt-2">30</h2>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow">
-                <p class="text-gray-500">User</p>
-                <h2 class="text-4xl font-bold mt-2">11</h2>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow">
-                <p class="text-gray-500">Fasilitas</p>
-                <h2 class="text-4xl font-bold mt-2"><?= count($facilities) ?></h2>
-            </div>
-        </div>
 
         <div class="flex justify-between items-center mb-6 print:hidden">
             <h2 class="text-2xl font-bold text-gray-800">Daftar Fasilitas</h2>
