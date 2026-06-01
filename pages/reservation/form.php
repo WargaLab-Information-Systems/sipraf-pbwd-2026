@@ -316,7 +316,7 @@ $facilities = getFacilities($conn);
 
                     </button>
 
-                    <a href="detail.php"
+                    <a href="index.php"
                     class="text-green-600 font-semibold">
 
                         Lihat Data →
