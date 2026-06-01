@@ -58,7 +58,7 @@ foreach ($facilities as $row) {
                 <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">Master Data</p>
                 <div class="space-y-2">
                     <a href="index.php"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-100 text-green-700 font-semibold">
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-100 bg-green-100 text-green-700 font-semibold">
                         <i class="fa-solid fa-building"></i>Facilities
                     </a>
                     <a href="../users/index.php"
