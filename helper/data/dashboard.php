@@ -17,7 +17,7 @@ function get_dashboard_stats($conn)
     // Total facility
     $query_facility = mysqli_query(
         $conn,
-        "SELECT COUNT(*) AS total_facility FROM facility"
+        "SELECT COUNT(*) AS total_facility FROM facilities"
     );
 
     $data['total_facility'] = mysqli_fetch_assoc(
@@ -27,7 +27,7 @@ function get_dashboard_stats($conn)
     // Total reservation
     $query_reservation = mysqli_query(
         $conn,
-        "SELECT COUNT(*) AS total_reservation FROM reservation"
+        "SELECT COUNT(*) AS total_reservation FROM reservations"
     );
 
     $data['total_reservation'] = mysqli_fetch_assoc(
@@ -37,7 +37,7 @@ function get_dashboard_stats($conn)
     // Total approval
     $query_approval = mysqli_query(
         $conn,
-        "SELECT COUNT(*) AS total_approval FROM approval"
+        "SELECT COUNT(*) AS total_approval FROM approvals"
     );
 
     $data['total_approval'] = mysqli_fetch_assoc(
@@ -72,7 +72,7 @@ function get_recent_reservation($conn)
 
     $query = mysqli_query(
         $conn,
-        "SELECT * FROM reservation
+        "SELECT * FROM reservations
          ORDER BY id DESC
          LIMIT 5"
     );
