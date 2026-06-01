@@ -83,7 +83,7 @@ foreach ($facilities as $row) {
                         <div class="space-y-2">
 
                             <a href="pages/facilities/index.php"
-                                class="flex items-center gap-3 px-4 py-3 rounded-xl bg-green-100 text-green-700 font-semibold">
+                                class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold">
 
                                 <i class="fa-solid fa-building"></i>Facilities
                             </a>
