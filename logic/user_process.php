@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../helper/db_conn.php';
+require_once __DIR__ . '/../helper/db_conn.php';
 
 // Pastikan user sudah login
 if (!isset($_SESSION['user_id'])) {

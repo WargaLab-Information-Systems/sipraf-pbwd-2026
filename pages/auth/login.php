@@ -5,8 +5,8 @@ session_start();
 
 $host     = 'localhost';
 $db       = 'db_sipraf';
-$user     = 'demo';
-$pass     = 'pw1234';
+$user     = 'root';
+$pass     = '';
 $charset  = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
