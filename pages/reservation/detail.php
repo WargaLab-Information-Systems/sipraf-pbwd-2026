@@ -27,7 +27,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'batal') {
     }
 }
 
-
 $query = mysqli_query($conn, "
     SELECT
         r.*,
@@ -55,7 +54,7 @@ $facilities_query = mysqli_query($conn, "SELECT id, name FROM facilities ORDER B
 
 $is_edit = (isset($_GET['mode']) && $_GET['mode'] === 'edit' && $data['status'] === 'diajukan');
 
-$error_message = isset($error_message) && $error_message !== '' ? $error_message : '';
+$error_message = isset($error_message) ? $error_message : '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_reservation'])) {
     $peminjam_name = mysqli_real_escape_string($conn, $_POST['peminjam_name']);
     $peminjam_email = mysqli_real_escape_string($conn, $_POST['peminjam_email']);
@@ -91,6 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_reservation'])
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -101,215 +101,173 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_reservation'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-<body class="bg-slate-50 text-slate-800 font-sans flex min-h-screen">
+<body class="bg-gray-100 text-slate-800 font-sans">
 
-    <body class="bg-gray-100">
+    <div class="flex min-h-screen">
 
-        <div class="flex min-h-screen">
+        <?php include '../../includes/sidebar.php'; ?>
 
-
-            <!-- SIDEBAR -->
-            <?php include '../../includes/sidebar.php' ?>
-
-        </div>
-
-
-        <!-- CONTENT -->
         <main class="flex-1 p-8">
 
-            <!-- HEADER -->
-            <div class="flex justify-between items-center mb-6">
+            <?php if (!empty($error_message)): ?>
+                <div class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-sm font-medium">
+                    ⚠️ <?= $error_message; ?>
+                </div>
+            <?php endif; ?>
 
+            <div class="flex justify-between items-center mb-6">
                 <div>
                     <h1 class="text-3xl font-bold text-gray-800">
-                        Detail Reservation
+                        <?= $is_edit ? 'Formulir Edit Pengajuan' : 'Detail Reservation' ?>
                     </h1>
                     <p class="text-gray-500 mt-1">
-                        Informasi lengkap peminjaman fasilitas
+                        <?= $is_edit ? 'Sesuaikan kembali jadwal penggunaan fasilitas' : 'Informasi lengkap peminjaman fasilitas' ?>
                     </p>
                 </div>
 
-                <?php
-                if ($data['status'] == 'disetujui') {
-                    echo "<span class='bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-medium'>✅ Disetujui</span>";
-                } elseif ($data['status'] == 'ditolak') {
-                    echo "<span class='bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-medium'>❌ Ditolak</span>";
-                } else {
-                    echo "<span class='bg-yellow-100 text-yellow-700 px-4 py-2 rounded-full text-sm font-medium'>⏳ Diajukan</span>";
-                }
-                ?>
+                <?php if (!$is_edit): ?>
+                    <div>
+                        <?php
+                        if ($data['status'] == 'disetujui') {
+                            echo "<span class='bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-medium'>✅ Disetujui</span>";
+                        } elseif ($data['status'] == 'ditolak') {
+                            echo "<span class='bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-medium'>❌ Ditolak</span>";
+                        } elseif ($data['status'] == 'dibatalkan') {
+                            echo "<span class='bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium'>⚪ Dibatalkan</span>";
+                        } else {
+                            echo "<span class='bg-yellow-100 text-yellow-700 px-4 py-2 rounded-full text-sm font-medium'>⏳ Diajukan</span>";
+                        }
+                        ?>
+                    </div>
+                <?php endif; ?>
             </div>
 
+            <?php if ($is_edit): ?>
+                <div class="bg-white rounded-2xl shadow-sm border p-8 max-w-4xl">
+                    <form action="" method="POST" id="editForm" onsubmit="return validateForm(event)">
+                        <div class="space-y-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Nama Peminjam</label>
+                                <input type="text" name="peminjam_name" class="w-full border border-gray-200 rounded-lg p-3 text-sm font-medium text-gray-800 focus:outline-none focus:border-blue-500 shadow-sm" value="<?= htmlspecialchars($data['peminjam']) ?>" required>
+                            </div>
 
-            <!-- DETAIL GRID -->
-            <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Email Peminjam</label>
+                                <input type="email" name="peminjam_email" class="w-full border border-gray-200 rounded-lg p-3 text-sm font-medium text-gray-800 focus:outline-none focus:border-blue-500 shadow-sm" value="<?= htmlspecialchars($data['email']) ?>" required>
+                            </div>
 
-                <!-- Peminjam -->
-                <div class="bg-white rounded-2xl shadow-sm border p-6">
-                    <h2 class="font-semibold text-lg text-gray-700 mb-4">
-                        👤 Data Peminjam
-                    </h2>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Pilih Fasilitas / Ruangan</label>
+                                <select name="facility_id" class="w-full border border-gray-200 rounded-lg p-3 text-sm bg-white focus:outline-none focus:border-blue-500 font-medium text-gray-800 shadow-sm" required>
+                                    <?php while($f_row = mysqli_fetch_assoc($facilities_query)): ?>
+                                        <option value="<?= $f_row['id']; ?>" <?= ($f_row['id'] == $data['facility_id']) ? 'selected' : ''; ?>>
+                                            <?= htmlspecialchars($f_row['name']); ?>
+                                        </option>
+                                    <?php endwhile; ?>
+                                </select>
+                            </div>
 
-                    <div class="space-y-3">
-                        <p>
-                            <span class="text-gray-500">Nama</span><br>
-                            <span class="font-medium"><?= $data['peminjam'] ?></span>
-                        </p>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Tanggal</label>
+                                <input type="date" name="tanggal" class="w-full border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-blue-500 font-medium text-gray-800 shadow-sm" value="<?= htmlspecialchars($data['tanggal']) ?>" required>
+                            </div>
 
-                        <p>
-                            <span class="text-gray-500">Email</span><br>
-                            <span class="font-medium"><?= $data['email'] ?></span>
-                        </p>
-                    </div>
-                </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Jam Mulai</label>
+                                    <input type="time" id="jam_mulai" name="jam_mulai" class="w-full border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-blue-500 font-medium text-gray-800 shadow-sm" value="<?= htmlspecialchars(substr($data['jam_mulai'], 0, 5)) ?>" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Jam Selesai</label>
+                                    <input type="time" id="jam_selesai" name="jam_selesai" class="w-full border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-blue-500 font-medium text-gray-800 shadow-sm" value="<?= htmlspecialchars(substr($data['jam_selesai'], 0, 5)) ?>" required>
+                                    <p id="time_warning" class="text-red-500 text-xs font-semibold mt-2 hidden">❌ Jam selesai tidak masuk akal! Harus lebih lambat dari jam mulai.</p>
+                                </div>
+                            </div>
 
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Catatan Tambahan</label>
+                                <textarea name="notes" rows="3" class="w-full border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-blue-500 font-medium text-gray-800 shadow-sm"><?= htmlspecialchars($data['notes']) ?></textarea>
+                            </div>
+                        </div>
 
-                <!-- Fasilitas -->
-                <div class="bg-white rounded-2xl shadow-sm border p-6">
-                    <h2 class="font-semibold text-lg text-gray-700 mb-4">
-                        🏢 Data Fasilitas
-                    </h2>
-
-                    <div class="space-y-3">
-                        <p>
-                            <span class="text-gray-500">Fasilitas</span><br>
-                            <span class="font-medium"><?= $data['fasilitas'] ?></span>
-                        </p>
-
-                        <p>
-                            <span class="text-gray-500">Kategori</span><br>
-                            <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">
-                                <?= ucfirst($data['kategori']) ?>
-                            </span>
-                        </p>
-
-                        <p>
-                            <span class="text-gray-500">Kapasitas</span><br>
-                            <span class="font-medium">
-                                <?= $data['kapasitas'] ?> Orang
-                            </span>
-                        </p>
-                    </div>
+                        <div class="flex items-center gap-3 mt-8">
+                            <a href="detail.php?id=<?= $id; ?>" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2.5 rounded-lg text-xs font-bold transition border border-gray-200">
+                                Batal
+                            </a>
+                            <button type="submit" name="update_reservation" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg text-xs font-bold transition shadow-sm">
+                                Simpan Perubahan
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
             <?php else: ?>
-
                 <div class="grid md:grid-cols-2 gap-6">
 
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition">
-                        <div class="flex items-center gap-3 mb-5">
-                            <div class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
-                                <i class="fa-solid fa-user text-lg"></i>
-                            </div>
-                            <div>
-                                <h2 class="font-bold text-lg text-gray-800">Data Peminjam</h2>
-                                <p class="text-xs text-gray-400">Informasi pengguna peminjam</p>
-                            </div>
-                        </div>
-
-                        <div class="space-y-4">
-                            <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                                <p class="text-xs text-gray-500 mb-1">Nama</p>
-                                <p class="font-semibold text-gray-800"><?= htmlspecialchars($data['peminjam']) ?></p>
-                            </div>
-
-                            <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                                <p class="text-xs text-gray-500 mb-1">Email</p>
-                                <p class="font-semibold text-gray-800"><?= htmlspecialchars($data['email']) ?></p>
-                            </div>
+                    <div class="bg-white rounded-2xl shadow-sm border p-6">
+                        <h2 class="font-semibold text-lg text-gray-700 mb-4">👤 Data Peminjam</h2>
+                        <div class="space-y-3">
+                            <p>
+                                <span class="text-gray-500">Nama</span><br>
+                                <span class="font-medium"><?= htmlspecialchars($data['peminjam']) ?></span>
+                            </p>
+                            <p>
+                                <span class="text-gray-500">Email</span><br>
+                                <span class="font-medium"><?= htmlspecialchars($data['email']) ?></span>
+                            </p>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition">
-                        <div class="flex items-center gap-3 mb-5">
-                            <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                                <i class="fa-solid fa-building-columns text-lg"></i>
-                            </div>
-                            <div>
-                                <h2 class="font-bold text-lg text-gray-800">Data Fasilitas</h2>
-                                <p class="text-xs text-gray-400">Informasi fasilitas yang dipinjam</p>
-                            </div>
-                        </div>
-
-                        <div class="space-y-4">
-                            <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                                <p class="text-xs text-gray-500 mb-1">Fasilitas</p>
-                                <p class="font-semibold text-gray-800"><?= htmlspecialchars($data['fasilitas']) ?></p>
-                            </div>
-
-                            <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                                <p class="text-xs text-gray-500 mb-1">Kategori</p>
-                                <span class="inline-flex bg-white border border-gray-200 px-3 py-1 rounded-full text-xs font-semibold text-gray-700">
+                    <div class="bg-white rounded-2xl shadow-sm border p-6">
+                        <h2 class="font-semibold text-lg text-gray-700 mb-4">🏢 Data Fasilitas</h2>
+                        <div class="space-y-3">
+                            <p>
+                                <span class="text-gray-500">Fasilitas</span><br>
+                                <span class="font-medium"><?= htmlspecialchars($data['fasilitas']) ?></span>
+                            </p>
+                            <p>
+                                <span class="text-gray-500">Kategori</span><br>
+                                <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">
                                     <?= ucfirst(htmlspecialchars($data['kategori'])) ?>
                                 </span>
-                            </div>
-
-                            <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                                <p class="text-xs text-gray-500 mb-1">Kapasitas</p>
-                                <p class="font-semibold text-gray-800"><?= htmlspecialchars($data['kapasitas']) ?> Orang</p>
-                            </div>
+                            </p>
+                            <p>
+                                <span class="text-gray-500">Kapasitas</span><br>
+                                <span class="font-medium"><?= htmlspecialchars($data['kapasitas']) ?> Orang</span>
+                            </p>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:col-span-2 hover:shadow-md transition">
-                        <div class="flex items-center gap-3 mb-5">
-                            <div class="w-11 h-11 rounded-xl bg-yellow-50 text-yellow-600 flex items-center justify-center">
-                                <i class="fa-solid fa-calendar-days text-lg"></i>
-                            </div>
-                            <div>
-                                <h2 class="font-bold text-lg text-gray-800">Jadwal Reservasi</h2>
-                                <p class="text-xs text-gray-400">Tanggal dan waktu penggunaan fasilitas</p>
-                            </div>
-                        </div>
-
+                    <div class="bg-white rounded-2xl shadow-sm border p-6 md:col-span-2">
+                        <h2 class="font-semibold text-lg text-gray-700 mb-4">📅 Jadwal Reservasi</h2>
                         <div class="grid md:grid-cols-2 gap-4">
-                            <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                                <p class="text-xs text-gray-500 mb-1">Tanggal</p>
-                                <p class="font-semibold text-lg text-gray-800"><?= date('d F Y', strtotime($data['tanggal'])) ?></p>
+                            <div class="bg-gray-50 rounded-xl p-4">
+                                <p class="text-gray-500 text-sm">Tanggal</p>
+                                <p class="font-semibold text-lg"><?= date('d F Y', strtotime($data['tanggal'])) ?></p>
                             </div>
-
-                            <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                                <p class="text-xs text-gray-500 mb-1">Jam</p>
-                                <p class="font-semibold text-lg text-gray-800">
+                            <div class="bg-gray-50 rounded-xl p-4">
+                                <p class="text-gray-500 text-sm">Jam</p>
+                                <p class="font-semibold text-lg">
                                     <?= substr($data['jam_mulai'], 0, 5) ?> - <?= substr($data['jam_selesai'], 0, 5) ?>
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:col-span-2 hover:shadow-md transition">
-                        <div class="flex items-center gap-3 mb-5">
-                            <div class="w-11 h-11 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
-                                <i class="fa-solid fa-note-sticky text-lg"></i>
-                            </div>
-                            <div>
-                                <h2 class="font-bold text-lg text-gray-800">Catatan Peminjam</h2>
-                                <p class="text-xs text-gray-400">Keperluan atau catatan tambahan</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 border border-gray-100 rounded-xl p-4 text-gray-700">
+                    <div class="bg-white rounded-2xl shadow-sm border p-6 md:col-span-2">
+                        <h2 class="font-semibold text-lg text-gray-700 mb-4">📝 Catatan Peminjam</h2>
+                        <div class="bg-gray-50 border rounded-xl p-4 text-gray-700">
                             <?= !empty($data['notes']) ? htmlspecialchars($data['notes']) : 'Tidak ada catatan.' ?>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:col-span-2 hover:shadow-md transition">
-                        <div class="flex items-center gap-3 mb-5">
-                            <div class="w-11 h-11 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center">
-                                <i class="fa-solid fa-file-lines text-lg"></i>
-                            </div>
-                            <div>
-                                <h2 class="font-bold text-lg text-gray-800">Deskripsi Fasilitas</h2>
-                                <p class="text-xs text-gray-400">Detail keterangan fasilitas</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 border border-gray-100 rounded-xl p-4 text-gray-700">
+                    <div class="bg-white rounded-2xl shadow-sm border p-6 md:col-span-2">
+                        <h2 class="font-semibold text-lg text-gray-700 mb-4">📄 Deskripsi Fasilitas</h2>
+                        <div class="bg-gray-50 border rounded-xl p-4 text-gray-700">
                             <?= !empty($data['deskripsi']) ? htmlspecialchars($data['deskripsi']) : 'Tidak ada deskripsi.' ?>
                         </div>
                     </div>
 
-                    </div>
                 </div>
 
                 <div class="flex flex-wrap gap-3 mt-8">
@@ -341,51 +299,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_reservation'])
                         </a>
                     <?php endif; ?>
                 </div>
-
             <?php endif; ?>
 
-        </div>
-    </main>
+        </main>
+    </div>
 
-</div>
+    <script>
+    function validateForm(event) {
+        const jamMulai = document.getElementById('jam_mulai').value;
+        const jamSelesai = document.getElementById('jam_selesai').value;
+        const warning = document.getElementById('time_warning');
 
-<script>
-function validateForm(event) {
-    const jamMulai = document.getElementById('jam_mulai');
-    const jamSelesai = document.getElementById('jam_selesai');
-    const warning = document.getElementById('time_warning');
-
-    if (!jamMulai || !jamSelesai || !warning) {
+        if (jamMulai && jamSelesai) {
+            if (jamSelesai <= jamMulai) {
+                event.preventDefault();
+                warning.classList.remove('hidden');
+                return false;
+            }
+        }
+        warning.classList.add('hidden');
         return true;
     }
 
-    if (jamMulai.value && jamSelesai.value) {
-        if (jamSelesai.value <= jamMulai.value) {
-            event.preventDefault();
-            warning.classList.remove('hidden');
-            return false;
-        }
-    }
-
-    warning.classList.add('hidden');
-    return true;
-}
-
-const jamMulaiInput = document.getElementById('jam_mulai');
-const jamSelesaiInput = document.getElementById('jam_selesai');
-const timeWarning = document.getElementById('time_warning');
-
-if (jamMulaiInput && timeWarning) {
-    jamMulaiInput.addEventListener('input', function() {
-        timeWarning.classList.add('hidden');
+    document.getElementById('jam_mulai').addEventListener('input', function() {
+        document.getElementById('time_warning').classList.add('hidden');
     });
-}
-
-if (jamSelesaiInput && timeWarning) {
-    jamSelesaiInput.addEventListener('input', function() {
-        timeWarning.classList.add('hidden');
+    document.getElementById('jam_selesai').addEventListener('input', function() {
+        document.getElementById('time_warning').classList.add('hidden');
     });
-}
-</script>
+    </script>
+</body>
 
 </html>
