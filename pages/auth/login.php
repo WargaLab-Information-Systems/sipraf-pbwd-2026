@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_role'] = $user['role'];
 
 
-            header("Location: ../dashboard/index.php");
+            header("Location: /index.php");
             exit;
         } else {
             $error_message = "Email atau password salah!";
