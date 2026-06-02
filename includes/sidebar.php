@@ -6,11 +6,7 @@
 
         <!-- LOGO -->
         <div class="p-8 border-b">
-
-            <h1 class="text-4xl font-bold text-center text-black">
-                SIPRAF
-            </h1>
-
+            <h1 class="text-4xl font-bold text-center text-black">SIPRAF</h1>
         </div>
 
         <!-- MENU -->
@@ -19,107 +15,82 @@
             <!-- DASHBOARD -->
             <div class="mb-10">
 
-                <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">
-                    Dashboard
-                </p>
-
+                <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">Dashboard</p>
                 <a href="../dashboard/index.php"
-                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
-
+                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-100  transition">
                     <i class="fa-solid fa-chart-line text-gray-600"></i>
-                    
-                    <span class="font-medium text-gray-700">
-                        Dashboard
-                    </span>
-
+                    <span class="font-medium text-gray-700">Dashboard</span>
                 </a>
-
             </div>
 
             <!-- MASTER DATA -->
             <div class="mb-10">
-
-                <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">
-                    Master Data
-                </p>
-
+                <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">Master Data</p>
                 <div class="space-y-2">
-
-                    <a href="index.php"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl bg-green-100 text-green-700 font-semibold">
-
+                    <a href="../facilities/index.php"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl ">
                         <i class="fa-solid fa-building"></i>Facilities
                     </a>
-
                     <a href="../users/index.php"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
-
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-100  transition">
                         <i class="fa-solid fa-users"></i>Users
                     </a>
-
                 </div>
-
             </div>
 
             <!-- FEATURE -->
             <div>
-
-                <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">
-                    Feature
-                </p>
-
+                <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">Feature</p>
                 <div class="space-y-2">
-
                     <a href="../reservation/index.php"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
-
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-100  transition">
                         <i class="fa-solid fa-calendar-check"></i>Peminjaman
                     </a>
-
                     <a href="../approval/index.php"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 transition">
-
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-100  transition">
                         <i class="fa-solid fa-circle-check"></i>Persetujuan
                     </a>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
     <!-- BOTTOM -->
-    <div class="p-6 border-t">
+   <div class="flex items-center justify-between">
 
-        <div class="flex items-center justify-between">
+    <!-- PROFILE -->
+<div class="flex items-center gap-10">
 
-            <!-- PROFILE -->
-            <a href="profile/index.php"
-            class="flex items-center gap-3">
+    <!-- PROFILE -->
+    <a href="../profile/index.php"
+       class="flex items-center gap-3">
 
-                <div class="w-12 h-12 rounded-full bg-gray-300"></div>
+        <div class="w-12 h-12 rounded-full bg-gray-300"></div>
 
-                <div>
+        <h2 class="font-semibold text-gray-700">
+            Profile_name
+        </h2>
 
-                    <h2 class="font-semibold text-gray-700">
-                        Profile_name
-                    </h2>
-                </div>
+    </a>
 
-            </a>
+    <!-- LOGOUT -->
+    <a href="../auth/logout.php"
+       class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 hover:bg-red-500 hover:text-white transition">
 
-            <!-- LOGOUT -->
-            <button
-            class="w-10 h-10 rounded-full bg-gray-200 hover:bg-red-500 hover:text-white transition">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="18"
+             height="18"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2">
+            <path d="m16 17 5-5-5-5"/>
+            <path d="M21 12H9M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+        </svg>
 
-                <i class="fa-solid fa-right-from-bracket"></i>
+    </a>
 
-            </button>
+</div>
 
-        </div>
-
-    </div>
-
+</div>
 </aside>

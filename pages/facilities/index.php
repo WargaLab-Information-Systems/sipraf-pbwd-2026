@@ -80,7 +80,7 @@ foreach ($facilities as $row) {
 
     <div class="p-6 border-t">
         <div class="flex items-center justify-between">
-            <a href="profile/index.php"
+            <a href="../profile/index.php"
             class="flex items-center gap-3">
                 <div class="w-12 h-12 rounded-full bg-gray-300"></div>
                 <div>
@@ -89,7 +89,7 @@ foreach ($facilities as $row) {
             </a>
 
             <button class="w-10 h-10 rounded-full bg-gray-200 hover:bg-red-500 hover:text-white transition">
-                <a href="../pages/auth/logout.php">
+                <a href="../auth/logout.php">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 </a>
             </button>

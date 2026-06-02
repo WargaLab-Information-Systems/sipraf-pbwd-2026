@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-
 // Jika belum login, kembalikan ke halaman login
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../auth/login.php");
@@ -187,6 +186,7 @@ $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT name, foto FROM users WHE
         document.getElementById('editMode').classList.remove('hidden'); 
         document.getElementById('btnEditContainer').classList.add('hidden'); 
     }
+
     function tutupFormEdit() {
         document.getElementById('viewMode').classList.remove('hidden'); 
         document.getElementById('editMode').classList.add('hidden'); 
