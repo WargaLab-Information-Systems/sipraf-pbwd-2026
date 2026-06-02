@@ -17,8 +17,9 @@ $calendar_events = get_calendar_data($conn);
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard - SIPRAF</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 body { font-family: 'Inter', sans-serif; }
 .card:hover { transform: translateY(-4px); transition: all 0.2s; }
