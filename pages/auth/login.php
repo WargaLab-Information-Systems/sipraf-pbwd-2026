@@ -2,39 +2,18 @@
 
 session_start();
 
-
-$host     = 'localhost';
-$db       = 'db_sipraf';
-$user     = 'demo';
-$pass     = 'pw1234';
-$charset  = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
-
-try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (\PDOException $e) {
-    die("Koneksi database gagal: " . $e->getMessage());
-}
-
-
 $error_message = "";
 
-
+// Masukkan ke logic/auth_process.php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email    = trim($_POST['email']);
     $password = trim($_POST['password']);
 
     if (!empty($email) && !empty($password)) {
-
+        
         $hashed_password = md5($password);
 
-
+        
         $stmt = $pdo->prepare("SELECT id, name, email, role FROM users WHERE email = ? AND password = ?");
         $stmt->execute([$email, $hashed_password]);
         $user = $stmt->fetch();
@@ -46,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_role'] = $user['role'];
 
 
-            header("Location: ../dashboard/index.php");
+            header("Location: /index.php");
             exit;
         } else {
             $error_message = "Email atau password salah!";
@@ -55,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error_message = "Harap isi semua kolom!";
     }
 }
+// sampai sini
 ?>
 
 <!DOCTYPE html>
@@ -89,11 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-align: center;
             color: #333;
         }
-
         .form-group {
             margin-bottom: 15px;
         }
-
         .form-group label {
             display: block;
             margin-bottom: 5px;
@@ -118,11 +96,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 16px;
             cursor: pointer;
         }
-
         .btn-login:hover {
             background-color: #0056b3;
         }
-
         .alert {
             background-color: #f8d7da;
             color: #721c24;
@@ -216,5 +192,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 
 </body>
-
 </html>

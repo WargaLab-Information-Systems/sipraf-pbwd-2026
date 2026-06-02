@@ -34,6 +34,7 @@ if(!$data){
 <title>Detail Reservation - SIPRAF</title>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<body class="bg-slate-50 text-slate-800 font-sans flex min-h-screen">
 
 <body class="bg-gray-100">
 
@@ -229,7 +230,6 @@ if(!$data){
                 <div class="bg-gray-50 border rounded-xl p-4 text-gray-700">
                     <?= $data['notes'] ?: 'Tidak ada catatan.' ?>
                 </div>
-            </div>
 
 
             <!-- Deskripsi -->
@@ -261,4 +261,5 @@ if(!$data){
 
 </body>
 
+</body>
 </html>
