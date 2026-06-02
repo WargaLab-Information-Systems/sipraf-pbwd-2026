@@ -3,6 +3,31 @@ require '../../helper/db_conn.php';
 
 $id = (int) $_GET['id'];
 
+if (isset($_GET['action']) && $_GET['action'] == 'hapus') {
+    $query_hapus = "DELETE FROM reservations WHERE id = '$id'";
+    $exec_hapus = mysqli_query($conn, $query_hapus);
+
+    if ($exec_hapus) {
+        header("Location: index.php");
+        exit;
+    } else {
+        $error_message = 'Gagal menghapus data dari database.';
+    }
+}
+
+if (isset($_GET['action']) && $_GET['action'] == 'batal') {
+    $query_batal = "UPDATE reservations SET status = 'dibatalkan' WHERE id = '$id'";
+    $exec_batal = mysqli_query($conn, $query_batal);
+
+    if ($exec_batal) {
+        header("Location: index.php");
+        exit;
+    } else {
+        $error_message = 'Gagal membatalkan pengajuan.';
+    }
+}
+
+
 $query = mysqli_query($conn, "
     SELECT
         r.*,
@@ -30,7 +55,7 @@ $facilities_query = mysqli_query($conn, "SELECT id, name FROM facilities ORDER B
 
 $is_edit = (isset($_GET['mode']) && $_GET['mode'] === 'edit' && $data['status'] === 'diajukan');
 
-$error_message = '';
+$error_message = isset($error_message) && $error_message !== '' ? $error_message : '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_reservation'])) {
     $peminjam_name = mysqli_real_escape_string($conn, $_POST['peminjam_name']);
     $peminjam_email = mysqli_real_escape_string($conn, $_POST['peminjam_email']);
@@ -66,20 +91,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_reservation'])
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $is_edit ? 'Edit Reservation' : 'Detail Reservation' ?> - SIPRAF</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body class="bg-gray-100 text-gray-800 min-h-screen m-0 p-0 overflow-hidden">
 
 <div class="flex w-full h-screen">
 
-    <!-- Sidebar -->
     <div class="w-64 flex-shrink-0 h-full">
         <div class="w-64 h-screen bg-white text-gray-700 flex flex-col justify-between border-r border-gray-200 font-sans">
 
@@ -168,7 +193,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_reservation'])
                         <?= $is_edit ? 'Sesuaikan kembali jadwal penggunaan fasilitas' : 'Informasi lengkap peminjaman fasilitas' ?>
                     </p>
                 </div>
-            </div>
 
                 <?php if (!$is_edit): ?>
                     <div>
@@ -374,13 +398,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_reservation'])
                         <a href="index.php" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-5 py-2.5 rounded-lg text-xs font-bold transition border border-gray-200">
                             Kembali
                         </a>
-                        <a href="../../logic/cancel_reservation.php?id=<?= $data['id'] ?>" onclick="return confirm('Apakah Anda yakin ingin membatalkan pengajuan ini?')" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-lg text-xs font-bold transition shadow-sm">
+                        <a href="detail.php?id=<?= $data['id'] ?>&action=batal" onclick="return confirm('Apakah Anda yakin ingin membatalkan pengajuan ini?')" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-lg text-xs font-bold transition shadow-sm">
                             Batalkan Pengajuan
                         </a>
                         <a href="detail.php?id=<?= $data['id'] ?>&mode=edit" class="bg-amber-500 hover:bg-amber-600 text-white px-5 py-2.5 rounded-lg text-xs font-bold transition shadow-sm">
                             Edit Data
                         </a>
-                        <a href="../../logic/delete_reservation.php?id=<?= $data['id'] ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data pengajuan ini?')" class="bg-rose-500 hover:bg-rose-600 text-white px-5 py-2.5 rounded-lg text-xs font-bold transition shadow-sm">
+                        <a href="detail.php?id=<?= $data['id'] ?>&action=hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus data pengajuan ini?')" class="bg-rose-500 hover:bg-rose-600 text-white px-5 py-2.5 rounded-lg text-xs font-bold transition shadow-sm">
                             Hapus Data
                         </a>
 
@@ -388,7 +412,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_reservation'])
                         <a href="index.php" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-5 py-2.5 rounded-lg text-xs font-bold transition border border-gray-200">
                             Kembali
                         </a>
-                        <a href="../../logic/delete_reservation.php?id=<?= $data['id'] ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data pengajuan ini?')" class="bg-rose-500 hover:bg-rose-600 text-white px-5 py-2.5 rounded-lg text-xs font-bold transition shadow-sm">
+                        <a href="detail.php?id=<?= $data['id'] ?>&action=hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus data pengajuan ini?')" class="bg-rose-500 hover:bg-rose-600 text-white px-5 py-2.5 rounded-lg text-xs font-bold transition shadow-sm">
                             Hapus Data
                         </a>
 
