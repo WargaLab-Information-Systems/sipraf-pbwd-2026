@@ -38,7 +38,6 @@ function insertReservation($conn, $data)
 
 /* =========================
    GET ALL RESERVATIONS
-========================= */
 function getReservations($conn)
 {
     $query = mysqli_query($conn, "
@@ -91,7 +90,6 @@ function getAllReservations($conn)
 
 /* =========================
    GET RESERVATION BY ID
-========================= */
 function getReservationById($conn, $id_reservation)
 {
     $id_reservation = (int) $id_reservation;
@@ -228,5 +226,3 @@ function updateStatusReservasi($conn, $id, $status)
 
     return mysqli_stmt_execute($stmt);
 }
-
-?>
