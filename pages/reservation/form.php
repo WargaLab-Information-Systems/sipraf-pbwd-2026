@@ -1,11 +1,15 @@
 <?php
+
 require '../../helper/db_conn.php';
+
 require '../../helper/data/user.php';
 require '../../helper/data/facility.php';
 
 $users = getUsers($conn);
 $facilities = getFacilities($conn);
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,217 +24,107 @@ $facilities = getFacilities($conn);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-<body class="bg-gray-100 text-gray-800 min-h-screen m-0 p-0 overflow-hidden">
+<body class="bg-[#f8fafc]">
 
     <div class="flex min-h-screen">
 
-        <!-- sidebr -->
-
         <?php include '../../includes/sidebar.php' ?>
-
-        <!-- kontem -->
 
         <div class="flex-1 p-10">
 
-            <!-- kotakotak -->
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 max-w-5xl mx-auto">
 
-            <div class="grid grid-cols-3 gap-6 mb-8">
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-
-                    <p class="text-gray-500 mb-2">
-                        Total Pengajuan
-                    </p>
-
-                    <h1 class="text-4xl font-bold text-green-600">
-                        12
+                <div class="mb-6">
+                    <h1 class="text-2xl font-bold text-[#1e293b] tracking-wide uppercase">
+                        FORM PENGAJUAN PEMINJAMAN
                     </h1>
-
+                    <p class="text-sm text-gray-400 mt-1">
+                        Sistem Informasi Peminjaman Ruangan dan Fasilitas Kampus (SIPRAF)
+                    </p>
+                    <hr class="mt-5 border-gray-200">
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                <form action="../../logic/reservation_process.php" method="POST" class="space-y-5">
 
-                    <p class="text-gray-500 mb-2">
-                        Total Fasilitas
-                    </p>
-
-                    <h1 class="text-4xl font-bold text-blue-600">
-                        13
-                    </h1>
-
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-
-                    <p class="text-gray-500 mb-2">
-                        Total User
-                    </p>
-
-                    <h1 class="text-4xl font-bold text-purple-600">
-                        11
-                    </h1>
-
-                </div>
-
-            </div>
-
-            <!-- form -->
-
-            <div class="bg-white p-8 rounded-2xl shadow-sm max-w-5xl">
-
-                <div class="mb-8">
-
-                    <h1 class="text-4xl font-bold text-gray-700 mb-2">
-                        Form Pengajuan
-                    </h1>
-
-                    <p class="text-gray-500">
-                        Silakan ajukan peminjaman fasilitas kampus
-                    </p>
-
-                </div>
-
-                <form action="../../logic/reservation_process.php" method="POST">
-
-                    <!-- user -->
-
-                    <div class="mb-5">
-
-                        <label class="block mb-2 font-semibold text-gray-600">
+                    <div>
+                        <label for="user_id" class="block mb-2 text-sm font-medium text-gray-700">
                             Pilih User
                         </label>
-
                         <select
                             name="user_id"
                             id="user_id"
-                            class="w-full border border-gray-200 rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-green-400">
-
-                            <option value="">-- Pilih User --</option>
-
+                            class="w-full border border-gray-300 rounded-lg p-3 text-gray-500 bg-white focus:border-blue-500 focus:outline-none">
+                            <option value="" class="text-gray-400">-- Pilih User --</option>
                             <?php while ($user = mysqli_fetch_assoc($users)) { ?>
-
                                 <option value="<?= $user['id']; ?>">
                                     <?= $user['name']; ?>
                                 </option>
-
                             <?php } ?>
-
                         </select>
-
                     </div>
 
-                    <!-- facility -->
-
-                    <div class="mb-5">
-
-                        <label class="block mb-2 font-semibold text-gray-600">
+                    <div>
+                        <label for="facility_id" class="block mb-2 text-sm font-medium text-gray-700">
                             Pilih Fasilitas
                         </label>
-
                         <select
                             name="facility_id"
                             id="facility_id"
-                            class="w-full border border-gray-200 rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-green-400">
-
-                            <option value="">-- Pilih Fasilitas --</option>
-
+                            class="w-full border border-gray-300 rounded-lg p-3 text-gray-500 bg-white focus:border-blue-500 focus:outline-none">
+                            <option value="" class="text-gray-400">-- Pilih Fasilitas --</option>
                             <?php while ($facility = mysqli_fetch_assoc($facilities)) { ?>
-
                                 <option value="<?= $facility['id']; ?>">
                                     <?= $facility['name']; ?>
                                 </option>
-
                             <?php } ?>
-
                         </select>
-
                     </div>
 
-                    <!-- tgl -->
-
-                    <div class="mb-5">
-
-                        <label class="block mb-2 font-semibold text-gray-600">
+                    <div>
+                        <label for="tanggal" class="block mb-2 text-sm font-medium text-gray-700">
                             Tanggal
                         </label>
-
                         <input
                             type="date"
                             name="tanggal"
                             id="tanggal"
-                            class="w-full border border-gray-200 rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-green-400">
-
+                            class="w-full border border-gray-300 rounded-lg p-3 text-gray-400 focus:border-blue-500 focus:outline-none">
                     </div>
 
-                    <!-- jam -->
-
-                    <div class="grid grid-cols-2 gap-5 mb-5">
-
+                    <div class="grid grid-cols-2 gap-5">
                         <div>
-
-                            <label class="block mb-2 font-semibold text-gray-600">
+                            <label for="jam_mulai" class="block mb-2 text-sm font-medium text-gray-700">
                                 Jam Mulai
                             </label>
-
                             <input
                                 type="time"
                                 name="jam_mulai"
                                 id="jam_mulai"
-                                class="w-full border border-gray-200 rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-green-400">
-
+                                class="w-full border border-gray-300 rounded-lg p-3 text-gray-400 focus:border-blue-500 focus:outline-none">
                         </div>
 
                         <div>
-
-                            <label class="block mb-2 font-semibold text-gray-600">
+                            <label for="jam_selesai" class="block mb-2 text-sm font-medium text-gray-700">
                                 Jam Selesai
                             </label>
-
                             <input
                                 type="time"
                                 name="jam_selesai"
                                 id="jam_selesai"
-                                class="w-full border border-gray-200 rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-green-400">
-
+                                class="w-full border border-gray-300 rounded-lg p-3 text-gray-400 focus:border-blue-500 focus:outline-none">
                         </div>
-
                     </div>
 
-                    <!-- keterangan -->
-
-                    <div class="mb-6">
-
-                        <label class="block mb-2 font-semibold text-gray-600">
+                    <div>
+                        <label for="notes" class="block mb-2 text-sm font-medium text-gray-700">
                             Keperluan
                         </label>
-
                         <textarea
                             name="notes"
                             id="notes"
-                            rows="5"
-                            class="w-full border border-gray-200 rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-green-400"></textarea>
-
-                    </div>
-
-                    <!-- button -->
-
-                    <div class="flex items-center gap-4">
-
-                        <button
-                            type="submit"
-                            class="bg-green-500 hover:bg-green-600 text-white px-6 py-4 rounded-xl font-semibold">
-
-                            Ajukan Peminjaman
-
-                        </button>
-
-                        <a href="detail.php"
-                            class="text-green-600 font-semibold">
-
-                            Lihat Data →
-
-                        </a>
-
+                            rows="4"
+                            placeholder="Tuliskan keperluan peminjaman..."
+                            class="w-full border border-gray-300 rounded-lg p-3 placeholder-gray-400 focus:border-blue-500 focus:outline-none"></textarea>
                     </div>
 
                 </form>
@@ -240,90 +134,6 @@ $facilities = getFacilities($conn);
         </div>
 
     </div>
-
-</div>
-
-<script>
-const form = document.getElementById('reservationForm');
-
-function setInvalid(input, error) {
-    input.classList.remove('border-gray-300', 'border-emerald-500');
-    input.classList.add('border-red-500', 'focus:ring-red-400', 'focus:border-red-400');
-    error.classList.remove('hidden');
-}
-
-function setValid(input, error) {
-    input.classList.remove('border-red-500', 'focus:ring-red-400', 'focus:border-red-400');
-    input.classList.add('border-emerald-500');
-    error.classList.add('hidden');
-}
-
-function validateForm() {
-    let valid = true;
-
-    const user = document.getElementById('user_id');
-    const facility = document.getElementById('facility_id');
-    const tanggal = document.getElementById('tanggal');
-    const mulai = document.getElementById('jam_mulai');
-    const selesai = document.getElementById('jam_selesai');
-    const notes = document.getElementById('notes');
-
-    if (!user.value) {
-        setInvalid(user, document.getElementById('errorUser'));
-        valid = false;
-    } else {
-        setValid(user, document.getElementById('errorUser'));
-    }
-
-    if (!facility.value) {
-        setInvalid(facility, document.getElementById('errorFacility'));
-        valid = false;
-    } else {
-        setValid(facility, document.getElementById('errorFacility'));
-    }
-
-    if (!tanggal.value) {
-        setInvalid(tanggal, document.getElementById('errorTanggal'));
-        valid = false;
-    } else {
-        setValid(tanggal, document.getElementById('errorTanggal'));
-    }
-
-    if (!mulai.value) {
-        setInvalid(mulai, document.getElementById('errorMulai'));
-        valid = false;
-    } else {
-        setValid(mulai, document.getElementById('errorMulai'));
-    }
-
-    if (!selesai.value || (mulai.value && selesai.value && mulai.value >= selesai.value)) {
-        setInvalid(selesai, document.getElementById('errorSelesai'));
-        valid = false;
-    } else {
-        setValid(selesai, document.getElementById('errorSelesai'));
-    }
-
-    if (!notes.value.trim()) {
-        setInvalid(notes, document.getElementById('errorNotes'));
-        valid = false;
-    } else {
-        setValid(notes, document.getElementById('errorNotes'));
-    }
-
-    return valid;
-}
-
-form.addEventListener('submit', function(e) {
-    if (!validateForm()) {
-        e.preventDefault();
-    }
-});
-
-document.querySelectorAll('.input-field').forEach(function(input) {
-    input.addEventListener('input', validateForm);
-    input.addEventListener('change', validateForm);
-});
-</script>
 
 </body>
 
