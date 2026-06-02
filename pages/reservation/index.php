@@ -26,19 +26,14 @@ if (function_exists('getAllReservations') && isset($conn)) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        .gabung{
-            display: flex;
-        }
-    </style>
 </head>
 <body class="bg-gray-100 text-gray-800 min-h-screen m-0 p-0 overflow-hidden">
-<div class="gabung">
-    <?php include '../../includes/sidebar.php' ?>
+
+    <div class="flex w-full h-screen">
+        
+        <?php include '../../includes/sidebar.php'; ?>
 
         <div class="flex-1 h-full overflow-y-auto p-6">
-            
-            
             <div class="max-w-6xl mx-auto bg-white rounded-lg shadow-md p-6 border border-gray-200">
                 
                 <div class="flex justify-between items-center border-b border-gray-200 pb-4 mb-6">
@@ -121,7 +116,6 @@ if (function_exists('getAllReservations') && isset($conn)) {
             </div>
         </div>
 
-    </div>
     </div>
 
 </body>
