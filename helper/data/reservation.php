@@ -36,8 +36,6 @@ function insertReservation($conn, $data)
 
 function getReservations($conn)
 
-
-function getReservations($conn)
 {
     $query = mysqli_query($conn, "
         SELECT
@@ -89,7 +87,6 @@ function getAllReservations($conn)
 function getReservationById($conn, $id_reservation)
 
 
-function getReservationById($conn, $id_reservation)
 {
     $id_reservation = (int) $id_reservation;
 
