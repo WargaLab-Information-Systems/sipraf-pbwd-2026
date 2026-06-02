@@ -1,6 +1,5 @@
 <?php
-require_once '../../helper/db_conn.php';
-require_once '../../helper/data/reservation.php';
+require_once __DIR__ . '/../../helper/data/reservation.php';
 $data_pengajuan = getAllReservations($conn);
 ?>
 <!DOCTYPE html>
@@ -11,6 +10,7 @@ $data_pengajuan = getAllReservations($conn);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Pengajuan - SIPRAF</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body class="bg-gray-100 text-gray-800 min-h-screen m-0 p-0 overflow-hidden">
@@ -97,9 +97,9 @@ $data_pengajuan = getAllReservations($conn);
         </div>
 
         <div class="flex-1 h-full overflow-y-auto p-6">
-
+            
             <div class="max-w-6xl mx-auto bg-white rounded-lg shadow-md p-6 border border-gray-200">
-
+                
                 <div class="flex justify-between items-center border-b border-gray-200 pb-4 mb-6">
                     <div>
                         <h1 class="text-2xl font-bold text-gray-800">LAPORAN DATA PENGAJUAN</h1>
