@@ -1,5 +1,4 @@
 <?php
-
 function getFacilities($conn) {
 
     $query = mysqli_query($conn, "SELECT * FROM facilities");
@@ -7,7 +6,6 @@ function getFacilities($conn) {
     return $query;
 
 }
-
 
 function getAllFacilities($conn) {
     $query = 'SELECT * FROM facilities ORDER BY id DESC';
@@ -31,7 +29,6 @@ function getFacilityById($conn, $id) {
 }
 
 function insertFacility($conn, $data) {
-    // created_at biasanya otomatis diisi oleh database (current_timestamp)
     $query = 'INSERT INTO facilities (name, kategori, kapasitas, deskripsi, status) VALUES (?, ?, ?, ?, ?)';
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "ssiss", $data['name'], $data['kategori'], $data['kapasitas'], $data['deskripsi'], $data['status']);
@@ -50,5 +47,17 @@ function deleteFacility($conn, $id) {
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "i", $id);
     return mysqli_stmt_execute($stmt);
+}
+
+function isFacilityInUse($conn, $id) {
+    $query = 'SELECT COUNT(*) as count FROM reservations WHERE facility_id = ?';
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+    
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+    
+    return $row['count'] > 0;
 }
 ?>
