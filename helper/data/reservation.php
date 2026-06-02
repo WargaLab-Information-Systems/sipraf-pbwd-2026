@@ -34,7 +34,7 @@ function insertReservation($conn, $data)
     return mysqli_query($conn, $query);
 }
 
-function getReservations($conn)
+
 
 
 function getReservations($conn)
@@ -86,7 +86,6 @@ function getAllReservations($conn)
     return $list_reservations;
 }
 
-function getReservationById($conn, $id_reservation)
 
 
 function getReservationById($conn, $id_reservation)
@@ -220,5 +219,3 @@ function updateStatusReservasi($conn, $id, $status)
 
     return mysqli_stmt_execute($stmt);
 }
-
-?>
