@@ -28,6 +28,38 @@ if ($id > 0) {
         } else {
             die("Error: " . mysqli_error($conn));
         }
+    } elseif ($action === 'update') {
+        $borrower_name  = isset($_POST['borrower_name']) ? mysqli_real_escape_string($conn, $_POST['borrower_name']) : '';
+        $borrower_email = isset($_POST['borrower_email']) ? mysqli_real_escape_string($conn, $_POST['borrower_email']) : '';
+        $notes          = isset($_POST['notes']) ? mysqli_real_escape_string($conn, $_POST['notes']) : '';
+
+        if (!empty($borrower_name) && !empty($borrower_email)) {
+            $query_update = "UPDATE reservations SET 
+                                borrower_name = '$borrower_name', 
+                                borrower_email = '$borrower_email', 
+                                notes = '$notes' 
+                             WHERE id = $id";
+
+            $eksekusi_update = mysqli_query($conn, $query_update);
+
+            if ($eksekusi_update) {
+                header("Location: ../pages/reservation/detail.php?id=" . $id);
+                exit();
+            } else {
+                die("Error: " . mysqli_error($conn));
+            }
+        } else {
+            header("Location: ../pages/reservation/detail.php?id=" . $id . "&status=failed");
+            exit();
+        }
+    } else {
+        header("Location: ../pages/reservation/index.php");
+        exit();
+    }
+} else {
+    header("Location: ../pages/reservation/index.php");
+    exit();
+}
 
     } elseif ($action === 'update') {
         $borrower_name  = isset($_POST['borrower_name']) ? mysqli_real_escape_string($conn, $_POST['borrower_name']) : '';

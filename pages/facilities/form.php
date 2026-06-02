@@ -26,6 +26,7 @@ if (isset($_GET['id'])) {
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,6 +34,7 @@ if (isset($_GET['id'])) {
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
 
     <div class="bg-white rounded-xl border border-gray-200 overflow-hidden w-full max-w-xl">
@@ -47,10 +49,11 @@ if (isset($_GET['id'])) {
             </div>
         </div>
 
-        <form id="facilityForm" action="/sipraf-pbwd-2026/logic/facility_process.php" method="POST" novalidate>
-            
+        <form id="facilityForm" action="../../logic/facility_process.php" method="POST" novalidate>
+
             <input type="hidden" name="action" value="<?= $isEdit ? 'update' : 'insert' ?>">
-            
+            <input type="hidden" name="status" value="<?= htmlspecialchars($facilityData['status']) ?>">
+
             <?php if ($isEdit): ?>
                 <input type="hidden" name="id" value="<?= htmlspecialchars($facilityData['id']) ?>">
             <?php endif; ?>
@@ -101,34 +104,6 @@ if (isset($_GET['id'])) {
                 </div>
 
                 <div>
-                    <label class="block text-xs font-medium text-gray-500 mb-1.5">
-                        Status <span class="text-red-500">*</span>
-                    </label>
-                    <div class="grid grid-cols-2 gap-2">
-                        <div>
-                            <input type="radio" id="s-tersedia" name="status" value="tersedia" class="peer hidden" 
-                                <?= (strtolower($facilityData['status']) == 'tersedia' || strtolower($facilityData['status']) == 'available') ? 'checked' : '' ?>>
-                            <label for="s-tersedia"
-                                class="flex items-center gap-2 px-3 py-2 text-sm border border-gray-200 rounded-lg cursor-pointer text-gray-500 transition
-                                       peer-checked:border-emerald-500 peer-checked:bg-emerald-50 peer-checked:text-emerald-800 peer-checked:font-medium">
-                                <span class="w-2 h-2 rounded-full bg-gray-300 peer-checked:bg-emerald-500 transition flex-shrink-0"></span>
-                                Tersedia
-                            </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="s-dipinjam" name="status" value="dipinjam" class="peer hidden"
-                                <?= strtolower($facilityData['status']) == 'dipinjam' ? 'checked' : '' ?>>
-                            <label for="s-dipinjam"
-                                class="flex items-center gap-2 px-3 py-2 text-sm border border-gray-200 rounded-lg cursor-pointer text-gray-500 transition
-                                       peer-checked:border-emerald-500 peer-checked:bg-emerald-50 peer-checked:text-emerald-800 peer-checked:font-medium">
-                                <span class="w-2 h-2 rounded-full bg-gray-300 transition flex-shrink-0"></span>
-                                Dipinjam
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
                     <label for="deskripsi" class="block text-xs font-medium text-gray-500 mb-1.5">
                         Deskripsi <span class="text-red-500">*</span>
                     </label>
@@ -151,7 +126,7 @@ if (isset($_GET['id'])) {
                     Memproses data...
                 </div>
             </div>
-
+            <!-- button -->
             <div class="flex justify-end items-center gap-2 px-6 py-4 border-t border-gray-100">
                 <button type="button" id="btnCancel"
                     class="px-4 py-2 text-sm border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-50 transition">
@@ -189,39 +164,44 @@ if (isset($_GET['id'])) {
             if (el) el.addEventListener('input', () => setError(id, false));
         });
 
-        form.addEventListener('submit', function (e) {
+        form.addEventListener('submit', function(e) {
             const name = document.getElementById('name').value.trim();
             const kategori = document.getElementById('kategori').value;
             const kapasitas = document.getElementById('kapasitas').value;
             const deskripsi = document.getElementById('deskripsi').value.trim();
             let isValid = true;
 
-            setError('name', !name); if (!name) isValid = false;
-            setError('kategori', !['lab', 'ruang', 'barang'].includes(kategori)); if (!['lab', 'ruang', 'barang'].includes(kategori)) isValid = false;
+            setError('name', !name);
+            if (!name) isValid = false;
+            setError('kategori', !['lab', 'ruang', 'barang'].includes(kategori));
+            if (!['lab', 'ruang', 'barang'].includes(kategori)) isValid = false;
             const kap = parseInt(kapasitas);
-            setError('kapasitas', !kapasitas || isNaN(kap) || kap < 1); if (!kapasitas || isNaN(kap) || kap < 1) isValid = false;
-            setError('deskripsi', !deskripsi); if (!deskripsi) isValid = false;
+            setError('kapasitas', !kapasitas || isNaN(kap) || kap < 1);
+            if (!kapasitas || isNaN(kap) || kap < 1) isValid = false;
+            setError('deskripsi', !deskripsi);
+            if (!deskripsi) isValid = false;
 
             if (!isValid) {
                 e.preventDefault();
             } else {
                 const actionText = "<?= $isEdit ? 'diupdate' : 'disimpan' ?>";
                 const konfirmasi = confirm(`Apakah data sudah benar dan ingin ${actionText}?`);
-                
+
                 if (!konfirmasi) {
-                    e.preventDefault(); 
+                    e.preventDefault();
                 } else {
                     document.getElementById('loadingMessage').classList.remove('hidden');
                 }
             }
         });
 
-        document.getElementById('btnCancel').addEventListener('click', function () {
+        document.getElementById('btnCancel').addEventListener('click', function() {
             const konfirmasi = confirm("Apakah Anda yakin ingin membatalkan? Perubahan tidak akan disimpan.");
             if (konfirmasi) {
-                window.location.href = 'index.php'; 
+                window.location.href = 'index.php';
             }
         });
     </script>
 </body>
+
 </html>

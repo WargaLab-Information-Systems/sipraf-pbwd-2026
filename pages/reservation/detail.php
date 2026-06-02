@@ -55,7 +55,7 @@ $query = "SELECT r.*, f.name AS facility_name, u.name AS borrower_name, u.email 
           JOIN facilities f ON r.facility_id = f.id
           JOIN users u ON r.user_id = u.id
           WHERE r.id = $id";
-          
+
 $result = mysqli_query($conn, $query);
 $data = mysqli_fetch_assoc($result);
 
@@ -69,6 +69,7 @@ $is_editing = isset($_GET['mode']) && $_GET['mode'] === 'edit';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>SIPRAF - Detail</title>
