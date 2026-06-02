@@ -10,7 +10,7 @@ $query = mysqli_query($conn, "SELECT * FROM users ORDER BY id ASC");
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIPRAF -User Management</title>
+    <title>SIPRAF - User Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -199,7 +199,7 @@ $query = mysqli_query($conn, "SELECT * FROM users ORDER BY id ASC");
                             <td class="py-4 print:hidden text-center">
                                 <div class="flex justify-center gap-2">
 
-                                    <a href="detail.php?id=<?= $row['id']; ?>"
+                                    <a href="../profile/index.php?id=<?= $row['id']; ?>"
                                     class="bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white px-3 py-2 rounded-lg transition text-sm flex items-center gap-1 font-medium border border-emerald-200 hover:border-transparent">
                                         <i class="fa-solid fa-eye"></i> Detail
                                     </a>

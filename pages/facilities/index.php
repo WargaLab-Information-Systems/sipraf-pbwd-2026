@@ -28,21 +28,16 @@ foreach ($facilities as $row) {
 
 <div class="flex min-h-screen">
 
-<!-- SIDEBAR -->
 <aside class="w-72 bg-white border-r shadow-sm flex flex-col justify-between print:hidden">
 
-    <!-- TOP -->
     <div>
 
-        <!-- LOGO -->
         <div class="p-8 border-b">
             <h1 class="text-4xl font-bold text-center text-black">SIPRAF</h1>
         </div>
 
-        <!-- MENU -->
         <div class="p-6">
 
-            <!-- DASHBOARD -->
             <div class="mb-10">
 
                 <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">Dashboard</p>
@@ -53,7 +48,6 @@ foreach ($facilities as $row) {
                 </a>
             </div>
 
-            <!-- MASTER DATA -->
             <div class="mb-10">
                 <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">Master Data</p>
                 <div class="space-y-2">
@@ -68,7 +62,6 @@ foreach ($facilities as $row) {
                 </div>
             </div>
 
-            <!-- FEATURE -->
             <div>
                 <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">Feature</p>
                 <div class="space-y-2">
@@ -85,11 +78,9 @@ foreach ($facilities as $row) {
         </div>
     </div>
 
-    <!-- BOTTOM -->
     <div class="p-6 border-t">
         <div class="flex items-center justify-between">
-            <!-- PROFILE -->
-            <a href="profile/index.php"
+            <a href="../profile/index.php"
             class="flex items-center gap-3">
                 <div class="w-12 h-12 rounded-full bg-gray-300"></div>
                 <div>
@@ -97,9 +88,8 @@ foreach ($facilities as $row) {
                 </div>
             </a>
 
-            <!-- LOGOUT -->
             <button class="w-10 h-10 rounded-full bg-gray-200 hover:bg-red-500 hover:text-white transition">
-                <a href="../pages/auth/logout.php">
+                <a href="../auth/logout.php">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 </a>
             </button>
@@ -114,10 +104,8 @@ foreach ($facilities as $row) {
             <p class="text-gray-500 mt-2">Sistem Informasi Peminjaman Ruang dan Fasilitas Kampus</p>
         </div>
 
-        <!-- BUTTON -->
         <div class="flex gap-3 print:hidden">
 
-            <!-- CETAK PDF -->
             <button
                 onclick="window.print()"
                 class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl shadow-lg">
@@ -125,7 +113,6 @@ foreach ($facilities as $row) {
                 Cetak PDF
             </button>
 
-            <!-- TAMBAH DATA -->
             <a href="form.php"
                 class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl shadow-lg">
                 <i class="fa-solid fa-plus"></i>
@@ -157,7 +144,7 @@ foreach ($facilities as $row) {
         <?php endif; ?>
 
         <div class="flex justify-between items-center mb-6 print:hidden">
-            <h2 class="text-2xl font-bold text-gray-800">Daftar Fasilitas</h2>
+            <h2 class="text-2xl font-bold text-gray-800">Daftar Fasilitas Tersedia</h2>
     
             <div class="flex">
                 <input type="text" id="searchInput" placeholder="Cari fasilitas, kategori, kapasitas, atau status..." 
@@ -184,8 +171,12 @@ foreach ($facilities as $row) {
                     <tbody class="text-gray-700">
                         <?php 
                         $no = 1; 
+                        $ada_tersedia = false; // Penanda untuk mengecek apakah ada data tersedia
                         if(count($facilities) > 0):
                             foreach ($facilities as $row): 
+                                // HANYA MENAMPILKAN YANG STATUSNYA TERSEDIA / AVAILABLE
+                                if (strtolower($row['status']) == 'tersedia' || strtolower($row['status']) == 'available'):
+                                    $ada_tersedia = true;
                         ?>
                         <tr class="border-b hover:bg-gray-50 transition">
                             <td class="py-4"><?= $no++ ?></td>
@@ -193,15 +184,9 @@ foreach ($facilities as $row) {
                             <td class="py-4 capitalize"><?= htmlspecialchars($row['kategori']) ?></td>
                             <td class="py-4"><?= htmlspecialchars($row['kapasitas']) ?> Unit/Orang</td>
                             <td class="py-4">
-                                <?php if (strtolower($row['status']) == 'tersedia' || strtolower($row['status']) == 'available'): ?>
-                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
-                                Tersedia
-                            </span>
-                                <?php else: ?>
-                                    <span class="bg-red-100 text-red-700 px-3 py-1.5 rounded-full text-xs font-bold">
-                                        <i class="fa-solid fa-circle-xmark"></i> <?= htmlspecialchars(ucfirst($row['status'])) ?>
-                                    </span>
-                                <?php endif; ?>
+                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+                                    Tersedia
+                                </span>
                             </td>
                             <td class="py-4 print:hidden">
                                 <div class="flex items-center justify-center gap-2">
@@ -222,13 +207,17 @@ foreach ($facilities as $row) {
                             </td>
                         </tr>
                         <?php 
+                                endif;
                             endforeach; 
-                        else: 
+                        endif;
+
+                        // JIKA TIDAK ADA FASILITAS YANG TERSEDIA
+                        if (!$ada_tersedia):
                         ?>
                         <tr>
                             <td colspan="6" class="text-center py-10 text-gray-500">
                                 <i class="fa-solid fa-folder-open text-4xl mb-3 text-gray-300 block"></i>
-                                Belum ada data fasilitas yang ditambahkan.
+                                Saat ini tidak ada data fasilitas yang tersedia.
                             </td>
                         </tr>
                         <?php endif; ?>
@@ -237,7 +226,82 @@ foreach ($facilities as $row) {
             </div>
         </div>
 
-    </main>
+        <div class="mt-8 overflow-x-auto">
+            <div class="bg-white border border-gray-200 rounded-2xl shadow-lg p-6">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Fasilitas Sedang Dipinjam</h2>
+                    <p class="text-sm text-gray-500 mt-1">Daftar ruangan atau perangkat yang saat ini sedang tidak tersedia karena sedang dipinjam.</p>
+                </div>
+                
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b text-gray-600">
+                        <th class="pb-4">No</th>
+                        <th class="pb-4">Nama</th>
+                        <th class="pb-4">Kategori</th>
+                        <th class="pb-4">Kapasitas</th>
+                        <th class="pb-4">Status</th>
+                        <th class="pb-4 print:hidden"><div class="flex justify-center translate-x-2">Aksi</div></th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700">
+                        <?php 
+                        $no_dipinjam = 1; 
+                        $ada_dipinjam = false; // Penanda untuk mengecek apakah ada data dipinjam
+                        if(count($facilities) > 0):
+                            foreach ($facilities as $row): 
+                                // HANYA MENAMPILKAN YANG STATUSNYA DIPINJAM
+                                if (strtolower($row['status']) == 'dipinjam'):
+                                    $ada_dipinjam = true;
+                        ?>
+                        <tr class="border-b hover:bg-gray-50 transition">
+                            <td class="py-4"><?= $no_dipinjam++ ?></td>
+                            <td class="py-4 font-semibold"><?= htmlspecialchars($row['name']) ?></td>
+                            <td class="py-4 capitalize"><?= htmlspecialchars($row['kategori']) ?></td>
+                            <td class="py-4"><?= htmlspecialchars($row['kapasitas']) ?> Unit/Orang</td>
+                            <td class="py-4">
+                                <span class="bg-red-100 text-red-700 px-3 py-1.5 rounded-full text-xs font-bold">
+                                    <i class="fa-solid fa-circle-xmark"></i> Dipinjam
+                                </span>
+                            </td>
+                            <td class="py-4 print:hidden">
+                                <div class="flex items-center justify-center gap-2">
+                                    <a href="form.php?id=<?= $row['id'] ?>" 
+                                       class="bg-blue-50 text-blue-600 hover:bg-blue-500 hover:text-white px-3 py-2 rounded-lg transition text-sm flex items-center gap-1 font-medium border border-blue-200 hover:border-transparent">
+                                        <i class="fa-solid fa-pen-to-square"></i> Edit
+                                    </a>
+                                    <a href="../../logic/facility_process.php?action=delete&id=<?= $row['id'] ?>" 
+                                       onclick="return confirm('Apakah kamu yakin ingin menghapus data fasilitas <?= htmlspecialchars($row['name']) ?>?')"
+                                       class="bg-red-50 text-red-600 hover:bg-red-500 hover:text-white px-3 py-2 rounded-lg transition text-sm flex items-center gap-1 font-medium border border-red-200 hover:border-transparent">
+                                        <i class="fa-solid fa-trash-can"></i> Hapus
+                                    </a>
+                                    <a href="detail.php?id=<?= $row['id'] ?>" 
+                                       class="bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white px-3 py-2 rounded-lg transition text-sm flex items-center gap-1 font-medium border border-emerald-200 hover:border-transparent">
+                                        <i class="fa-solid fa-eye"></i> Detail
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php 
+                                endif;
+                            endforeach; 
+                        endif;
+
+                        // JIKA TIDAK ADA FASILITAS YANG SEDANG DIPINJAM
+                        if (!$ada_dipinjam): 
+                        ?>
+                        <tr>
+                            <td colspan="6" class="text-center py-10 text-gray-500">
+                                <i class="fa-solid fa-circle-check text-4xl mb-3 text-green-400 block"></i>
+                                Semua fasilitas saat ini tersedia (tidak ada yang dipinjam).
+                            </td>
+                        </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </main>
 
 </div>
 <script>
