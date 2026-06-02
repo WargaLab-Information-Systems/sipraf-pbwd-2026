@@ -23,8 +23,6 @@ if ($user['role'] == 'admin') {
     $role_tampil = 'Pemohon';
 }
 
-// Ambil huruf pertama nama untuk inisial foto profil
-$inisial = strtoupper(substr($user['name'], 0, 1));
 ?>
 
 <!DOCTYPE html>
@@ -34,14 +32,76 @@ $inisial = strtoupper(substr($user['name'], 0, 1));
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Profil Saya – SIPRAF</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style> body { font-family: 'Plus Jakarta Sans', sans-serif; } </style>
 </head>
 <body class="bg-slate-100 text-slate-800 flex min-h-screen">
+<!-- SIDEBAR -->
+<?php
+$url = $_SERVER['PHP_SELF'];
+$aktif = "bg-green-100 text-green-700 font-semibold";
+$biasa = "hover:bg-gray-100 text-gray-600 transition";
 
-    <!-- Sidebar -->
-<?php include __DIR__ . '/../../includes/sidebar.php'; ?>
+if (!isset($conn)) require_once __DIR__ . '/../helper/db_conn.php';
+$user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT name, foto FROM users WHERE id = '{$_SESSION['user_id']}'"));
+?>
+
+<aside class="w-72 bg-white border-r shadow-sm flex flex-col justify-between print:hidden">
+    <div>
+        <div class="p-8 border-b"><h1 class="text-4xl font-bold text-center text-black">SIPRAF</h1></div>
+        
+        <div class="p-6">
+            <div class="mb-10">
+                <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">Dashboard</p>
+                <a href="../dashboard/index.php" class="flex items-center gap-3 px-4 py-3 rounded-xl <?= strpos($url, 'dashboard') ? $aktif : $biasa ?>">
+                    <i class="fa-solid fa-chart-line"></i><span class="font-medium">Dashboard</span>
+                </a>
+            </div>
+
+            <div class="mb-10">
+                <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">Master Data</p>
+                <div class="space-y-2">
+                    <a href="../facilities/index.php" class="flex items-center gap-3 px-4 py-3 rounded-xl <?= strpos($url, 'facilities') ? $aktif : $biasa ?>">
+                        <i class="fa-solid fa-building"></i><span class="font-medium">Facilities</span>
+                    </a>
+                    <a href="../users/index.php" class="flex items-center gap-3 px-4 py-3 rounded-xl <?= strpos($url, 'users') ? $aktif : $biasa ?>">
+                        <i class="fa-solid fa-users"></i><span class="font-medium">Users</span>
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <p class="text-gray-400 text-sm font-semibold mb-4 uppercase">Feature</p>
+                <div class="space-y-2">
+                    <a href="../reservation/index.php" class="flex items-center gap-3 px-4 py-3 rounded-xl <?= strpos($url, 'reservation') ? $aktif : $biasa ?>">
+                        <i class="fa-solid fa-calendar-check"></i><span class="font-medium">Peminjaman</span>
+                    </a>
+                    <a href="../approval/index.php" class="flex items-center gap-3 px-4 py-3 rounded-xl <?= strpos($url, 'approval') ? $aktif : $biasa ?>">
+                        <i class="fa-solid fa-circle-check"></i><span class="font-medium">Persetujuan</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-6 border-t <?= strpos($url, 'profile') ? 'bg-green-50 border-green-200' : '' ?>">
+        <div class="flex items-center justify-between">
+            <a href="../profile/index.php" class="flex items-center gap-3 hover:opacity-80 transition w-full">
+                <?php if (!empty($user['foto'])): ?>
+                    <img src="../../assets/img/<?= $user['foto'] ?>" class="w-12 h-12 rounded-full object-cover <?= strpos($url, 'profile') ? 'border-2 border-green-500' : '' ?>">
+                <?php else: ?>
+                    <div class="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-500 <?= strpos($url, 'profile') ? 'border-2 border-green-500' : '' ?>"><i class="fa-solid fa-user"></i></div>
+                <?php endif; ?>
+
+                <div class="overflow-hidden">
+                    <h2 class="font-semibold truncate w-32 <?= strpos($url, 'profile') ? 'text-green-800' : 'text-gray-700' ?>"><?= $user['name'] ?></h2>
+                </div>
+            </a>
+            <button class="w-10 h-10 rounded-full bg-gray-200 hover:bg-red-500 hover:text-white transition flex-shrink-0"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+    </div>
+</aside>
+
+<!-- SIDEBAR -->
 
   <main class="flex-1 py-10 px-8">
     <div class="max-w-4xl mx-auto space-y-6">
@@ -78,40 +138,39 @@ $inisial = strtoupper(substr($user['name'], 0, 1));
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60"><span class="text-[10.5px] font-bold text-slate-400 uppercase block mb-1">ID Anggota</span><span class="text-sm font-semibold text-slate-700">#USR-<?php echo sprintf("%03d", $user['id']); ?></span></div>
             <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60"><span class="text-[10.5px] font-bold text-slate-400 uppercase block mb-1">Email</span><span class="text-sm font-semibold text-slate-700"><?php echo htmlspecialchars($user['email']); ?></span></div>
-            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60"><span class="text-[10.5px] font-bold text-slate-400 uppercase block mb-1">Tanggal Bergabung</span><span class="text-sm font-semibold text-slate-700"><?php echo date('d F Y', strtotime($user['created_at'])); ?></span></div>
-            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60">
-              <span class="text-[10.5px] font-bold text-slate-400 uppercase block mb-1">Status Akses / Peran</span>
-              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> <?php echo $role_tampil; ?></span>
-            </div>
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/60"><span class="text-[10.5px] font-bold text-slate-400 uppercase block mb-1">Status Akses / Peran</span><span class="text-sm font-semibold text-emerald-700"><?php echo $role_tampil; ?></span></div>
           </div>
         </div>
 
         <div id="editMode" class="p-6 space-y-6 hidden bg-slate-50 border-t border-slate-200">
           <h2 class="text-base font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-user-pen text-emerald-600"></i> Form Edit Profil</h2>
           
-          <form id="formEditProfile" action="../../logic/user_process.php" method="POST" class="space-y-4">
+          <form id="formEditProfile" action="../../logic/user_process.php" method="POST" enctype="multipart/form-data" class="space-y-4">
               <input type="hidden" name="action" value="update_profile">
               
               <div>
                   <label class="block text-sm font-semibold text-slate-700 mb-1">Nama Lengkap *</label>
-                  <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($user['name']); ?>" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:border-emerald-500 outline-none text-sm">
-                  <span id="nameError" class="text-xs text-red-500 hidden mt-1">Nama wajib diisi!</span>
+                  <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($user['name']); ?>" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 outline-none text-sm">
               </div>
               
               <div>
                   <label class="block text-sm font-semibold text-slate-700 mb-1">Alamat Email *</label>
-                  <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:border-emerald-500 outline-none text-sm">
-                  <span id="emailError" class="text-xs text-red-500 hidden mt-1">Email wajib diisi dan harus ada tanda @</span>
+                  <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 outline-none text-sm">
+              </div>
+
+              <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-1">Foto Profil Baru (Opsional)</label>
+                  <input type="file" id="foto" name="foto" accept="image/*" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white outline-none text-sm">
+                  <span class="text-xs text-slate-500 mt-1 block">Biarkan kosong jika tidak ingin mengubah foto.</span>
               </div>
               
               <div>
                   <label class="block text-sm font-semibold text-slate-700 mb-1">Password Baru (Opsional)</label>
-                  <input type="password" id="password" name="password" placeholder="Kosongkan jika tak diubah" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:border-emerald-500 outline-none text-sm">
-                  <span id="passwordError" class="text-xs text-red-500 hidden mt-1">Password minimal 6 karakter!</span>
+                  <input type="password" id="password" name="password" placeholder="Kosongkan jika tak diubah" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 outline-none text-sm">
               </div>
               
               <div class="flex justify-end gap-3 pt-4 border-t border-slate-200">
-                  <button type="button" onclick="tutupFormEdit()" class="px-5 py-2 rounded-xl text-sm font-semibold text-slate-600 bg-white border border-slate-300 hover:bg-slate-50">Batal</button>
+                  <button type="button" onclick="tutupFormEdit()" class="px-5 py-2 rounded-xl text-sm font-semibold text-slate-600 bg-white border border-slate-300">Batal</button>
                   <button type="submit" class="px-5 py-2 rounded-xl text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700">Simpan</button>
               </div>
           </form>
@@ -133,39 +192,6 @@ $inisial = strtoupper(substr($user['name'], 0, 1));
         document.getElementById('editMode').classList.add('hidden'); 
         document.getElementById('btnEditContainer').classList.remove('hidden'); 
     }
-
-    document.getElementById('formEditProfile').addEventListener('submit', function(event) {
-        let berhasil = true; 
-        
-        let nama_input = document.getElementById('name').value;
-        let email_input = document.getElementById('email').value;
-        let pass_input = document.getElementById('password').value;
-
-        if (nama_input === "") {
-            document.getElementById('nameError').classList.remove('hidden');
-            berhasil = false; 
-        } else {
-            document.getElementById('nameError').classList.add('hidden');
-        }
-
-        if (email_input === "" || email_input.includes("@") === false) {
-            document.getElementById('emailError').classList.remove('hidden');
-            berhasil = false; 
-        } else {
-            document.getElementById('emailError').classList.add('hidden');
-        }
-
-        if (pass_input !== "" && pass_input.length < 6) {
-            document.getElementById('passwordError').classList.remove('hidden');
-            berhasil = false; 
-        } else {
-            document.getElementById('passwordError').classList.add('hidden');
-        }
-
-        if (berhasil === false) {
-            event.preventDefault();
-        }
-    });
   </script>
 
 </body>
