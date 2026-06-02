@@ -32,9 +32,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'delete') {
     if (isset($_GET['id'])) {
-        deleteFacility($conn, $_GET['id']);
-        header("Location: $redirect_url?status=deleted");
-        exit;
+        $id = $_GET['id'];
+
+        if (isFacilityInUse($conn, $id)) {
+            // Jika ya, batalkan hapus dan kirim status error_used
+            header("Location: $redirect_url?status=error_used");
+            exit;
+        } else {
+            deleteFacility($conn, $id);
+            header("Location: $redirect_url?status=deleted");
+            exit;
+        }
     }
     
     header("Location: $redirect_url");

@@ -66,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_reservation'])
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -167,6 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_reservation'])
                         <?= $is_edit ? 'Sesuaikan kembali jadwal penggunaan fasilitas' : 'Informasi lengkap peminjaman fasilitas' ?>
                     </p>
                 </div>
+            </div>
 
                 <?php if (!$is_edit): ?>
                     <div>

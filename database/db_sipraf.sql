@@ -1,70 +1,11 @@
-<<<<<<< HEAD
-CREATE TABLE users_table (
-
-    id INT PRIMARY KEY AUTO_INCREMENT,
-
-    username VARCHAR(100),
-
-    email VARCHAR(100)
-
-);
-
-CREATE TABLE facility (
-
-    id INT PRIMARY KEY AUTO_INCREMENT,
-
-    facility_name VARCHAR(100)
-
-);
-
-CREATE TABLE reservation (
-
-    id INT PRIMARY KEY AUTO_INCREMENT,
-
-    reservation_date DATE,
-
-    facility_name VARCHAR(100)
-
-);
-
-CREATE TABLE approval (
-
-    id INT PRIMARY KEY AUTO_INCREMENT,
-
-    status VARCHAR(50)
-
-);
-
-INSERT INTO users_table(username, email)
-VALUES
-('sultan', 'sultan@gmail.com'),
-('admin', 'admin@gmail.com');
-
-INSERT INTO facility(facility_name)
-VALUES
-('Aula'),
-('Ruang Meeting'),
-('Lab Komputer');
-
-INSERT INTO reservation(reservation_date, facility_name)
-VALUES
-('2026-05-20', 'Aula'),
-('2026-05-21', 'Ruang Meeting'),
-('2026-05-22', 'Lab Komputer');
-
-INSERT INTO approval(status)
-VALUES
-('Approved'),
-('Pending');
-=======
 -- phpMyAdmin SQL Dump
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 19, 2026 at 12:37 PM
--- Server version: 9.6.0
--- PHP Version: 8.3.30
+-- Generation Time: Jun 02, 2026 at 01:37 PM
+-- Server version: 8.0.30
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -78,8 +19,8 @@ SET time_zone = "+00:00";
 
 --
 -- Database: `db_sipraf`
-CREATE DATABASE IF NOT EXISTS db_sipraf;
-USE db_sipraf;
+--
+
 -- --------------------------------------------------------
 
 --
@@ -92,34 +33,35 @@ CREATE TABLE `approvals` (
   `user_id` int NOT NULL,
   `status` enum('disetujui','ditolak') NOT NULL,
   `notes` text,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `approvals`
 --
 
-INSERT INTO `approvals` (`id`, `reservation_id`, `user_id`, `status`, `notes`, `created_at`) VALUES
-(1, 2, 5, 'disetujui', 'Disetujui, kembalikan fasilitas tepat waktu.', '2026-05-19 12:35:26'),
-(2, 4, 3, 'ditolak', 'Tidak memenuhi prosedur peminjaman.', '2026-05-19 12:35:26'),
-(3, 5, 3, 'disetujui', 'Jadwal tersedia, silakan gunakan fasilitas.', '2026-05-19 12:35:26'),
-(4, 6, 3, 'disetujui', 'Jadwal tersedia, silakan gunakan fasilitas.', '2026-05-19 12:35:26'),
-(5, 8, 2, 'disetujui', 'Disetujui, harap jaga kebersihan ruangan.', '2026-05-19 12:35:26'),
-(6, 11, 5, 'ditolak', 'Tidak memenuhi prosedur peminjaman.', '2026-05-19 12:35:26'),
-(7, 14, 6, 'disetujui', 'Pengajuan memenuhi syarat, disetujui.', '2026-05-19 12:35:26'),
-(8, 15, 6, 'disetujui', 'Disetujui, kembalikan fasilitas tepat waktu.', '2026-05-19 12:35:26'),
-(9, 16, 3, 'ditolak', 'Fasilitas sudah dipesan oleh pihak lain.', '2026-05-19 12:35:26'),
-(10, 19, 6, 'ditolak', 'Tidak memenuhi prosedur peminjaman.', '2026-05-19 12:35:26'),
-(11, 20, 3, 'disetujui', 'Disetujui, koordinasi dengan pengelola gedung.', '2026-05-19 12:35:26'),
-(12, 21, 4, 'disetujui', 'Disetujui, koordinasi dengan pengelola gedung.', '2026-05-19 12:35:26'),
-(13, 22, 5, 'disetujui', 'Disetujui, koordinasi dengan pengelola gedung.', '2026-05-19 12:35:26'),
-(14, 23, 3, 'ditolak', 'Jadwal bentrok dengan kegiatan lain.', '2026-05-19 12:35:26'),
-(15, 24, 5, 'disetujui', 'Fasilitas tersedia pada waktu yang diminta.', '2026-05-19 12:35:26'),
-(16, 25, 3, 'disetujui', 'Disetujui, koordinasi dengan pengelola gedung.', '2026-05-19 12:35:26'),
-(17, 26, 6, 'ditolak', 'Pengajuan tidak disertai keterangan yang jelas.', '2026-05-19 12:35:26'),
-(18, 27, 2, 'disetujui', 'Fasilitas tersedia pada waktu yang diminta.', '2026-05-19 12:35:26'),
-(19, 28, 6, 'disetujui', 'Fasilitas tersedia pada waktu yang diminta.', '2026-05-19 12:35:26'),
-(20, 30, 2, 'ditolak', 'Fasilitas sudah dipesan oleh pihak lain.', '2026-05-19 12:35:26');
+INSERT INTO `approvals` (`id`, `reservation_id`, `user_id`, `status`, `notes`, `created_at`, `updated_at`) VALUES
+(1, 2, 5, 'ditolak', 'Disetujui, kembalikan fasilitas tepat waktu.', '2026-05-19 12:35:26', '2026-06-02 13:33:01'),
+(2, 4, 3, 'ditolak', 'Tidak memenuhi prosedur peminjaman.', '2026-05-19 12:35:26', '2026-06-02 13:36:17'),
+(3, 5, 3, 'disetujui', 'Jadwal tersedia, silakan gunakan fasilitas.', '2026-05-19 12:35:26', NULL),
+(4, 6, 3, 'disetujui', 'Jadwal tersedia, silakan gunakan fasilitas.', '2026-05-19 12:35:26', NULL),
+(5, 8, 2, 'disetujui', 'Disetujui, harap jaga kebersihan ruangan.', '2026-05-19 12:35:26', NULL),
+(6, 11, 5, 'ditolak', 'Tidak memenuhi prosedur peminjaman.', '2026-05-19 12:35:26', NULL),
+(7, 14, 6, 'disetujui', 'Pengajuan memenuhi syarat, disetujui.', '2026-05-19 12:35:26', NULL),
+(8, 15, 6, 'disetujui', 'Disetujui, kembalikan fasilitas tepat waktu.', '2026-05-19 12:35:26', NULL),
+(9, 16, 3, 'ditolak', 'Fasilitas sudah dipesan oleh pihak lain.', '2026-05-19 12:35:26', NULL),
+(10, 19, 6, 'ditolak', 'Tidak memenuhi prosedur peminjaman.', '2026-05-19 12:35:26', '2026-06-02 13:31:45'),
+(11, 20, 3, 'disetujui', 'Disetujui, koordinasi dengan pengelola gedung.', '2026-05-19 12:35:26', NULL),
+(12, 21, 4, 'disetujui', 'Disetujui, koordinasi dengan pengelola gedung.', '2026-05-19 12:35:26', NULL),
+(13, 22, 5, 'disetujui', 'Disetujui, koordinasi dengan pengelola gedung.', '2026-05-19 12:35:26', NULL),
+(14, 23, 3, 'ditolak', 'Jadwal bentrok dengan kegiatan lain.', '2026-05-19 12:35:26', NULL),
+(15, 24, 5, 'disetujui', 'Fasilitas tersedia pada waktu yang diminta.', '2026-05-19 12:35:26', NULL),
+(16, 25, 3, 'disetujui', 'Disetujui, koordinasi dengan pengelola gedung.', '2026-05-19 12:35:26', NULL),
+(17, 26, 6, 'ditolak', 'Pengajuan tidak disertai keterangan yang jelas.', '2026-05-19 12:35:26', NULL),
+(18, 27, 2, 'disetujui', 'Fasilitas tersedia pada waktu yang diminta.', '2026-05-19 12:35:26', NULL),
+(19, 28, 6, 'disetujui', 'Fasilitas tersedia pada waktu yang diminta.', '2026-05-19 12:35:26', NULL),
+(20, 30, 2, 'ditolak', 'Fasilitas sudah dipesan oleh pihak lain.', '2026-05-19 12:35:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -135,7 +77,7 @@ CREATE TABLE `facilities` (
   `deskripsi` text,
   `status` enum('tersedia','dipinjam') DEFAULT 'tersedia',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `facilities`
@@ -172,7 +114,7 @@ CREATE TABLE `reservations` (
   `jam_selesai` time NOT NULL,
   `status` enum('diajukan','disetujui','ditolak','dibatalkan') DEFAULT 'diajukan',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `reservations`
@@ -224,7 +166,7 @@ CREATE TABLE `users` (
   `role` enum('admin','supervisor','borrower') NOT NULL,
   `foto` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `users`
@@ -326,4 +268,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
->>>>>>> origin/main

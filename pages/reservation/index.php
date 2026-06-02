@@ -4,6 +4,7 @@ $data_pengajuan = getAllReservations($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,10 +12,11 @@ $data_pengajuan = getAllReservations($conn);
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body class="bg-gray-100 text-gray-800 min-h-screen m-0 p-0 overflow-hidden">
 
     <div class="flex w-full h-screen">
-        
+
         <div class="w-64 flex-shrink-0 h-full">
             <div class="w-64 h-screen bg-white text-gray-700 flex flex-col justify-between border-r border-gray-200 font-sans">
     
@@ -91,7 +93,7 @@ $data_pengajuan = getAllReservations($conn);
                         <h1 class="text-2xl font-bold text-gray-800">LAPORAN DATA PENGAJUAN</h1>
                         <p class="text-sm text-gray-500">Sistem Informasi Peminjaman Fasilitas (SIPRAF)</p>
                     </div>
-                    
+
                     <div class="flex gap-3 print:hidden">
                         <a href="form.php" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow text-sm font-semibold transition-colors flex items-center gap-1">
                             <i class="fa-solid fa-plus text-xs"></i>
@@ -155,11 +157,12 @@ $data_pengajuan = getAllReservations($conn);
                         </tbody>
                     </table>
                 </div>
-                
+
             </div>
         </div>
 
     </div>
 
 </body>
+
 </html>
