@@ -9,13 +9,80 @@ $data_pengajuan = getAllReservations($conn);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Pengajuan - SIPRAF</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gray-100 text-gray-800 min-h-screen m-0 p-0 overflow-hidden">
 
     <div class="flex w-full h-screen">
         
         <div class="w-64 flex-shrink-0 h-full">
-            <?php include $_SERVER['DOCUMENT_ROOT'] . '/sipraf-pbwd-2026/includes/sidebar.php'; ?>
+            <div class="w-64 h-screen bg-white text-gray-700 flex flex-col justify-between border-r border-gray-200 font-sans">
+    
+                <div>
+                    <div class="p-6 border-b border-gray-100 flex items-center justify-center">
+                        <h1 class="text-2xl font-bold tracking-wider text-gray-950">SIPRAF</h1>
+                    </div>
+
+                    <nav class="p-4 space-y-6">
+                        
+                        <div>
+                            <a href="../../pages/dashboard/index.php" class="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-gray-100 hover:text-gray-950 transition-colors text-sm font-medium">
+                                <i class="fa-solid fa-chart-pie text-lg text-gray-400 w-5 text-center"></i>
+                                Dashboard
+                            </a>
+                        </div>
+
+                        <div>
+                            <span class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider block mb-2">Master Data</span>
+                            <div class="space-y-1">
+                                <a href="../../pages/facilities/index.php" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 hover:text-gray-950 transition-colors text-sm font-medium">
+                                    <i class="fa-solid fa-building text-lg text-gray-400 w-5 text-center"></i>
+                                    Facilities
+                                </a>
+                                <a href="../../pages/users/index.php" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 hover:text-gray-950 transition-colors text-sm font-medium">
+                                    <i class="fa-solid fa-users text-lg text-gray-400 w-5 text-center"></i>
+                                    Users
+                                </a>
+                            </div>
+                        </div>
+
+                        <div>
+                            <span class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider block mb-2">Feature</span>
+                            <div class="space-y-1">
+                                <a href="../../pages/reservation/index.php" class="flex items-center gap-3 px-4 py-2 rounded-lg bg-emerald-50 text-emerald-600 transition-colors text-sm font-semibold">
+                                    <i class="fa-solid fa-calendar-days text-lg text-emerald-500 w-5 text-center"></i>
+                                    Peminjaman
+                                </a>
+                                <a href="../../pages/approval/index.php" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 hover:text-gray-950 transition-colors text-sm font-medium">
+                                    <i class="fa-solid fa-circle-check text-lg text-gray-400 w-5 text-center"></i>
+                                    Persetujuan
+                                </a>
+                            </div>
+                        </div>
+
+                    </nav>
+                </div>
+
+                <div class="p-6 border-t">
+            <div class="flex items-center justify-between">
+                <a href="../profile/index.php"
+                class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-gray-300"></div>
+                    <div>
+                        <h2 class="font-semibold text-gray-700">Profile_name</h2>
+                    </div>
+                </a>
+
+                <a href="../auth/logout.php"
+                class="flex items-center gap-3">
+                    <button
+                    class="w-10 h-10 rounded-full bg-gray-200 hover:bg-red-500 hover:text-white">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </a>
+            </div>
+
+            </div>
         </div>
 
         <div class="flex-1 h-full overflow-y-auto p-6">
@@ -29,11 +96,12 @@ $data_pengajuan = getAllReservations($conn);
                     </div>
                     
                     <div class="flex gap-3 print:hidden">
-                        <a href="create.php" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow text-sm font-semibold transition-colors flex items-center gap-1">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        <a href="form.php" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow text-sm font-semibold transition-colors flex items-center gap-1">
+                            <i class="fa-solid fa-plus text-xs"></i>
                             Tambah Pengajuan
                         </a>
-                        <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow text-sm font-semibold transition-colors">
+                        <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow text-sm font-semibold transition-colors flex items-center gap-1">
+                            <i class="fa-solid fa-print text-xs"></i>
                             Cetak Laporan
                         </button>
                     </div>
