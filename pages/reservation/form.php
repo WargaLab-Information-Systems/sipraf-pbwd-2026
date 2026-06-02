@@ -127,6 +127,17 @@ $facilities = getFacilities($conn);
                             class="w-full border border-gray-300 rounded-lg p-3 placeholder-gray-400 focus:border-blue-500 focus:outline-none"></textarea>
                     </div>
 
+                    <div class="flex items-center gap-3 pt-2">
+                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded shadow text-sm font-semibold transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-paper-plane text-xs"></i>
+                            Ajukan Peminjaman
+                        </button>
+
+                        <a href="index.php" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-3 rounded shadow text-sm font-semibold transition-colors">
+                            Lihat Data
+                        </a>
+                    </div>
+
                 </form>
 
             </div>
