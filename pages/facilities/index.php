@@ -90,7 +90,7 @@ foreach ($facilities as $row) {
             <div class="p-6 border-t">
                 <div class="flex items-center justify-between">
                     <!-- PROFILE -->
-                    <a href="profile/index.php"
+                    <a href="../profile/index.php"
                         class="flex items-center gap-3">
                         <div class="w-12 h-12 rounded-full bg-gray-300"></div>
                         <div>
@@ -239,6 +239,87 @@ foreach ($facilities as $row) {
                 </div>
             </div>
 
+            <!-- RAHMAD -->
+           <div class="flex justify-between items-center mb-6 print:hidden">
+                <h2 class="text-2xl font-bold text-gray-800">Daftar Fasilitas Dipinjam</h2>
+
+                <div class="flex">
+                    <input type="text" id="searchInput" placeholder="Cari fasilitas, kategori, atau kapasitas..."
+                        class="border border-gray-300 px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 w-96">
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <div class="bg-white border border-gray-200 rounded-2xl shadow-lg p-6">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b text-gray-600">
+                                <th class="pb-4">No</th>
+                                <th class="pb-4">Nama</th>
+                                <th class="pb-4">Kategori</th>
+                                <th class="pb-4">Kapasitas</th>
+                                <th class="pb-4">Status</th>
+                                <th class="pb-4 print:hidden">
+                                    <div class="flex justify-center translate-x-2">Aksi</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-700">
+                            <?php
+                            $no = 1;
+                            $has_borrowed = false; // Penanda jika terdapat data yang sedang dipinjam
+
+                            if (isset($facilities) && count($facilities) > 0):
+                                foreach ($facilities as $row):
+                                    // FILTER: Lewati data jika statusnya 'Tersedia' atau 'Available'
+                                    if (strtolower($row['status']) == 'tersedia' || strtolower($row['status']) == 'available') {
+                                        continue;
+                                    }
+                                    
+                                    $has_borrowed = true; // Set true karena ada fasilitas yang dipinjam
+                            ?>
+                                    <tr class="border-b hover:bg-gray-50 transition">
+                                        <td class="py-4"><?= $no++ ?></td>
+                                        <td class="py-4 font-semibold"><?= htmlspecialchars($row['name']) ?></td>
+                                        <td class="py-4 capitalize"><?= htmlspecialchars($row['kategori']) ?></td>
+                                        <td class="py-4"><?= htmlspecialchars($row['kapasitas']) ?> Unit/Orang</td>
+                                        <td class="py-4">
+                                            <span class="bg-orange-100 text-orange-700 px-3 py-1.5 rounded-full text-xs font-bold">
+                                                <i class="fa-solid fa-clock"></i> <?= htmlspecialchars(ucfirst($row['status'])) ?>
+                                            </span>
+                                        </td>
+                                        <td class="py-4 print:hidden">
+                                            <div class="flex items-center justify-center gap-2">
+                                                <a href="detail.php?id=<?= $row['id'] ?>"
+                                                    class="bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white px-3 py-2 rounded-lg transition text-sm flex items-center gap-1 font-medium border border-emerald-200 hover:border-transparent">
+                                                    <i class="fa-solid fa-eye"></i> Detail
+                                                </a>
+                                                <a href="form.php?id=<?= $row['id'] ?>"
+                                                    class="bg-blue-50 text-blue-600 hover:bg-blue-500 hover:text-white px-3 py-2 rounded-lg transition text-sm flex items-center gap-1 font-medium border border-blue-200 hover:border-transparent">
+                                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php
+                                endforeach;
+                            endif;
+                            
+                            // Tampilkan pesan kosong jika tidak ada data setelah difilter
+                            if (!$has_borrowed):
+                                ?>
+                                <tr>
+                                    <td colspan="6" class="text-center py-10 text-gray-500">
+                                        <i class="fa-solid fa-folder-open text-4xl mb-3 text-gray-300 block"></i>
+                                        Saat ini tidak ada fasilitas yang sedang dipinjam.
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- SAMPAI SINI -->
         </main>
 
     </div>

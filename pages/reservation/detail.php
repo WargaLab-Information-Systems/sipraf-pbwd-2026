@@ -172,6 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_reservation'])
         </div>
     </div>
 
+    <!-- Main Content -->
     <main class="flex-1 h-screen overflow-y-auto p-6 bg-gray-100">
 
         <div class="max-w-6xl mx-auto bg-white rounded-lg shadow-md p-6 border border-gray-200">

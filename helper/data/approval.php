@@ -6,7 +6,7 @@ function getAllApproval($conn) {
                 a.id,
                 a.status AS status_approval,
                 a.notes AS catatan_approval,
-                a.created_at AS tanggal_approval,
+                COALESCE(a.updated_at, a.created_at) AS tanggal_approval,
                 r.id AS reservation_id,
                 r.tanggal,
                 r.jam_mulai,
@@ -34,7 +34,7 @@ function getApprovalByUser($conn, $user_id) {
                 a.id,
                 a.status AS status_approval,
                 a.notes AS catatan_approval,
-                a.created_at AS tanggal_approval,
+                COALESCE(a.updated_at, a.created_at) AS tanggal_approval,
                 r.id AS reservation_id,
                 r.tanggal,
                 r.jam_mulai,
@@ -66,7 +66,7 @@ function getDetailApproval($conn, $id) {
                 a.id,
                 a.status AS status_approval,
                 a.notes AS catatan_approval,
-                a.created_at AS tanggal_approval,
+                COALESCE(a.updated_at, a.created_at) AS tanggal_approval,
                 r.id AS reservation_id,
                 r.tanggal,
                 r.jam_mulai,
@@ -96,13 +96,20 @@ function getDetailApproval($conn, $id) {
     return mysqli_fetch_assoc($result);
 }
 
+// update status dan catatan approval (hanya admin)
+function updateApproval($conn, $id, $status, $notes) {
+    $stmt = mysqli_prepare($conn, "UPDATE approvals SET status = ?, notes = ?, updated_at = NOW() WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, 'ssi', $status, $notes, $id);
+    return mysqli_stmt_execute($stmt);
+}
+
 // mengambil semua data approval untuk keperluan laporan
 function getLaporanApproval($conn) {
     $query = "SELECT 
                 a.id,
                 a.status AS status_approval,
                 a.notes AS catatan_approval,
-                a.created_at AS tanggal_approval,
+                COALESCE(a.updated_at, a.created_at) AS tanggal_approval,
                 r.tanggal,
                 r.jam_mulai,
                 r.jam_selesai,

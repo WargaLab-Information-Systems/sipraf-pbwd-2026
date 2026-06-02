@@ -34,66 +34,10 @@ if (!$data_detail) die("Data approval tidak ditemukan.");
 <body class="bg-[#f0f2f5] min-h-screen flex">
 
     <!-- SIDEBAR -->
-    <aside class="w-64 min-h-screen bg-white border-r border-[#eaedf0] shadow-sm flex flex-col fixed top-0 left-0">
-
-        <!-- logo -->
-        <div class="px-6 py-5 border-b border-[#eaedf0]">
-            <p class="text-lg font-bold text-gray-800 tracking-tight">SIPRAF</p>
-        </div>
-
-        <!-- menu -->
-        <nav class="flex-1 px-4 py-5 space-y-1 overflow-y-auto">
-
-            <a href="../dashboard/index.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-500 hover:bg-[#f0f2f5] hover:text-gray-800 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
-                Dashboard
-            </a>
-
-            <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-widest px-3 pt-4 pb-1">Master Data</p>
-
-            <a href="../facilities/index.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-500 hover:bg-[#f0f2f5] hover:text-gray-800 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                Facilities
-            </a>
-
-            <a href="../users/index.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-500 hover:bg-[#f0f2f5] hover:text-gray-800 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                Users
-            </a>
-
-            <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-widest px-3 pt-4 pb-1">Feature</p>
-
-            <a href="../reservation/index.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-500 hover:bg-[#f0f2f5] hover:text-gray-800 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-                Peminjaman
-            </a>
-
-            <!-- aktif di halaman ini -->
-            <a href="index.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold bg-indigo-50 text-indigo-600 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                Persetujuan
-            </a>
-
-        </nav>
-
-        <!-- profile & logout -->
-        <div class="px-4 py-4 border-t border-[#eaedf0]">
-            <a href="../profile/index.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#f0f2f5] transition">
-                <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-sm">
-                    <?= strtoupper(substr($nama_user, 0, 1)) ?>
-                </div>
-                <span class="text-sm font-medium text-gray-700 truncate"><?= htmlspecialchars($nama_user) ?></span>
-            </a>
-            <a href="../../pages/auth/logout.php" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 transition mt-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
-                Logout
-            </a>
-        </div>
-
-    </aside>
+    <?php include '../../includes/sidebar.php' ?>
 
     <!-- KONTEN UTAMA -->
-    <main class="ml-64 flex-1 p-6 md:p-8">
+    <main class=" flex-1 p-6 md:p-8">
 
         <div class="mb-7 flex items-center gap-4">
             <a href="index.php" class="inline-flex items-center gap-1.5 bg-white text-indigo-500 border border-[#dde3f5] hover:bg-indigo-50 px-4 py-2 rounded-xl text-sm font-semibold transition">← Kembali</a>
@@ -102,6 +46,20 @@ if (!$data_detail) die("Data approval tidak ditemukan.");
                 <h1 class="text-2xl font-bold text-gray-800">Detail Keputusan Approval</h1>
             </div>
         </div>
+
+        <?php if (!empty($_SESSION['flash_success'])): ?>
+        <div class="mb-5 flex items-center gap-3 bg-green-50 border border-green-200 text-green-700 px-5 py-3 rounded-xl text-sm font-medium">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <?= htmlspecialchars($_SESSION['flash_success']) ?>
+        </div>
+        <?php unset($_SESSION['flash_success']); endif; ?>
+
+        <?php if (!empty($_SESSION['flash_error'])): ?>
+        <div class="mb-5 flex items-center gap-3 bg-red-50 border border-red-200 text-red-600 px-5 py-3 rounded-xl text-sm font-medium">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+            <?= htmlspecialchars($_SESSION['flash_error']) ?>
+        </div>
+        <?php unset($_SESSION['flash_error']); endif; ?>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 
@@ -115,6 +73,13 @@ if (!$data_detail) die("Data approval tidak ditemukan.");
                         <p class="text-sm font-semibold text-gray-700">Informasi Keputusan</p>
                         <p class="text-xs text-gray-400">Data hasil approval</p>
                     </div>
+                    <?php if ($role === 'admin' || ($role === 'supervisor' && $data_detail['email_supervisor'] === ($_SESSION['email'] ?? ''))): ?>
+                    <button onclick="document.getElementById('modalEdit').classList.remove('hidden')"
+                        class="ml-auto flex items-center gap-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 text-xs font-semibold px-3 py-1.5 rounded-lg transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        Edit
+                    </button>
+                    <?php endif; ?>
                 </div>
                 <div class="px-6 py-5 space-y-3 text-sm">
                     <div class="flex justify-between items-center py-2 border-b border-[#f5f6f8]">
@@ -201,6 +166,67 @@ if (!$data_detail) die("Data approval tidak ditemukan.");
         </div>
 
     </main>
+
+    <?php if ($role === 'admin' || ($role === 'supervisor' && $data_detail['email_supervisor'] === ($_SESSION['email'] ?? ''))): ?>
+    <!-- MODAL EDIT KEPUTUSAN -->
+    <div id="modalEdit" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 overflow-hidden">
+            <!-- header modal -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-[#eaedf0]">
+                <div>
+                    <p class="text-sm font-bold text-gray-800">Edit Keputusan Approval</p>
+                    <p class="text-xs text-gray-400">Ubah status dan catatan keputusan</p>
+                </div>
+                <button onclick="document.getElementById('modalEdit').classList.add('hidden')"
+                    class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[#f0f2f5] text-gray-400 hover:text-gray-600 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+                </button>
+            </div>
+            <!-- form -->
+            <form action="../../logic/approval_process.php" method="POST" class="px-6 py-5 space-y-4">
+                <input type="hidden" name="_action" value="edit_approval">
+                <input type="hidden" name="id" value="<?= $data_detail['id'] ?>">
+
+                <!-- status -->
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 mb-1.5">Status</label>
+                    <div class="flex gap-3">
+                        <label class="flex-1 flex items-center gap-2.5 border rounded-xl px-4 py-2.5 cursor-pointer has-[:checked]:border-green-500 has-[:checked]:bg-green-50 transition">
+                            <input type="radio" name="status" value="disetujui" class="accent-green-600"
+                                <?= $data_detail['status_approval'] === 'disetujui' ? 'checked' : '' ?>>
+                            <span class="text-sm font-medium text-gray-700">Disetujui</span>
+                        </label>
+                        <label class="flex-1 flex items-center gap-2.5 border rounded-xl px-4 py-2.5 cursor-pointer has-[:checked]:border-red-400 has-[:checked]:bg-red-50 transition">
+                            <input type="radio" name="status" value="ditolak" class="accent-red-500"
+                                <?= $data_detail['status_approval'] === 'ditolak' ? 'checked' : '' ?>>
+                            <span class="text-sm font-medium text-gray-700">Ditolak</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- catatan -->
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 mb-1.5">Catatan Keputusan</label>
+                    <textarea name="notes" rows="4"
+                        class="w-full border border-[#dde3f0] rounded-xl px-4 py-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-300 resize-none"
+                        placeholder="Tulis catatan keputusan..."><?= htmlspecialchars($data_detail['catatan_approval']) ?></textarea>
+                </div>
+
+                <!-- action buttons -->
+                <div class="flex gap-3 pt-1">
+                    <button type="button" onclick="document.getElementById('modalEdit').classList.add('hidden')"
+                        class="flex-1 border border-[#dde3f0] text-gray-600 text-sm font-semibold py-2.5 rounded-xl hover:bg-[#f0f2f5] transition">
+                        Batal
+                    </button>
+                    <button type="submit"
+                        class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2.5 rounded-xl transition">
+                        Simpan Perubahan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <?php endif; ?>
 
 </body>
 </html>
