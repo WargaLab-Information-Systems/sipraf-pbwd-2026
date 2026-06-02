@@ -5,7 +5,6 @@ require_once __DIR__ . '/../db_conn.php';
 /* =========================
    INSERT RESERVATION
 ========================= */
- main
 function insertReservation($conn, $data)
 {
     $user_id = $data['user_id'];
