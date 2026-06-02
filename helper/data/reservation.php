@@ -2,7 +2,9 @@
 
 require_once __DIR__ . '/../db_conn.php';
 
-
+/* =========================
+   INSERT RESERVATION
+========================= */
 function insertReservation($conn, $data)
 {
     $user_id = $data['user_id'];
@@ -35,7 +37,6 @@ function insertReservation($conn, $data)
 }
 
 function getReservations($conn)
-
 {
     $query = mysqli_query($conn, "
         SELECT
@@ -53,8 +54,9 @@ function getReservations($conn)
     return $query;
 }
 
-
-
+/* =========================
+   GET ALL RESERVATIONS ARRAY
+========================= */
 function getAllReservations($conn)
 {
     $sql_query = "
@@ -85,8 +87,6 @@ function getAllReservations($conn)
 }
 
 function getReservationById($conn, $id_reservation)
-
-
 {
     $id_reservation = (int) $id_reservation;
 
@@ -123,7 +123,9 @@ function getReservationById($conn, $id_reservation)
     return null;
 }
 
-
+/* =========================
+   CANCEL RESERVATION
+========================= */
 function cancelReservation($conn, $id_reservation)
 {
     $id_reservation = (int) $id_reservation;
@@ -137,8 +139,9 @@ function cancelReservation($conn, $id_reservation)
     return mysqli_query($conn, $sql_query);
 }
 
-
-
+/* =========================
+   DELETE RESERVATION
+========================= */
 function deleteReservation($conn, $id_reservation)
 {
     $id_reservation = (int) $id_reservation;
@@ -151,8 +154,9 @@ function deleteReservation($conn, $id_reservation)
     return mysqli_query($conn, $sql_query);
 }
 
-
-
+/* =========================
+   UPDATE RESERVATION
+========================= */
 function updateReservation(
     $conn,
     $id_reservation,
@@ -196,8 +200,9 @@ function updateReservation(
     return mysqli_query($conn, $sql_query);
 }
 
-
-
+/* =========================
+   UPDATE STATUS
+========================= */
 function updateStatusReservasi($conn, $id, $status)
 {
     $query = "
@@ -217,5 +222,3 @@ function updateStatusReservasi($conn, $id, $status)
 
     return mysqli_stmt_execute($stmt);
 }
-
-?>

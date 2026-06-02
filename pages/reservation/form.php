@@ -1,15 +1,11 @@
 <?php
-
 require '../../helper/db_conn.php';
-
 require '../../helper/data/user.php';
 require '../../helper/data/facility.php';
 
 $users = getUsers($conn);
 $facilities = getFacilities($conn);
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +20,7 @@ $facilities = getFacilities($conn);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-<body class="bg-[#f4f7fb]">
+<body class="bg-gray-100 text-gray-800 min-h-screen m-0 p-0 overflow-hidden">
 
     <div class="flex min-h-screen">
 
@@ -244,6 +240,90 @@ $facilities = getFacilities($conn);
         </div>
 
     </div>
+
+</div>
+
+<script>
+const form = document.getElementById('reservationForm');
+
+function setInvalid(input, error) {
+    input.classList.remove('border-gray-300', 'border-emerald-500');
+    input.classList.add('border-red-500', 'focus:ring-red-400', 'focus:border-red-400');
+    error.classList.remove('hidden');
+}
+
+function setValid(input, error) {
+    input.classList.remove('border-red-500', 'focus:ring-red-400', 'focus:border-red-400');
+    input.classList.add('border-emerald-500');
+    error.classList.add('hidden');
+}
+
+function validateForm() {
+    let valid = true;
+
+    const user = document.getElementById('user_id');
+    const facility = document.getElementById('facility_id');
+    const tanggal = document.getElementById('tanggal');
+    const mulai = document.getElementById('jam_mulai');
+    const selesai = document.getElementById('jam_selesai');
+    const notes = document.getElementById('notes');
+
+    if (!user.value) {
+        setInvalid(user, document.getElementById('errorUser'));
+        valid = false;
+    } else {
+        setValid(user, document.getElementById('errorUser'));
+    }
+
+    if (!facility.value) {
+        setInvalid(facility, document.getElementById('errorFacility'));
+        valid = false;
+    } else {
+        setValid(facility, document.getElementById('errorFacility'));
+    }
+
+    if (!tanggal.value) {
+        setInvalid(tanggal, document.getElementById('errorTanggal'));
+        valid = false;
+    } else {
+        setValid(tanggal, document.getElementById('errorTanggal'));
+    }
+
+    if (!mulai.value) {
+        setInvalid(mulai, document.getElementById('errorMulai'));
+        valid = false;
+    } else {
+        setValid(mulai, document.getElementById('errorMulai'));
+    }
+
+    if (!selesai.value || (mulai.value && selesai.value && mulai.value >= selesai.value)) {
+        setInvalid(selesai, document.getElementById('errorSelesai'));
+        valid = false;
+    } else {
+        setValid(selesai, document.getElementById('errorSelesai'));
+    }
+
+    if (!notes.value.trim()) {
+        setInvalid(notes, document.getElementById('errorNotes'));
+        valid = false;
+    } else {
+        setValid(notes, document.getElementById('errorNotes'));
+    }
+
+    return valid;
+}
+
+form.addEventListener('submit', function(e) {
+    if (!validateForm()) {
+        e.preventDefault();
+    }
+});
+
+document.querySelectorAll('.input-field').forEach(function(input) {
+    input.addEventListener('input', validateForm);
+    input.addEventListener('change', validateForm);
+});
+</script>
 
 </body>
 

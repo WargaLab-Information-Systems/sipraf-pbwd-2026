@@ -1,10 +1,23 @@
 <?php
 require_once __DIR__ . '/../../helper/data/reservation.php';
-$data_pengajuan = getAllReservations($conn);
+
+if (!isset($conn)) {
+    if (file_exists(__DIR__ . '/../../config/database.php')) {
+        include_once __DIR__ . '/../../config/database.php';
+    } elseif (file_exists(__DIR__ . '/../../config/config.php')) {
+        include_once __DIR__ . '/../../config/config.php';
+    } elseif (file_exists(__DIR__ . '/../../includes/db.php')) {
+        include_once __DIR__ . '/../../includes/db.php';
+    }
+}
+
+$data_pengajuan = [];
+if (function_exists('getAllReservations') && isset($conn)) {
+    $data_pengajuan = getAllReservations($conn);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +32,6 @@ $data_pengajuan = getAllReservations($conn);
         }
     </style>
 </head>
-
 <body class="bg-gray-100 text-gray-800 min-h-screen m-0 p-0 overflow-hidden">
 <div class="gabung">
     <?php include '../../includes/sidebar.php' ?>
@@ -34,15 +46,14 @@ $data_pengajuan = getAllReservations($conn);
                         <h1 class="text-2xl font-bold text-gray-800">LAPORAN DATA PENGAJUAN</h1>
                         <p class="text-sm text-gray-500">Sistem Informasi Peminjaman Fasilitas (SIPRAF)</p>
                     </div>
-
+                    
                     <div class="flex gap-3 print:hidden">
                         <a href="form.php" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow text-sm font-semibold transition-colors flex items-center gap-1">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                            </svg>
+                            <i class="fa-solid fa-plus text-xs"></i>
                             Tambah Pengajuan
                         </a>
-                        <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow text-sm font-semibold transition-colors">
+                        <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow text-sm font-semibold transition-colors flex items-center gap-1">
+                            <i class="fa-solid fa-print text-xs"></i>
                             Cetak Laporan
                         </button>
                     </div>
@@ -63,33 +74,40 @@ $data_pengajuan = getAllReservations($conn);
                             </tr>
                         </thead>
                         <tbody class="text-sm text-gray-700 divide-y divide-gray-200">
-                            <?php if (empty($data_pengajuan)): ?>
+                            <?php if (empty($data_pengajuan) || !is_array($data_pengajuan)): ?>
                                 <tr>
-                                    <td colspan="8" class="p-4 text-center text-gray-400 bg-gray-50">Belum ada data pengajuan.</td>
+                                    <td colspan="8" class="p-4 text-center text-gray-400 bg-gray-50">Belum ada data pengajuan atau koneksi terputus.</td>
                                 </tr>
                             <?php else: ?>
                                 <?php $nomor_urut = 1; ?>
                                 <?php foreach ($data_pengajuan as $row_data): ?>
                                     <tr class="hover:bg-gray-50 transition-colors">
                                         <td class="p-3 border-r text-center"><?php echo $nomor_urut++; ?></td>
-                                        <td class="p-3 border-r font-semibold"><?php echo htmlspecialchars($row_data['borrower_name']); ?></td>
-                                        <td class="p-3 border-r"><?php echo htmlspecialchars($row_data['facility_name']); ?></td>
-                                        <td class="p-3 border-r uppercase text-xs text-gray-500"><?php echo htmlspecialchars($row_data['kategori']); ?></td>
-                                        <td class="p-3 border-r"><?php echo htmlspecialchars($row_data['tanggal']); ?></td>
-                                        <td class="p-3 border-r"><?php echo htmlspecialchars($row_data['jam_mulai'] . ' - ' . $row_data['jam_selesai']); ?></td>
+                                        <td class="p-3 border-r font-semibold"><?php echo isset($row_data['borrower_name']) ? htmlspecialchars($row_data['borrower_name']) : '-'; ?></td>
+                                        <td class="p-3 border-r"><?php echo isset($row_data['facility_name']) ? htmlspecialchars($row_data['facility_name']) : '-'; ?></td>
+                                        <td class="p-3 border-r uppercase text-xs text-gray-500"><?php echo isset($row_data['kategori']) ? htmlspecialchars($row_data['kategori']) : '-'; ?></td>
+                                        <td class="p-3 border-r"><?php echo isset($row_data['tanggal']) ? htmlspecialchars($row_data['tanggal']) : '-'; ?></td>
                                         <td class="p-3 border-r">
+                                            <?php 
+                                            $m = isset($row_data['jam_mulai']) ? $row_data['jam_mulai'] : '';
+                                            $s = isset($row_data['jam_selesai']) ? $row_data['jam_selesai'] : '';
+                                            echo htmlspecialchars($m . ' - ' . $s); 
+                                            ?>
+                                        </td>
+                                        <td class="p-3 border-r">
+                                            <?php $st = isset($row_data['status']) ? $row_data['status'] : 'pending'; ?>
                                             <span class="px-2 py-0.5 rounded text-xs font-bold uppercase
                                                 <?php
-                                                if ($row_data['status'] == 'disetujui') echo 'bg-green-100 text-green-800';
-                                                elseif ($row_data['status'] == 'ditolak') echo 'bg-red-100 text-red-800';
-                                                elseif ($row_data['status'] == 'dibatalkan') echo 'bg-gray-100 text-gray-800';
+                                                if ($st == 'disetujui') echo 'bg-green-100 text-green-800';
+                                                elseif ($st == 'ditolak') echo 'bg-red-100 text-red-800';
+                                                elseif ($st == 'dibatalkan') echo 'bg-gray-100 text-gray-800';
                                                 else echo 'bg-yellow-100 text-yellow-800';
                                                 ?>">
-                                                <?php echo htmlspecialchars($row_data['status']); ?>
+                                                <?php echo htmlspecialchars($st); ?>
                                             </span>
                                         </td>
                                         <td class="p-3 text-center print:hidden">
-                                            <a href="detail.php?id=<?php echo $row_data['id']; ?>" class="inline-block bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded text-xs font-medium transition-colors">
+                                            <a href="detail.php?id=<?php echo isset($row_data['id']) ? $row_data['id'] : ''; ?>" class="inline-block bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded text-xs font-medium transition-colors">
                                                 Detail
                                             </a>
                                         </td>
@@ -107,5 +125,4 @@ $data_pengajuan = getAllReservations($conn);
     </div>
 
 </body>
-
 </html>
